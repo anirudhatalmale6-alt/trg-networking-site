@@ -422,7 +422,7 @@ function trg_sc_cards( $atts, $content = '' ) {
 		$head,
 		$head ? 'mt-12' : '',
 		esc_attr( $grid ),
-		do_shortcode( $content )
+		trg_shortcode_children( $content )
 	);
 }
 add_shortcode( 'trg_cards', 'trg_sc_cards' );
@@ -904,7 +904,7 @@ function trg_sc_faq( $atts, $content = '' ) {
 		'bg'      => 'canvas',
 	), $atts, 'trg_faq' );
 
-	$items = do_shortcode( $content );
+	$items = trg_shortcode_children( $content );
 	if ( ! trim( $items ) ) {
 		return '';
 	}
@@ -960,7 +960,7 @@ function trg_sc_process( $atts, $content = '' ) {
 		'columns' => '3',
 	), $atts, 'trg_process' );
 
-	$steps = do_shortcode( $content );
+	$steps = trg_shortcode_children( $content );
 	if ( ! trim( $steps ) ) {
 		return '';
 	}

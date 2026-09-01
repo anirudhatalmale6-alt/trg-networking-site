@@ -14,13 +14,15 @@ OUT.mkdir(exist_ok=True)
 
 # route, label, how many viewport-heights down to capture
 PLAN = [
-    ("/", "home", [0, 1, 2, 3, 4, 5, 6]),
+    ("/", "home", [0, 1, 2, 3, 4, 5, 6, 7, 8]),
     ("/managed-it-services/", "service", [0, 1, 2]),
+    ("/cmmc-readiness/", "cmmc", [0, 1, 2]),
+    ("/strategic-it-vcio/", "vcio", [0, 1]),
     ("/industries/", "industries", [0, 1]),
     ("/contact/", "contact", [0, 1]),
     ("/support-center/", "support", [0]),
     ("/resources/", "resources", [0, 1]),
-    ("/why-trg/", "whytrg", [0, 1]),
+    ("/why-trg/", "whytrg", [0, 1, 2]),
 ]
 
 

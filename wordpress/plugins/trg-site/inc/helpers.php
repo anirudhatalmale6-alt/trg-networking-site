@@ -65,6 +65,29 @@ function trg_site_phone_href() {
 }
 
 /**
+ * Render the children of an enclosing shortcode.
+ *
+ * Why this is not just do_shortcode(): wpautop runs on the_content BEFORE
+ * shortcodes are expanded, and it turns every newline between the child
+ * shortcodes into a "<br />". Those survive into the container's markup, and
+ * when the container is a CSS grid each one becomes an empty grid item — so
+ * four cards in a four-column grid land in columns 2 and 4 with holes beside
+ * them. Nothing in an automated check notices: the headings, links, images and
+ * page width are all still correct. It is only visible by looking at the page.
+ *
+ * Card and step bodies are passed through wp_strip_all_tags() anyway, so no
+ * intentional line break is lost here.
+ *
+ * @param string $content Raw inner content.
+ * @return string
+ */
+function trg_shortcode_children( $content ) {
+	$out = do_shortcode( (string) $content );
+	$out = preg_replace( '#\s*<br\s*/?>\s*#i', '', $out );
+	return trim( (string) $out );
+}
+
+/**
  * Split a shortcode attribute that holds a list.
  *
  * Written for people, not for code: "Microsoft, Cisco, Dell" and

@@ -154,20 +154,18 @@ function trg_body_class( $classes ) {
 }
 add_filter( 'body_class', 'trg_body_class' );
 
-/**
- * Strip the wrapping <p> WordPress adds around a shortcode that sits on its own
- * line. Left in place it puts an empty paragraph above every section band.
+/*
+ * There is deliberately no filter here to strip the <p> WordPress wraps around
+ * a shortcode on its own line. Core already does it: shortcode_unautop() runs
+ * on the_content at priority 10, straight after wpautop and before shortcodes
+ * are expanded at 11. An earlier version of this file added its own version at
+ * priority 8 — before wpautop had produced any <p> to strip — so it matched
+ * nothing and did nothing. Removed rather than left in as reassuring noise.
  *
- * @param string $content Post content.
- * @return string
+ * What core does NOT clean up is the <br /> wpautop inserts between the child
+ * shortcodes inside an enclosing one. That is handled where it matters, in
+ * trg_shortcode_children() in the plugin.
  */
-function trg_unwrap_shortcodes( $content ) {
-	$block = 'trg_[a-z_]+';
-	$content = preg_replace( "#<p>\s*(\[{$block}[^\]]*\])\s*</p>#", '$1', $content );
-	$content = preg_replace( "#<p>\s*(\[/{$block}\])\s*</p>#", '$1', $content );
-	return $content;
-}
-add_filter( 'the_content', 'trg_unwrap_shortcodes', 8 );
 
 /**
  * Keep the admin bar off the front end for logged-in editors previewing pages
