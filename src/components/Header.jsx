@@ -67,14 +67,12 @@ export default function Header() {
               <Phone size={13} aria-hidden="true" />
               {company.phone}
             </a>
-            <a
-              href={company.supportUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to={company.supportUrl}
               className="font-heading font-semibold text-white/85 hover:text-brand-200"
             >
               Existing Client Support
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -230,14 +228,12 @@ export default function Header() {
                 <a href={company.phoneHref} className="btn-outline w-full">
                   <Phone size={15} aria-hidden="true" /> {company.phone}
                 </a>
-                <a
-                  href={company.supportUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to={company.supportUrl}
                   className="block px-1 pt-1 text-center text-sm font-semibold text-muted hover:text-brand-600"
                 >
                   Existing Client Support
-                </a>
+                </Link>
               </div>
             </nav>
           </div>

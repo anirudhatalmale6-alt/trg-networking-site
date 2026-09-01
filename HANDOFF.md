@@ -95,8 +95,21 @@ npm install          # once
 npm run build        # produces dist/
 ```
 
-Upload **the contents of `dist/`** plus the `api/` folder and `.htaccess` to
-the web root. Nothing else needs to go on the server.
+Upload **the contents of `dist/`** plus the `api/` folder to the web root.
+
+The build ships a config file for each kind of host. Only one applies — the
+others are harmless if left in place:
+
+| Host | Config file | Contact form |
+|---|---|---|
+| Apache (cPanel, Hostinger, most shared hosting) | `.htaccess` | `api/contact.php` works as shipped |
+| Azure Static Web Apps | `staticwebapp.config.json` | needs an Azure Function — see below |
+| Azure App Service (Windows / IIS) | `web.config` | needs an Azure Function or SMTP relay |
+| Azure App Service (Linux, PHP) | `.htaccess` | `api/contact.php` works as shipped |
+
+Azure does **not** read `.htaccess`. That is why the redirect map is repeated in
+`staticwebapp.config.json` and `web.config`. If you change a redirect, change it
+in all three.
 
 `npm run build` also pre-renders all 24 pages to real HTML files. Set your
 domain first so the canonical URLs and sitemap are right:
@@ -146,9 +159,18 @@ $FROM_ADDRESS = 'website@trgnetworking.com';   // must be a real mailbox ON THIS
 `$FROM_ADDRESS` matters. If it is an address on a domain the server is not
 authorised to send for, most providers will spam-folder or reject the mail.
 
-**This requires PHP.** If the site ends up on static-only hosting, tell me and
-I will switch the form to a hosted endpoint instead — it is a one-line change
-to `ENDPOINT` in `src/components/ContactForm.jsx`.
+**This requires PHP**, which Azure Static Web Apps and Azure Storage do not
+run. The form endpoint is set at build time so the code does not have to change:
+
+```
+VITE_CONTACT_ENDPOINT=/api/contact npm run build
+```
+
+Whatever it points at needs to answer `{"ok":true}` on success. On Azure the
+options are an Azure Function that sends through Microsoft 365 (you already have
+M365, so this is the natural fit), Azure Communication Services Email, or a
+hosted form service. Tell me which Azure service the site lands on and I will
+build the matching endpoint.
 
 After going live, send one test enquiry and confirm it arrives.
 

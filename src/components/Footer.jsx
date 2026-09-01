@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Linkedin, Mail, MapPin, Phone } from 'lucide-react'
+import { Facebook, Linkedin, Mail, MapPin, Phone, Twitter, Youtube } from 'lucide-react'
 import { addressLine, company, industriesNav, servicesNav } from '../data/site'
 
 const companyLinks = [
@@ -52,19 +52,30 @@ export default function Footer() {
             <p className="max-w-xs text-[14px] leading-relaxed text-white/65">
               {company.blurb}
             </p>
-            {/* Only real, working profiles are listed. The previous build had
-                four placeholder icons that all pointed at "#". */}
-            <a
-              href={company.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="TRG Networking on LinkedIn"
-              className="mt-5 inline-flex h-10 w-10 items-center justify-center rounded-lg
-                         border border-white/15 bg-white/5 text-white/80
-                         transition-colors hover:border-brand-400 hover:bg-brand-600 hover:text-white"
-            >
-              <Linkedin size={17} aria-hidden="true" />
-            </a>
+            {/* Real profiles, recovered from the live site. The Hostinger build
+                had four icons that all pointed at "#". */}
+            <ul className="mt-5 flex gap-2">
+              {[
+                { key: 'linkedin', label: 'LinkedIn', Icon: Linkedin },
+                { key: 'facebook', label: 'Facebook', Icon: Facebook },
+                { key: 'twitter',  label: 'X (Twitter)', Icon: Twitter },
+                { key: 'youtube',  label: 'YouTube',  Icon: Youtube },
+              ].filter((s) => company.social[s.key]).map(({ key, label, Icon }) => (
+                <li key={key}>
+                  <a
+                    href={company.social[key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`TRG Networking on ${label}`}
+                    className="inline-flex h-10 w-10 items-center justify-center rounded-lg
+                               border border-white/15 bg-white/5 text-white/80
+                               transition-colors hover:border-brand-400 hover:bg-brand-600 hover:text-white"
+                  >
+                    <Icon size={17} aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <Column title="Services"   links={servicesNav} />
@@ -93,14 +104,9 @@ export default function Footer() {
                 <span>{addressLine}</span>
               </li>
             </ul>
-            <a
-              href={company.supportUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-ghost-l mt-5 w-full"
-            >
+            <Link to={company.supportUrl} className="btn-ghost-l mt-5 w-full">
               Existing client support
-            </a>
+            </Link>
           </div>
         </div>
 

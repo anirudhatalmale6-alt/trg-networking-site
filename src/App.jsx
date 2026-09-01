@@ -6,7 +6,7 @@ import Home from './pages/Home'
 import DetailPage from './pages/DetailPage'
 import Contact, { Resources } from './pages/Contact'
 import { About, Industries, Services, WhyTrg } from './pages/Simple'
-import { Accessibility, CaseStudies, Guides, NotFound, Privacy, Terms } from './pages/Misc'
+import { Accessibility, CaseStudies, Guides, NotFound, Privacy, SupportCenter, Terms } from './pages/Misc'
 import { legacyRedirects } from './data/detailPages'
 
 /**
@@ -62,6 +62,8 @@ export default function App() {
           {Object.entries(legacyRedirects).map(([from, to]) => (
             <Route key={from} path={from} element={<Navigate to={to} replace />} />
           ))}
+
+          <Route path="/support-center" element={<SupportCenter />} />
 
           <Route path="/privacy"       element={<Privacy />} />
           <Route path="/terms"         element={<Terms />} />

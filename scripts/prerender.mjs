@@ -26,6 +26,7 @@ const ROUTES = [
   '/backup-business-continuity',
   '/construction', '/manufacturing', '/government-contractors',
   '/professional-services',
+  '/support-center',
   '/privacy', '/terms', '/accessibility',
 ]
 

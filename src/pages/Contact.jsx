@@ -78,14 +78,9 @@ export default function Contact() {
                   <span className="block font-heading text-[15px] font-bold text-ink">Existing clients</span>
                   <span className="text-[14.5px] text-muted">
                     Please use the{' '}
-                    <a
-                      href={company.supportUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-semibold text-brand-600 hover:underline"
-                    >
-                      Client Support Center
-                    </a>{' '}
+                    <Link to={company.supportUrl} className="font-semibold text-brand-600 hover:underline">
+                      Support Center
+                    </Link>{' '}
                     for active technical requests.
                   </span>
                 </span>

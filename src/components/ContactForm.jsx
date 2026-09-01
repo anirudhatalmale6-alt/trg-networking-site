@@ -11,14 +11,23 @@ import { company, serviceOptions } from '../data/site'
  * The previous Hostinger build wrote straight into a hidden Horizons database
  * collection ("consultation_requests") and emailed nobody, so enquiries could
  * pile up unread behind a success message. This version posts to ENDPOINT,
- * which is a small PHP handler (public/api/contact.php) that mails NOTIFY_TO
- * and sets Reply-To to the enquirer.
+ * which mails the enquiry with Reply-To set to the sender.
  *
- * If that POST fails for any reason the form does NOT show a false success.
- * It surfaces the error and offers a mailto fallback with the message already
- * written out, so a lead is never silently dropped.
+ * ENDPOINT is set at build time so the same code works on any host:
+ *
+ *   Apache / PHP hosting  ->  /api/contact.php   (shipped, the default)
+ *   Azure Static Web Apps ->  /api/contact       (an Azure Function)
+ *   A hosted form service ->  its full https URL
+ *
+ * Set it with VITE_CONTACT_ENDPOINT at build time, e.g.
+ *   VITE_CONTACT_ENDPOINT=/api/contact npm run build
+ *
+ * Whatever it points at must answer JSON {"ok":true} on success. If the POST
+ * fails for any reason the form does NOT show a false success — it surfaces
+ * the error and offers a mailto fallback with the message already written out,
+ * so a lead is never silently dropped.
  */
-const ENDPOINT = '/api/contact.php'
+const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT || '/api/contact.php'
 
 const EMPTY = {
   name: '', email: '', company: '', phone: '',

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Quote } from 'lucide-react'
+import { ArrowRight, Mail, Phone, Quote } from 'lucide-react'
 import Seo from '../components/Seo'
 import { CtaBand, PageHero, Perspective, SectionHead } from '../components/Blocks'
 import { addressLine, company, testimonials } from '../data/site'
@@ -268,6 +268,92 @@ export function Accessibility() {
         </p>
       </div>
     </Legal>
+  )
+}
+
+/* ---------------------------------------------------------- Support Center */
+
+/**
+ * The live WordPress site has a /support-center/ page. Once this build takes
+ * over the domain that URL has to keep working — and the "Existing Client
+ * Support" link in the header, footer and contact page points at it.
+ *
+ * It is not a portal or a login: on the old site it is a page telling existing
+ * clients which number to call for technical support. Same job here.
+ */
+export function SupportCenter() {
+  return (
+    <>
+      <Seo
+        title="Support Center | TRG Networking"
+        description="Technical support contact details for existing TRG Networking clients. Call 410-363-6980 for active technical requests."
+      />
+      <PageHero
+        eyebrow="Support Center"
+        title="Welcome to the TRG Networking Support Center."
+        lede="Please use the details below for technical support requests only. For anything else, the contact page is the right place."
+      />
+
+      <section className="section bg-white">
+        <div className="shell max-w-3xl">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <a
+              href={company.phoneHref}
+              className="card-hover group flex items-start gap-4"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600" aria-hidden="true">
+                <Phone size={19} />
+              </span>
+              <span className="min-w-0">
+                <span className="block font-heading text-[12px] font-bold uppercase tracking-[0.12em] text-soft">
+                  Phone support
+                </span>
+                <span className="mt-1 block font-heading text-[19px] font-extrabold text-ink group-hover:text-brand-600">
+                  {company.phone}
+                </span>
+              </span>
+            </a>
+
+            <a
+              href={`mailto:${company.email}`}
+              className="card-hover group flex items-start gap-4"
+            >
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600" aria-hidden="true">
+                <Mail size={19} />
+              </span>
+              <span className="min-w-0">
+                <span className="block font-heading text-[12px] font-bold uppercase tracking-[0.12em] text-soft">
+                  Email support
+                </span>
+                <span className="mt-1 block break-all font-heading text-[15px] font-extrabold text-ink group-hover:text-brand-600">
+                  {company.email}
+                </span>
+              </span>
+            </a>
+          </div>
+
+          <div className="mt-8 rounded-xl border border-brand-200 bg-brand-50 p-6">
+            <h2 className="text-[18px]">Not an existing client?</h2>
+            <p className="mt-2 text-[15px] leading-relaxed text-muted">
+              If you are enquiring about services rather than raising a technical
+              issue, the contact page will get you to the right person faster.
+            </p>
+            <Link to="/contact" className="btn-primary mt-5">
+              Go to the contact page <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
+
+          <p className="mt-8 text-[14px] leading-relaxed text-soft">
+            Support is available {' '}
+            <strong className="text-body">24&#215;7</strong>. For urgent issues
+            affecting your business operations, please call rather than email —
+            it reaches the team fastest.
+          </p>
+        </div>
+      </section>
+
+      <CtaBand />
+    </>
   )
 }
 

@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+
+  "_comment": [
+    "Azure Static Web Apps configuration. This is the Azure equivalent of the",
+    ".htaccess file — Azure does not read .htaccess, so the redirect map has to",
+    "be repeated here. Keep the two in sync if you edit either.",
+    "Route order matters: the first match wins."
+  ],
+
+  "routes": [
+    { "route": "/managed-it",                        "redirect": "/managed-it-services",        "statusCode": 301 },
+    { "route": "/help-desk",                         "redirect": "/help-desk-it-support",       "statusCode": 301 },
+    { "route": "/microsoft-cloud",                   "redirect": "/microsoft-365-cloud",        "statusCode": 301 },
+    { "route": "/ai-services",                       "redirect": "/secure-ai-adoption",         "statusCode": 301 },
+    { "route": "/cmmc",                              "redirect": "/cmmc-readiness",             "statusCode": 301 },
+    { "route": "/business-continuity",               "redirect": "/backup-business-continuity", "statusCode": 301 },
+    { "route": "/industries/construction",           "redirect": "/construction",               "statusCode": 301 },
+    { "route": "/industries/manufacturing",          "redirect": "/manufacturing",              "statusCode": 301 },
+    { "route": "/industries/government-contractors", "redirect": "/government-contractors",     "statusCode": 301 },
+    { "route": "/industries/professional-services",  "redirect": "/professional-services",      "statusCode": 301 },
+
+    { "route": "/network-security",         "redirect": "/cybersecurity",               "statusCode": 301 },
+    { "route": "/cloud-computing",          "redirect": "/microsoft-365-cloud",         "statusCode": 301 },
+    { "route": "/data-backup-and-recovery", "redirect": "/backup-business-continuity",  "statusCode": 301 },
+    { "route": "/about-us/contact-us",      "redirect": "/contact",                     "statusCode": 301 },
+    { "route": "/about-us/referral-program","redirect": "/about",                       "statusCode": 301 },
+    { "route": "/about-us",                 "redirect": "/about",                       "statusCode": 301 },
+    { "route": "/why-choose-us",            "redirect": "/why-trg",                     "statusCode": 301 },
+    { "route": "/our-clients",              "redirect": "/resources/case-studies",      "statusCode": 301 },
+    { "route": "/testimonial/*",            "redirect": "/resources/case-studies",      "statusCode": 301 },
+    { "route": "/free-network-assessment",  "redirect": "/contact?type=assessment",     "statusCode": 301 },
+    { "route": "/initial-consultation",     "redirect": "/contact",                     "statusCode": 301 },
+    { "route": "/discoverycall",            "redirect": "/contact",                     "statusCode": 301 },
+    { "route": "/cyber-security-tip-of-the-week", "redirect": "/resources",             "statusCode": 301 },
+    { "route": "/itbuyersguide",            "redirect": "/resources/guides",            "statusCode": 301 },
+    { "route": "/new-cybersecurity-crisis", "redirect": "/cybersecurity",               "statusCode": 301 },
+    { "route": "/3problems",                "redirect": "/resources",                   "statusCode": 301 },
+    { "route": "/aspirin",                  "redirect": "/resources",                   "statusCode": 301 },
+    { "route": "/thank-you-aspirin",        "redirect": "/resources",                   "statusCode": 301 },
+    { "route": "/closerlook",               "redirect": "/resources",                   "statusCode": 301 },
+    { "route": "/is-this-you",              "redirect": "/resources",                   "statusCode": 301 },
+
+    { "route": "/2023/*", "redirect": "/resources", "statusCode": 301 },
+    { "route": "/2024/*", "redirect": "/resources", "statusCode": 301 },
+    { "route": "/2025/*", "redirect": "/resources", "statusCode": 301 },
+
+    { "route": "/api/*", "allowedRoles": ["anonymous"] }
+  ],
+
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/img/*", "/assets/*", "/api/*", "*.xml", "*.txt", "*.json", "*.webp", "*.ico"]
+  },
+
+  "responseOverrides": {
+    "404": { "rewrite": "/index.html", "statusCode": 404 }
+  },
+
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "geolocation=(), microphone=(), camera=()"
+  },
+
+  "mimeTypes": {
+    ".webp": "image/webp",
+    ".json": "application/json",
+    ".xml": "application/xml"
+  }
+}

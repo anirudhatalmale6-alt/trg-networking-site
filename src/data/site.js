@@ -9,7 +9,17 @@ export const company = {
   phoneHref: 'tel:+14103636980',
   email: 'info@trgnetworking.com',
   marketingEmail: 'marketing@trgnetworking.com',
-  supportUrl: 'https://www.trgnetworking.com/support-center/',
+  // Internal route, not the old WordPress URL. Once this site takes over the
+  // domain, an absolute link to /support-center/ would hit this site and 404.
+  supportUrl: '/support-center',
+  // Recovered from the live site. The Hostinger build had four social icons
+  // that all pointed at "#".
+  social: {
+    linkedin: 'https://www.linkedin.com/company/trg-networking-inc',
+    facebook: 'https://www.facebook.com/TRGNetworkinginc/',
+    twitter:  'https://twitter.com/trg_networking',
+    youtube:  'https://www.youtube.com/channel/UCzYPG-1UjnPmWU_kYwl4XNg',
+  },
   linkedin: 'https://www.linkedin.com/company/trg-networking-inc',
   address: {
     street: '9861 Broken Land Parkway, Suite 100',
