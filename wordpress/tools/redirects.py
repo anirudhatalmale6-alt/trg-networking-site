@@ -70,7 +70,12 @@ for path in [
     CASES[path] = "/resources/"
 
 # The free assessment page carries a query string through.
-QUERY_CASES = {"/free-network-assessment/": "/contact/?type=assessment"}
+QUERY_CASES = {"/free-network-assessment/": "/contact/?type=it-assessment"}
+
+# The two solution areas added in the consolidated change request are new
+# slugs, not old ones: they must resolve where they are and never redirect.
+CASES["/network-infrastructure/"] = "/network-infrastructure/"
+CASES["/strategic-it-vcio/"] = "/strategic-it-vcio/"
 
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):

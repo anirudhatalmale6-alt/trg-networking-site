@@ -17,6 +17,7 @@ ROUTES = [
     "/managed-it-services/", "/help-desk-it-support/", "/cybersecurity/",
     "/microsoft-365-cloud/", "/azure/", "/secure-ai-adoption/",
     "/cmmc-readiness/", "/backup-business-continuity/",
+    "/network-infrastructure/", "/strategic-it-vcio/",
     "/construction/", "/manufacturing/", "/government-contractors/",
     "/professional-services/", "/support-center/",
     "/privacy/", "/terms/", "/accessibility/",

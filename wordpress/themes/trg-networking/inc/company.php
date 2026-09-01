@@ -31,7 +31,7 @@ function trg_company_defaults() {
 		'state_short'     => 'MD',
 		'zip'             => '21046',
 		'tagline'         => 'Maryland-based • Supporting businesses nationwide',
-		'blurb'           => 'Making technology simpler, safer and more responsive for businesses since 1992.',
+		'blurb'           => 'Enterprise technology expertise delivered with personal attention. Supporting organizations since 1992.',
 		'linkedin'        => 'https://www.linkedin.com/company/trg-networking-inc',
 		'facebook'        => 'https://www.facebook.com/TRGNetworkinginc/',
 		'twitter'         => 'https://twitter.com/trg_networking',

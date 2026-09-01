@@ -163,12 +163,23 @@ function trg_sc_home_hero( $atts ) {
 					<span class="eyebrow-pill"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
 				<?php endif; ?>
 
+				<?php
+				// Built from whichever lines are actually filled in. Emitting a
+				// <br> per *slot* rather than per *line* would leave a blank line
+				// in the middle of the headline whenever line2 is empty.
+				$lines = array();
+				if ( $atts['line1'] ) {
+					$lines[] = esc_html( $atts['line1'] );
+				}
+				if ( $atts['line2'] ) {
+					$lines[] = esc_html( $atts['line2'] );
+				}
+				if ( $atts['accent'] ) {
+					$lines[] = '<span class="text-brand-600">' . esc_html( $atts['accent'] ) . '</span>';
+				}
+				?>
 				<h1 class="mt-6 text-[36px] leading-[1.06] sm:text-[52px] lg:text-[58px]">
-					<?php echo esc_html( $atts['line1'] ); ?><?php echo $atts['line2'] || $atts['accent'] ? '<br>' : ''; ?>
-					<?php echo esc_html( $atts['line2'] ); ?><?php echo $atts['accent'] ? '<br>' : ''; ?>
-					<?php if ( $atts['accent'] ) : ?>
-						<span class="text-brand-600"><?php echo esc_html( $atts['accent'] ); ?></span>
-					<?php endif; ?>
+					<?php echo implode( '<br>', $lines ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above. ?>
 				</h1>
 
 				<?php if ( $atts['lede'] ) : ?>
@@ -688,8 +699,9 @@ function trg_sc_media_split( $atts ) {
 	ob_start();
 	?>
 	<section class="section <?php echo 'white' === $atts['bg'] ? 'bg-white' : 'bg-canvas'; ?>">
+		<?php // min-w-0 on both columns: without it a grid item's min-width:auto lets one wide child stretch the whole page. ?>
 		<div class="shell grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-			<div class="relative <?php echo $reverse ? 'order-2 lg:order-1' : 'order-2'; ?>">
+			<div class="relative min-w-0 <?php echo $reverse ? 'order-2 lg:order-1' : 'order-2'; ?>">
 				<?php if ( $image ) : ?>
 					<img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $atts['image_alt'] ); ?>"
 						width="1400" height="1050" loading="lazy"
@@ -709,7 +721,7 @@ function trg_sc_media_split( $atts ) {
 				<?php endif; ?>
 			</div>
 
-			<div class="<?php echo $reverse ? 'order-1 lg:order-2' : 'order-1'; ?>">
+			<div class="min-w-0 <?php echo $reverse ? 'order-1 lg:order-2' : 'order-1'; ?>">
 				<?php
 				echo trg_section_head( array( // phpcs:ignore WordPress.Security.EscapeOutput
 					'eyebrow' => $atts['eyebrow'],
@@ -720,7 +732,13 @@ function trg_sc_media_split( $atts ) {
 				?>
 
 				<?php if ( $pills ) : ?>
-					<div class="mt-7"><?php echo do_shortcode( '[trg_pills items="' . esc_attr( $atts['pills'] ) . '"]' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
+					<?php
+					// Calling the pills renderer directly rather than round-tripping
+					// through do_shortcode(): esc_attr() would turn "POA&M" into
+					// "POA&amp;M", which the shortcode parser stores literally and
+					// the renderer then escapes again, printing "&amp;" on screen.
+					?>
+					<div class="mt-7"><?php echo trg_sc_pills( array( 'items' => $atts['pills'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside. ?></div>
 				<?php endif; ?>
 
 				<?php if ( $bullets ) : ?>
@@ -822,6 +840,8 @@ function trg_sc_cta_band( $atts, $content = '' ) {
 		'body'         => __( 'Start with a straightforward conversation about your business, your concerns and what better IT support could look like.', 'trg-site' ),
 		'button_text'  => __( 'Talk with our team', 'trg-site' ),
 		'button_link'  => 'contact',
+		'button2_text' => '',
+		'button2_link' => 'contact',
 	), $atts, 'trg_cta_band' );
 
 	$body = trim( wp_strip_all_tags( $content ) );
@@ -847,6 +867,11 @@ function trg_sc_cta_band( $atts, $content = '' ) {
 					<?php echo esc_html( $atts['button_text'] ); ?>
 					<?php echo trg_site_icon( 'arrow-right', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 				</a>
+				<?php if ( $atts['button2_text'] ) : ?>
+					<a href="<?php echo esc_url( trg_link_url( $atts['button2_link'] ) ); ?>" class="btn-ghost-l w-full sm:w-auto">
+						<?php echo esc_html( $atts['button2_text'] ); ?>
+					</a>
+				<?php endif; ?>
 				<a href="<?php echo esc_url( trg_site_phone_href() ); ?>" class="btn-ghost-l w-full sm:w-auto">
 					<?php
 					/* translators: %s: phone number. */
@@ -932,6 +957,7 @@ function trg_sc_process( $atts, $content = '' ) {
 		'title'   => '',
 		'body'    => '',
 		'bg'      => 'canvas',
+		'columns' => '3',
 	), $atts, 'trg_process' );
 
 	$steps = do_shortcode( $content );
@@ -945,11 +971,16 @@ function trg_sc_process( $atts, $content = '' ) {
 		'body'    => $atts['body'],
 	) ) : '';
 
+	// Both widths are in the Tailwind safelist: these classes only ever appear
+	// in page content stored in the database, which the CSS build cannot scan.
+	$grid = '4' === (string) $atts['columns'] ? 'sm:grid-cols-2 md:grid-cols-4' : 'md:grid-cols-3';
+
 	return sprintf(
-		'<section class="section %s"><div class="shell">%s<ol class="%s grid gap-6 md:grid-cols-3">%s</ol></div></section>',
+		'<section class="section %s"><div class="shell">%s<ol class="%s grid gap-6 %s">%s</ol></div></section>',
 		'white' === $atts['bg'] ? 'bg-white' : 'bg-canvas',
 		$head,
 		$head ? 'mt-12' : '',
+		esc_attr( $grid ),
 		$steps
 	);
 }
@@ -1017,7 +1048,13 @@ function trg_sc_ai_panel( $atts ) {
 				</div>
 
 				<?php if ( $atts['pills'] ) : ?>
-					<div class="mt-7"><?php echo do_shortcode( '[trg_pills items="' . esc_attr( $atts['pills'] ) . '"]' ); // phpcs:ignore WordPress.Security.EscapeOutput ?></div>
+					<?php
+					// Calling the pills renderer directly rather than round-tripping
+					// through do_shortcode(): esc_attr() would turn "POA&M" into
+					// "POA&amp;M", which the shortcode parser stores literally and
+					// the renderer then escapes again, printing "&amp;" on screen.
+					?>
+					<div class="mt-7"><?php echo trg_sc_pills( array( 'items' => $atts['pills'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped inside. ?></div>
 				<?php endif; ?>
 
 				<?php if ( $atts['button_text'] ) : ?>

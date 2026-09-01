@@ -37,9 +37,18 @@
            px-3.5 py-1.5 font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-brand-600;
   }
 
+  /*
+   * No `whitespace-nowrap` here, deliberately. A grid or flex item defaults to
+   * min-width:auto, so a button that refuses to wrap sets a floor under the
+   * width of the whole column it sits in — and a long label like "Schedule a
+   * CMMC Readiness Assessment" then makes the entire page scroll sideways on a
+   * 320px phone. Text still stays on one line whenever it fits; it only wraps
+   * when the alternative is breaking the layout.
+   */
   .btn {
-    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg
-           px-[26px] py-[11px] font-heading text-sm font-semibold transition-all duration-200;
+    @apply inline-flex max-w-full items-center justify-center gap-2 rounded-lg
+           px-[26px] py-[11px] text-center font-heading text-sm font-semibold
+           transition-all duration-200;
   }
   .btn-primary { @apply btn bg-brand-600 text-white shadow-sm hover:bg-brand-700 hover:shadow-md; }
   .btn-outline { @apply btn border border-brand-200 bg-white text-brand-600 hover:border-brand-600 hover:bg-brand-50; }

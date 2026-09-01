@@ -64,6 +64,13 @@ function trg_redirect_map() {
 		'thank-you-aspirin'                 => 'resources',
 		'closerlook'                        => 'resources',
 		'is-this-you'                       => 'resources',
+
+		// WordPress generates its sitemap at /wp-sitemap.xml. The old site was
+		// submitted to Search Console under the other two names, and an SEO
+		// plugin installed later would take these paths over itself — until
+		// then, point them at the one that exists rather than returning 404.
+		'sitemap.xml'                       => '/wp-sitemap.xml',
+		'sitemap_index.xml'                 => '/wp-sitemap.xml',
 	) );
 }
 
@@ -132,7 +139,7 @@ function trg_do_redirects() {
 
 	// The free assessment landing page pre-selects the assessment on the form.
 	if ( 'free-network-assessment' === $path ) {
-		wp_safe_redirect( add_query_arg( 'type', 'assessment', trg_site_page_url( 'contact' ) ), 301 );
+		wp_safe_redirect( add_query_arg( 'type', 'it-assessment', trg_site_page_url( 'contact' ) ), 301 );
 		exit;
 	}
 

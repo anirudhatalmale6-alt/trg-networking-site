@@ -32,6 +32,13 @@ const INTERACTIVE_ONLY = {
   'chevron-right': '<path d="m9 18 6-6-6-6"/>',
   'circle-check': '<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
   'triangle-alert': '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+  // Added for the two service areas the change request introduced (network
+  // infrastructure, strategic IT / vCIO). No page of the source build used
+  // them, so they cannot be scraped out of dist/.
+  network:
+    '<rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3"/><path d="M12 12V8"/>',
+  compass:
+    '<path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/><circle cx="12" cy="12" r="10"/>',
 }
 
 for (const [name, inner] of Object.entries(INTERACTIVE_ONLY)) icons.set(name, inner)

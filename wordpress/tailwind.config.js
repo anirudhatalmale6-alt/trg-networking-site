@@ -47,7 +47,8 @@ export default {
   safelist: [
     'bg-white', 'bg-canvas', 'bg-ink',
     'sm:grid-cols-2', 'lg:grid-cols-3', 'lg:grid-cols-4',
-    'order-1', 'order-2', 'lg:order-1', 'lg:order-2',
+    'md:grid-cols-3', 'md:grid-cols-4',
+    'order-1', 'order-2', 'lg:order-1', 'lg:order-2', 'min-w-0',
   ],
   plugins: [],
 }

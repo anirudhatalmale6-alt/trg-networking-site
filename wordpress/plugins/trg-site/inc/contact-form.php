@@ -48,20 +48,22 @@ function trg_register_enquiry_type() {
 add_action( 'init', 'trg_register_enquiry_type' );
 
 /**
- * The service options offered in the form's dropdown.
+ * The options offered in the form's dropdown.
+ *
+ * Written as the five conversion paths named in the change request rather than
+ * as a list of service areas: what a visitor wants to happen next is a shorter
+ * and more useful question than which product line they think they need.
  *
  * @return array<string,string>
  */
 function trg_service_options() {
 	return apply_filters( 'trg_service_options', array(
-		'managed-it'          => __( 'Managed IT Services', 'trg-site' ),
-		'help-desk'           => __( 'Help Desk & IT Support', 'trg-site' ),
-		'cybersecurity'       => __( 'Cybersecurity', 'trg-site' ),
-		'microsoft'           => __( 'Microsoft Solutions (Azure / 365)', 'trg-site' ),
-		'cmmc'                => __( 'CMMC Readiness', 'trg-site' ),
-		'ai'                  => __( 'Secure AI Adoption', 'trg-site' ),
-		'business-continuity' => __( 'Backup & Business Continuity', 'trg-site' ),
-		'other'               => __( 'Other / General Inquiry', 'trg-site' ),
+		'consultation'  => __( 'Schedule a Consultation', 'trg-site' ),
+		'it-assessment' => __( 'Request an IT Assessment', 'trg-site' ),
+		'cmmc'          => __( 'CMMC Readiness Assessment', 'trg-site' ),
+		'cybersecurity' => __( 'Cybersecurity Assessment', 'trg-site' ),
+		'microsoft'     => __( 'Microsoft / Azure Consultation', 'trg-site' ),
+		'other'         => __( 'Something else', 'trg-site' ),
 	) );
 }
 
@@ -83,7 +85,15 @@ function trg_sc_contact_form( $atts ) {
 	$old     = is_array( $old ) ? $old : array();
 	$options = trg_service_options();
 
-	$preselect = isset( $_GET['type'] ) && 'assessment' === sanitize_key( wp_unslash( $_GET['type'] ) ) ? 'managed-it' : ''; // phpcs:ignore WordPress.Security.NonceVerification
+	// ?type= on the URL pre-selects the dropdown, so a button that says
+	// "Free IT Assessment" lands on a form that already says the same thing.
+	// Only keys that actually exist as options are honoured; the old
+	// ?type=assessment links from the previous site still work.
+	$requested = isset( $_GET['type'] ) ? sanitize_key( wp_unslash( $_GET['type'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification -- read-only display hint.
+	if ( 'assessment' === $requested ) {
+		$requested = 'it-assessment';
+	}
+	$preselect = isset( $options[ $requested ] ) ? $requested : '';
 
 	$value = static function ( $key ) use ( $old ) {
 		return isset( $old[ $key ] ) ? $old[ $key ] : '';
@@ -188,7 +198,7 @@ function trg_sc_contact_form( $atts ) {
 			</div>
 
 			<div>
-				<label for="trg-service" class="mb-1.5 block font-heading text-[13.5px] font-bold text-ink"><?php esc_html_e( 'What can we help with?', 'trg-site' ); ?></label>
+				<label for="trg-service" class="mb-1.5 block font-heading text-[13.5px] font-bold text-ink"><?php esc_html_e( 'What would you like to do?', 'trg-site' ); ?></label>
 				<select id="trg-service" name="trg_service"
 					class="w-full rounded-lg border border-line bg-white px-3.5 py-2.5 text-[15px] text-body focus:border-brand-600">
 					<?php foreach ( $options as $key => $label ) : ?>

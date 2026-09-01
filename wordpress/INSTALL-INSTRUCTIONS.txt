@@ -1,0 +1,189 @@
+TRG NETWORKING WEBSITE - INSTALLATION INSTRUCTIONS
+For the webmaster.  Version 1.1, 1 September 2026.
+
+
+WHAT YOU HAVE BEEN SENT
+=======================
+
+Two files:
+
+  trg-networking-theme.zip   The theme.  Design, header, footer, navigation,
+                             page layouts, images, stylesheet.
+
+  trg-site-plugin.zip        The plugin.  Page sections, the contact form,
+                             the editable service and industry card lists,
+                             and the redirects for the old site's URLs.
+
+Both are needed.  They are separate on purpose: the redirect map for the old
+URLs and every contact form submission must survive a future theme change.
+
+This is a normal WordPress theme and a normal WordPress plugin.  There is
+nothing unusual to configure, no build step, no external service, and no paid
+plugin dependency.
+
+
+BEFORE YOU START
+================
+
+1.  DO NOT unzip either file into the live site root.  They install through
+    the WordPress dashboard, which unpacks them into the right folders itself.
+
+2.  Install on a staging site, a subdomain or a subfolder first.  TRG want to
+    review it page by page before it replaces the live site.
+
+3.  This needs a WordPress site that is otherwise empty or nearly so.  It
+    creates twenty-seven pages and four menus.  Installing it over an existing
+    populated site is not what it is designed for.
+
+4.  Requirements: WordPress 6.0 or newer, PHP 7.4 or newer.  Both are met by
+    any current host.
+
+
+INSTALLING - THE NORMAL WAY (3 STEPS, NO FTP)
+=============================================
+
+Log in to WordPress as an administrator, then:
+
+  Step 1.   Appearance  ->  Themes  ->  Add New  ->  Upload Theme
+            Choose trg-networking-theme.zip
+            Install Now, then Activate
+
+  Step 2.   Plugins  ->  Add New  ->  Upload Plugin
+            Choose trg-site-plugin.zip
+            Install Now, then Activate
+
+  Step 3.   Tools  ->  TRG Setup
+            Click "Build the site"
+
+Step 3 creates the pages, the service and industry cards, the testimonials,
+the header menu and the three footer menus, and sets the homepage.  It prints
+a list of everything it did.
+
+Running step 3 twice is safe.  Anything that already exists is left exactly as
+it is, so a page somebody has edited will never be overwritten by a second
+click.
+
+That is the whole installation.
+
+
+INSTALLING - IF UPLOAD IS DISABLED
+==================================
+
+Some hosts disable theme and plugin uploads in the dashboard.  If the Upload
+button is missing, unzip the two files on your own machine and upload the
+resulting folders by FTP or SFTP:
+
+    trg-networking/   ->   /wp-content/themes/trg-networking/
+    trg-site/         ->   /wp-content/plugins/trg-site/
+
+Upload the FOLDER, not the zip, and keep those exact folder names.  Then
+activate the theme under Appearance -> Themes, activate the plugin under
+Plugins, and carry on with step 3 above.
+
+
+AFTER INSTALLING - PLEASE CHECK THESE FOUR THINGS
+=================================================
+
+1.  PERMALINKS
+    Settings -> Permalinks should be set to "Post name".
+    The setup sets this automatically on a fresh site, but if the site already
+    had a different setting the setup leaves it alone.  It matters: the page
+    addresses have to match the old site's addresses for the search rankings
+    to carry over.
+
+2.  THE CONTACT FORM
+    Send yourself a test enquiry from the Contact page and confirm the email
+    arrives.
+
+    Every enquiry is stored in the dashboard under "Enquiries" as well as
+    emailed, so nothing can be lost even if mail fails.  The "Emailed" column
+    in that list says whether the notification actually went out.
+
+    TRG's mail is on Microsoft 365.  Some hosts cannot send mail through PHP at
+    all, or have it filtered as spam because the sending server is not in the
+    domain's SPF record.  If the test does not arrive, install WP Mail SMTP (or
+    similar) and point it at Microsoft 365, or tell Anirudha and he will set it
+    up.  Do not skip this test - a contact form that silently fails is exactly
+    the problem this rebuild was meant to fix.
+
+3.  THE OLD URLS
+    The plugin redirects about sixty addresses from the old site.  Once the
+    site is reachable, request these three and confirm each one lands on a real
+    page rather than a 404:
+
+        /network-security/     should land on   /cybersecurity/
+        /about-us/             should land on   /about/
+        /our-clients/          should land on   /resources/case-studies/
+
+    These run in PHP, not in .htaccess, so they work the same on Apache, IIS,
+    nginx and LiteSpeed and there is no server config file to edit.
+
+4.  SEARCH ENGINE VISIBILITY
+    Settings -> Reading -> "Discourage search engines from indexing this site"
+    should be TICKED while the site is on staging, and UNTICKED when it goes
+    live.  This is the single most common way a new site launches invisible.
+
+
+GOING LIVE ON WWW.TRGNETWORKING.COM
+===================================
+
+Read this before changing any DNS.
+
+  ***  TRG's email runs on Microsoft 365.  The MX records for
+       trgnetworking.com point at trgnetworking-com.mail.protection.outlook.com.
+       If DNS is rebuilt from a host's default template during the move,
+       COMPANY EMAIL STOPS.  Not the website - the email.
+
+       Copy the existing MX, SPF, DKIM and any domain verification records
+       across before changing the A or CNAME record, and check them again
+       afterwards.  ***
+
+Suggested sequence:
+
+   1.  Install on staging.  Run TRG Setup.  Let TRG review every page.
+   2.  Test the contact form on staging and confirm the email arrives.
+   3.  A day ahead, lower the TTL on the current DNS records to 300 seconds.
+   4.  Move the site to the live host, leaving the old one running.
+   5.  Repoint DNS.  Confirm MX is untouched.
+   6.  Untick "Discourage search engines" under Settings -> Reading.
+   7.  Request the three old URLs listed above on the live domain.
+   8.  Send a real enquiry through the live form.
+   9.  Submit https://www.trgnetworking.com/sitemap.xml in Google Search
+       Console.
+  10.  Leave the old site's files in place for a fortnight.  It costs nothing
+       and it is the difference between a rollback and a rebuild.
+
+
+THINGS THAT ARE EASY TO GET WRONG
+=================================
+
+  -  Do not install an SEO plugin and then wonder why there are two sets of
+     meta tags.  The theme writes titles, descriptions, canonical URLs and
+     social preview tags itself, and it stands down automatically if Yoast,
+     Rank Math, All in One SEO or SEOPress is activated.  Either is fine.
+     Both at once is not a problem - but only because the theme steps aside.
+
+  -  Do not delete the plugin to "tidy up" after installing.  The redirects
+     and every stored enquiry live in it.
+
+  -  Do not edit files inside wp-content/themes/trg-networking/ directly.
+     Everything a normal edit needs is in the dashboard: text in Pages, phone
+     and address under Appearance -> Customize -> TRG company details, the
+     cards under Service cards and Industry cards, the menus under Appearance
+     -> Menus.  Direct file edits are lost when the theme is updated.
+
+  -  If a newer plugin version is supplied later, install it the same way.
+     Pages that already exist keep their current text.  There is a separate
+     button at the bottom of Tools -> TRG Setup to replace page text with the
+     newly shipped version - it warns you first, because it discards edits.
+
+
+IF SOMETHING IS WRONG
+=====================
+
+Send the details through Charles and they will reach me.  Useful things to
+include: the page address, what you expected, what happened, and whether it
+is on staging or live.  If WordPress showed an error message, the exact text
+of it.
+
+- Anirudha

@@ -1,8 +1,12 @@
 # TRG Networking — WordPress build
 
 The merged site as a WordPress theme and plugin: the Hostinger build's design
-language carrying the Lovable build's content, structure and URL structure.
-Twenty-five pages, all editable in the normal WordPress dashboard.
+language carrying the Lovable build's content, structure and URL structure,
+with the consolidated change request of 1 September applied throughout.
+Twenty-seven pages, all editable in the normal WordPress dashboard.
+
+> **Version 1.1.** What changed from 1.0, and the five things still waiting on
+> a decision from TRG, are listed in section 10 at the end of this document.
 
 Two files:
 
@@ -26,11 +30,24 @@ Three steps, all from the WordPress dashboard. No FTP required.
    Install → **Activate**.
 3. **Tools → TRG Setup** → click **Build the site**.
 
-Step 3 creates the twenty-five pages, the service, industry and testimonial
+Step 3 creates the twenty-seven pages, the service, industry and testimonial
 cards, and the header and footer menus, and sets the homepage.
 
 It is safe to run more than once. Anything that already exists is left exactly
 as it is, so a page you have edited will never be overwritten by a second click.
+
+### Updating to a newer version later
+
+If I send a newer plugin, install it the same way (Plugins → Add New → Upload)
+and WordPress replaces the old one. Pages that already exist keep whatever text
+they currently have, which is usually what you want.
+
+When you *do* want the revised wording applied to existing pages, there is a
+second button at the bottom of **Tools → TRG Setup**: *Replace page text with
+the shipped version*. It asks for confirmation first, because it discards any
+edits made in the page editor. Menus, cards, company details, enquiries and
+uploaded images are never touched, and WordPress keeps a revision of every page
+so a single page can be rolled back from its own editor afterwards.
 
 ### Do this on a staging site first
 
@@ -222,11 +239,14 @@ Stated plainly rather than left for you to discover.
   of their own. There was no copy for a full page on either source site, and
   writing it myself would have meant inventing claims about TRG.
 - **No blog posts have been migrated.** See section 4.
-- **The "163+ organizations served" figure** came from the Hostinger build.
-  Worth confirming it is current before it goes live on the real domain.
+- **There is no leadership section on the About page.** The change request asks
+  About to communicate leadership. I will not invent names, titles, biographies
+  or photographs of real people. Send me those and the section goes in.
 - **The photography is what the Hostinger builder generated.** It is generic
   stock-style imagery, not photographs of TRG's actual team or office. Real
   photos would be an improvement whenever you have them.
+- **Nothing on the site claims 99.9% uptime.** The change request rules that
+  claim out unless documented data supports it, and it has not been restored.
 
 ### One thing that was fixed
 
@@ -249,8 +269,8 @@ Every section available in a page. Attributes are plain text.
 |---|---|
 | `[trg_home_hero]` | The homepage hero: headline, buttons, badge pills, image with caption, floating cards, capability strip |
 | `[trg_hero]` | An inner-page hero: eyebrow, heading, lede, buttons |
-| `[trg_stats items="1992\|Serving clients since;163+\|Organizations served"]` | The dark figures band |
-| `[trg_partners items="Microsoft, Cisco, Dell"]` | The scrolling partner strip |
+| `[trg_stats items="34+\|Years of experience;200+\|Organizations served"]` | The dark figures band |
+| `[trg_partners title="…" items="Microsoft, Cisco, Dell"]` | The scrolling technology strip |
 | `[trg_cards]…[trg_card icon="shield" title="…"]body[/trg_card]…[/trg_cards]` | A card grid. `columns="2\|3\|4"`, `bg="white\|canvas"` |
 | `[trg_services]` | The service cards, from the Service cards menu |
 | `[trg_industries]` | The numbered industry rows, from the Industry cards menu |
@@ -258,9 +278,9 @@ Every section available in a page. Attributes are plain text.
 | `[trg_media_split]` | Image one side, heading, tick list and button the other. `reverse="1"` flips it |
 | `[trg_ai_panel]` | The dark numbered panel from the homepage |
 | `[trg_perspective title="…" body="…"]` | The dark quote band |
-| `[trg_cta_band]` | The closing blue call-to-action band |
+| `[trg_cta_band]` | The closing blue call-to-action band. `button2_text="…"` adds a second button |
 | `[trg_faq]…[trg_faq_item q="…"]answer[/trg_faq_item]…[/trg_faq]` | The questions accordion |
-| `[trg_process]…[trg_step n="1" title="…"]body[/trg_step]…[/trg_process]` | The numbered "what happens next" steps |
+| `[trg_process columns="4"]…[trg_step n="1" title="…"]body[/trg_step]…[/trg_process]` | The numbered "what happens next" steps. `columns="3"` or `"4"` |
 | `[trg_split_points]` | Heading one side, a grid of ticked points the other |
 | `[trg_pills items="Azure, Teams, Intune"]` | Small rounded labels |
 | `[trg_note title="…" button_text="…"]body[/trg_note]` | A bordered note panel |
@@ -281,7 +301,7 @@ from the Customizer, so a button can never disagree with the footer.
 Not "it looked fine" — this is what was actually run, against a clean WordPress
 installed from these two zip files:
 
-- All twenty-five pages loaded in a real browser: each has exactly one main
+- All twenty-seven pages loaded in a real browser: each has exactly one main
   heading, a real page title, real text, no broken images, no links that go
   nowhere, and no JavaScript errors.
 - No sideways scrolling at 320px or 390px wide — the two widths that catch a
@@ -292,5 +312,63 @@ installed from these two zip files:
   instead of showing a false confirmation, keeps what the visitor typed, and
   still files the enquiry.
 - The bot trap was submitted and confirmed to file nothing.
-- Forty-two old URLs requested for real and their destinations checked.
+- Forty-four old URLs requested for real and their destinations checked.
 - A missing URL returns a genuine 404, not a page pretending to be one.
+
+---
+
+## 10. Version 1.1 — the consolidated change request
+
+Everything in the change request of 1 September has been applied. The parts
+worth calling out:
+
+### Applied
+
+- **Homepage hero** — new headline, eyebrow kept, new body copy, "Talk with our
+  team" and "Free IT Assessment", four floating callouts, four trust badges with
+  "CMMC Readiness Experts". "Simpler IT. Stronger security. A team that
+  responds." is preserved as the heading of the band below the figures.
+- **Credibility band** — 34+ years, 200+ organizations, 7 solution areas,
+  24x7 monitoring. The 99.9% uptime claim has not been restored.
+- **Two new solution areas** — Network Infrastructure and Strategic IT / vCIO
+  now have real pages, cards and menu entries. Their copy is written from the
+  capability lists in the change request and nothing else.
+- **New homepage sections** — Why TRG, Microsoft, and CMMC, each as one of the
+  existing bands so the design language is unchanged.
+- **CMMC terminology** — every page now says "prepare for" rather than
+  "certify". The CMMC page states plainly that TRG is not a C3PAO, does not
+  award or guarantee certification, and explains the difference between a TRG
+  readiness assessment and a certification assessment.
+- **Contact form** — the dropdown is now the five conversion paths from the
+  change request, and the buttons deep-link to it, so "Free IT Assessment"
+  lands on a form that already says Request an IT Assessment.
+- **Conversion model** — the "what happens next" steps are now Consultation,
+  Assessment, Discovery, Customized Solution.
+- **Testimonials** — still only the two attributed quotes. Nothing invented,
+  nothing restored. See below.
+- **Design, layout, images, SEO and accessibility** are untouched. No band, CSS
+  file, image or template was redesigned; this release changes words, ordering
+  and two new pages.
+
+### Waiting on TRG
+
+1. **"7 Technology Solution Areas".** The change request asks for that figure in
+   the credibility band, and also lists nine solution areas in the section
+   directly below it — where nine cards now appear. As shipped the band says 7,
+   exactly as requested. Tell me which number is right and it is a one-word fix.
+2. **"200+ Organizations Served"**, "Microsoft Partner", "Women/Minority Owned"
+   and "24x7 Support" are on the page as requested but are on your own list of
+   claims to verify before production.
+3. **Technology partners.** Pending confirmation of the current relationships,
+   that band is headed "Technologies we work with every day" rather than
+   "partners and alliances" — a statement about TRG rather than a claim made on
+   another company's behalf. Send me the confirmed list and I will set it.
+4. **Testimonials.** The two on the site — Nick Pirovolidis of BSC America and
+   Todd Hirsch of Belt Built Contracting — were taken from TRG's own live site
+   at www.trgnetworking.com, where they are published today. If that is not
+   authorization enough, say so and I will remove them or drop the attributions.
+5. **Leadership on the About page.** Asked for, not written: I will not invent
+   people. Send names, titles and short biographies and it goes in.
+6. **Contact details.** Phone, email and street address are unchanged from the
+   previous build. Confirm them once and they update everywhere at the same
+   time — see section 2.
