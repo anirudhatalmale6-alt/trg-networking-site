@@ -6,6 +6,33 @@ same fonts, same blue, same spacing scale, same card treatment.
 
 ---
 
+## 0. First, how editing works now — please read
+
+Your brief asked for a note showing where to edit the new sections **inside the
+Hostinger dashboard**. I need to be straight with you about that.
+
+This is not a Hostinger Horizons site any more, and it cannot be. Horizons is an
+AI website builder: you describe a change in its chat and it regenerates the
+site. There is no way to take a second site built somewhere else, merge it in,
+and have the result still be editable that way — Horizons did not author this
+code, so its editor cannot manage it.
+
+What you have instead is a normal, self-contained website that runs on any
+standard hosting, including Hostinger's ordinary web hosting. That brings real
+advantages: it is yours outright, no builder subscription controls it, it loads
+faster, and it is not locked to one platform ever again.
+
+The trade is that content changes happen in **two plain text files** rather than
+a chat box. Section 1 below is the map. Anyone comfortable editing a document
+can make most changes — they are lists of text, not layout code — and I am happy
+to make them for you either way.
+
+If keeping the Horizons AI editor really matters more than merging the two
+sites, tell me now, because that is a different project and I would rather say so
+than let you find out later.
+
+---
+
 ## 1. Where to edit things
 
 Almost everything you will want to change lives in **two files**. You do not
