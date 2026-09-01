@@ -30,21 +30,21 @@ export const addressLine = `${company.address.street}, ${company.address.city}, 
 // ---------------------------------------------------------------------------
 
 export const servicesNav = [
-  { label: 'Managed IT Services',      to: '/managed-it' },
-  { label: 'Help Desk & IT Support',   to: '/help-desk' },
+  { label: 'Managed IT Services',      to: '/managed-it-services' },
+  { label: 'Help Desk & IT Support',   to: '/help-desk-it-support' },
   { label: 'Cybersecurity',            to: '/cybersecurity' },
-  { label: 'Microsoft 365 & Cloud',    to: '/microsoft-cloud' },
+  { label: 'Microsoft 365 & Cloud',    to: '/microsoft-365-cloud' },
   { label: 'Azure Cloud',              to: '/azure' },
-  { label: 'Secure AI Adoption',       to: '/ai-services' },
-  { label: 'CMMC Readiness',           to: '/cmmc' },
-  { label: 'Backup & Business Continuity', to: '/business-continuity' },
+  { label: 'Secure AI Adoption',       to: '/secure-ai-adoption' },
+  { label: 'CMMC Readiness',           to: '/cmmc-readiness' },
+  { label: 'Backup & Business Continuity', to: '/backup-business-continuity' },
 ]
 
 export const industriesNav = [
-  { label: 'Construction & Contractors', to: '/industries/construction' },
-  { label: 'Manufacturing',              to: '/industries/manufacturing' },
-  { label: 'Government Contractors',     to: '/industries/government-contractors' },
-  { label: 'Professional Services',      to: '/industries/professional-services' },
+  { label: 'Construction & Contractors', to: '/construction' },
+  { label: 'Manufacturing',              to: '/manufacturing' },
+  { label: 'Government Contractors',     to: '/government-contractors' },
+  { label: 'Professional Services',      to: '/professional-services' },
   { label: 'Healthcare',                 to: '/industries#healthcare' },
   { label: 'Nonprofits',                 to: '/industries#nonprofits' },
 ]
@@ -115,11 +115,11 @@ export const outcomes = [
   },
 ]
 
-// Service cards — Lovable's copy, Hostinger's slugs, plus the three services
-// that only existed on the Hostinger build (Azure, vCIO, Network).
+// Service cards — Lovable's copy and Lovable's URL structure, plus the services
+// that only existed on the Hostinger build (Azure Cloud).
 export const services = [
   {
-    to: '/managed-it',
+    to: '/managed-it-services',
     title: 'Managed IT Services',
     body: 'Proactive care, responsive support and a clear technology plan — without the cost of building an internal IT department.',
     icon: 'server',
@@ -131,31 +131,31 @@ export const services = [
     icon: 'shield',
   },
   {
-    to: '/microsoft-cloud',
+    to: '/microsoft-365-cloud',
     title: 'Microsoft 365 & Cloud',
     body: 'Licensing, security, migrations and everyday support that help your organization get more from Microsoft 365.',
     icon: 'cloud',
   },
   {
-    to: '/ai-services',
+    to: '/secure-ai-adoption',
     title: 'Secure AI Adoption',
     body: 'Policies, training and practical use cases that help your team save time with AI while protecting company information.',
     icon: 'sparkles',
   },
   {
-    to: '/business-continuity',
+    to: '/backup-business-continuity',
     title: 'Backup & Business Continuity',
     body: 'Verified backups and recovery planning designed to keep a disruption from becoming a business-ending event.',
     icon: 'database',
   },
   {
-    to: '/cmmc',
+    to: '/cmmc-readiness',
     title: 'CMMC Readiness',
     body: 'Technology and security guidance for government contractors working toward a stronger, audit-ready environment.',
     icon: 'badge',
   },
   {
-    to: '/help-desk',
+    to: '/help-desk-it-support',
     title: 'Help Desk & IT Support',
     body: 'Friendly, responsive support that treats people with respect and keeps issues moving toward resolution.',
     icon: 'headset',
@@ -173,28 +173,28 @@ export const services = [
 export const industries = [
   {
     n: '01',
-    to: '/industries/construction',
+    to: '/construction',
     title: 'Construction & Contractors',
     body: 'Keep field teams, offices and projects connected without technology slowing the work.',
     tags: 'Field connectivity, BEC protection',
   },
   {
     n: '02',
-    to: '/industries/manufacturing',
+    to: '/manufacturing',
     title: 'Manufacturing',
     body: 'Protect production, reduce disruption and build a technology foundation that supports growth.',
     tags: 'OT security, ERP, production uptime',
   },
   {
     n: '03',
-    to: '/industries/government-contractors',
+    to: '/government-contractors',
     title: 'Government Contractors',
     body: 'Strengthen security practices and move toward CMMC readiness with experienced guidance.',
     tags: 'CMMC, NIST 800-171, CUI protection',
   },
   {
     n: '04',
-    to: '/industries/professional-services',
+    to: '/professional-services',
     title: 'Professional Services',
     body: 'Give your people secure, reliable tools to serve clients from the office or anywhere else.',
     tags: 'Law firms, CPAs, consultancies',

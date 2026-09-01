@@ -12,9 +12,9 @@ const CTA = {
 
 export const detailPages = {
   // -------------------------------------------------------------- services
-  'managed-it': {
+  'managed-it-services': {
     kind: 'service',
-    slug: '/managed-it',
+    slug: '/managed-it-services',
     eyebrow: 'Managed IT Services',
     title: 'Reliable technology without the daily worry.',
     lede: 'TRG manages, maintains and improves your technology so your people can stay focused on the work they were hired to do.',
@@ -44,9 +44,9 @@ export const detailPages = {
     cta: CTA,
   },
 
-  'help-desk': {
+  'help-desk-it-support': {
     kind: 'service',
-    slug: '/help-desk',
+    slug: '/help-desk-it-support',
     eyebrow: 'Help Desk & IT Support',
     title: 'When your team needs help, they should feel helped.',
     lede: 'Friendly, responsive support that treats people with respect and keeps technology issues moving toward resolution.',
@@ -101,9 +101,9 @@ export const detailPages = {
     cta: CTA,
   },
 
-  'microsoft-cloud': {
+  'microsoft-365-cloud': {
     kind: 'service',
-    slug: '/microsoft-cloud',
+    slug: '/microsoft-365-cloud',
     eyebrow: 'Microsoft 365 & Cloud',
     title: 'Get more value — and stronger security — from Microsoft 365.',
     lede: 'Licensing, configuration, security, collaboration and support designed around how your organization works.',
@@ -157,9 +157,9 @@ export const detailPages = {
     cta: CTA,
   },
 
-  'ai-services': {
+  'secure-ai-adoption': {
     kind: 'service',
-    slug: '/ai-services',
+    slug: '/secure-ai-adoption',
     eyebrow: 'Secure AI Adoption',
     title: 'Put AI to work — without putting company information at risk.',
     lede: 'Practical guidance, policies and training for organizations ready to use AI responsibly and productively.',
@@ -189,9 +189,9 @@ export const detailPages = {
     cta: CTA,
   },
 
-  cmmc: {
+  'cmmc-readiness': {
     kind: 'service',
-    slug: '/cmmc',
+    slug: '/cmmc-readiness',
     eyebrow: 'CMMC Readiness',
     title: 'Build a stronger foundation for protecting CUI.',
     lede: 'Technology and security guidance for government contractors preparing for CMMC requirements and assessment.',
@@ -216,9 +216,9 @@ export const detailPages = {
     cta: CTA,
   },
 
-  'business-continuity': {
+  'backup-business-continuity': {
     kind: 'service',
-    slug: '/business-continuity',
+    slug: '/backup-business-continuity',
     eyebrow: 'Backup & Business Continuity',
     title: 'Recovery should be a plan — not a hope.',
     lede: 'Protect critical systems and prepare your organization to continue operating when technology is disrupted.',
@@ -244,7 +244,7 @@ export const detailPages = {
   // ------------------------------------------------------------ industries
   construction: {
     kind: 'industry',
-    slug: '/industries/construction',
+    slug: '/construction',
     eyebrow: 'IT for Construction & Contractors',
     title: 'Keep projects moving from the office to the job site.',
     lede: 'Responsive support, secure access and dependable technology for construction companies and specialty contractors.',
@@ -269,7 +269,7 @@ export const detailPages = {
 
   manufacturing: {
     kind: 'industry',
-    slug: '/industries/manufacturing',
+    slug: '/manufacturing',
     eyebrow: 'IT for Manufacturing',
     title: 'Protect production. Reduce disruption. Plan for growth.',
     lede: 'Technology management and cybersecurity for manufacturers that depend on reliable systems and coordinated vendors.',
@@ -294,7 +294,7 @@ export const detailPages = {
 
   'government-contractors': {
     kind: 'industry',
-    slug: '/industries/government-contractors',
+    slug: '/government-contractors',
     eyebrow: 'IT for Government Contractors',
     title: 'Secure technology for demanding contract requirements.',
     lede: 'Managed IT, Microsoft government cloud and CMMC readiness support for organizations protecting federal contract information.',
@@ -319,7 +319,7 @@ export const detailPages = {
 
   'professional-services': {
     kind: 'industry',
-    slug: '/industries/professional-services',
+    slug: '/professional-services',
     eyebrow: 'IT for Professional Services',
     title: 'Secure, responsive technology for people whose time matters.',
     lede: 'Dependable support and protected collaboration for firms built around expertise, relationships and client trust.',
@@ -343,17 +343,19 @@ export const detailPages = {
   },
 }
 
-// Old Lovable URLs -> the merged site's canonical URLs. Used by the router so
-// any link the manager shared, or anything already indexed, still lands.
+// The merged site uses the Lovable URL structure, which the client asked for and
+// which already matches the live WordPress site on one page (/managed-it-services/).
+// These are the interim Hostinger-build slugs, kept so nothing shared during the
+// build phase 404s.
 export const legacyRedirects = {
-  '/managed-it-services':        '/managed-it',
-  '/help-desk-it-support':       '/help-desk',
-  '/microsoft-365-cloud':        '/microsoft-cloud',
-  '/secure-ai-adoption':         '/ai-services',
-  '/cmmc-readiness':             '/cmmc',
-  '/backup-business-continuity': '/business-continuity',
-  '/construction':               '/industries/construction',
-  '/manufacturing':              '/industries/manufacturing',
-  '/government-contractors':     '/industries/government-contractors',
-  '/professional-services':      '/industries/professional-services',
+  '/managed-it':                        '/managed-it-services',
+  '/help-desk':                         '/help-desk-it-support',
+  '/microsoft-cloud':                   '/microsoft-365-cloud',
+  '/ai-services':                       '/secure-ai-adoption',
+  '/cmmc':                              '/cmmc-readiness',
+  '/business-continuity':               '/backup-business-continuity',
+  '/industries/construction':           '/construction',
+  '/industries/manufacturing':          '/manufacturing',
+  '/industries/government-contractors': '/government-contractors',
+  '/industries/professional-services':  '/professional-services',
 }

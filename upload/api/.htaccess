@@ -1,0 +1,15 @@
+# The enquiry backup file contains names, emails and phone numbers.
+# Nothing in this directory except the handler itself may be fetched.
+<FilesMatch "\.(csv|log|json|txt|bak)$">
+    Require all denied
+</FilesMatch>
+
+# Older Apache (2.2) equivalent, harmless on 2.4.
+<IfModule !mod_authz_core.c>
+    <FilesMatch "\.(csv|log|json|txt|bak)$">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</IfModule>
+
+Options -Indexes

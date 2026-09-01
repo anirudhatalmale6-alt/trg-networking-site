@@ -30,13 +30,13 @@ menu, the footer, every call-to-action band and every service page at once.
 
 ### `src/data/detailPages.js` — the twelve service and industry pages
 
-Each page is one object. To edit the CMMC page, find `cmmc:` and change
+Each page is one object. To edit the CMMC page, find `'cmmc-readiness':` and change
 `title`, `lede`, `features`, `perspective` or `faq`. To add a whole new
 service page:
 
 1. Add an entry to `detailPages` (copy an existing one as a template).
-2. Add the slug to `SERVICE_SLUGS` in `src/App.jsx`.
-3. Add it to `servicesNav` in `src/data/site.js` so it appears in the menu.
+2. Add it to `servicesNav` in `src/data/site.js` so it appears in the menu.
+3. Add the slug to `DETAIL_SLUGS` in `src/App.jsx`.
 4. Add the route to `ROUTES` in `scripts/prerender.mjs`.
 
 All twelve pages share one template (`src/pages/DetailPage.jsx`), which is why
@@ -172,9 +172,9 @@ After going live, send one test enquiry and confirm it arrives.
   0 words to over 1,000 in the served source. Added `sitemap.xml`, `robots.txt`,
   per-page titles, descriptions, canonicals, Open Graph tags and
   ProfessionalService structured data.
-- **Old URLs.** The two builds used different slugs for the same page. All 10
-  Lovable URLs 301-redirect to their merged equivalent, so nothing already
-  shared or indexed breaks.
+- **URL structure.** The site uses the **Lovable** structure, as requested —
+  service and industry pages sit at the root (`/managed-it-services`,
+  `/construction`). The interim Hostinger slugs 301-redirect to them.
 - **Images.** 10 MB of PNGs converted to WebP — now 572 KB total, same quality.
 - **Accessibility.** Skip link, visible focus rings, one `<h1>` per page,
   labelled form fields, alt text, reduced-motion support. The Lovable build
@@ -202,3 +202,79 @@ is still current.
   that go nowhere. Send me the PDFs and they become real downloads.
 - **Case studies** are quotes plus an honest note that write-ups are in
   progress, rather than invented client stories.
+
+
+---
+
+## 6. Going live on www.trgnetworking.com
+
+`www.trgnetworking.com` is **not** either of the builds we merged. It is a live
+WordPress site (theme `designn`, WPBakery Page Builder, Gravity Forms) on
+third-party hosting — `www` is a CNAME to `host.axionthemes.com`. There is also
+a WAF in front of it that blocks unfamiliar crawlers with a 403.
+
+That makes this a site *replacement*, not a first launch. Four things matter.
+
+### a. Email will break if the DNS cutover is careless
+`trgnetworking.com` MX records point at **Microsoft 365**
+(`trgnetworking-com.mail.protection.outlook.com`). If the domain is moved to
+new hosting and the DNS is rebuilt from a default template, those MX records
+are lost and **company email stops**. Whoever performs the cutover must copy
+MX, SPF, DKIM and any Microsoft verification records across *before* switching.
+
+Nameservers are `ns1/ns2/ns3.trgnetworking.com` — vanity nameservers. Find out
+who controls them before scheduling anything.
+
+### b. 60 URLs are already indexed
+The live sitemap lists 60 URLs: 25 pages and 35 blog posts from 2023–2024.
+Neither the Hostinger nor the Lovable build contains any of them. Cutting over
+without a redirect map would 404 all 60 and throw away the site's search
+history.
+
+`.htaccess` already contains the full map. Every live URL resolves:
+
+| Old WordPress URL | New page |
+|---|---|
+| `/managed-it-services/` | *same path* — ranking carries over directly |
+| `/network-security/` | `/cybersecurity` |
+| `/cloud-computing/` | `/microsoft-365-cloud` |
+| `/data-backup-and-recovery/` | `/backup-business-continuity` |
+| `/about-us/` | `/about` |
+| `/about-us/contact-us/` | `/contact` |
+| `/why-choose-us/` | `/why-trg` |
+| `/our-clients/`, `/testimonial/*` | `/resources/case-studies` |
+| `/free-network-assessment/` | `/contact?type=assessment` |
+| `/initial-consultation/`, `/discoverycall/` | `/contact` |
+| `/itbuyersguide/` | `/resources/guides` |
+| 35 blog posts under `/YYYY/MM/DD/` | `/resources` *(interim — see below)* |
+
+I simulated every rule against all 60 live URLs plus all 24 new routes: no
+canonical URL redirects, no loops, nothing 404s. The rules have **not** been
+executed against a real Apache yet — I will confirm that on the server during
+cutover.
+
+### c. The blog needs a decision
+35 posts currently point at `/resources` as a holding position. That is honest
+but it loses their individual rankings. Three options:
+
+1. **Migrate them.** Bring the posts across as real pages. Most work, keeps the
+   most SEO value.
+2. **Keep the best.** Migrate the 5–10 that actually earn traffic (pull the list
+   from Google Search Console), redirect the rest.
+3. **Leave as is.** Everything lands on Resources. Least work, least value.
+
+Option 2 is usually the right trade. I need Search Console access, or an export,
+to pick the list.
+
+### d. `/support-center/` must keep working
+It is a live client portal and it is deliberately **not** redirected. Either
+leave it on the current host or confirm where it moves to before cutover.
+
+### Suggested sequence for a zero-downtime switch
+1. Publish this build to a staging URL on the target host and check it.
+2. Take a full backup of the WordPress site and its database.
+3. Confirm MX/SPF/DKIM are recorded somewhere safe.
+4. Lower the DNS TTL to 300 seconds, 24 hours ahead.
+5. Cut over. Verify the redirect table with real requests.
+6. Submit the new `sitemap.xml` in Google Search Console.
+7. Keep the WordPress backup for at least 30 days.

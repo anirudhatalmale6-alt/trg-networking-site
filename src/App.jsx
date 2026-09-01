@@ -26,12 +26,11 @@ function ScrollToTop() {
   return null
 }
 
-const SERVICE_SLUGS = [
-  'managed-it', 'help-desk', 'cybersecurity', 'microsoft-cloud',
-  'azure', 'ai-services', 'cmmc', 'business-continuity',
-]
-
-const INDUSTRY_SLUGS = [
+// Lovable's URL structure: service pages and industry pages both sit at the root.
+const DETAIL_SLUGS = [
+  'managed-it-services', 'help-desk-it-support', 'cybersecurity',
+  'microsoft-365-cloud', 'azure', 'secure-ai-adoption', 'cmmc-readiness',
+  'backup-business-continuity',
   'construction', 'manufacturing', 'government-contractors', 'professional-services',
 ]
 
@@ -54,14 +53,11 @@ export default function App() {
           <Route path="/resources/case-studies" element={<CaseStudies />} />
           <Route path="/resources/guides"       element={<Guides />} />
 
-          {SERVICE_SLUGS.map((s) => (
+          {DETAIL_SLUGS.map((s) => (
             <Route key={s} path={`/${s}`} element={<DetailPage slug={s} />} />
           ))}
-          {INDUSTRY_SLUGS.map((s) => (
-            <Route key={s} path={`/industries/${s}`} element={<DetailPage slug={s} />} />
-          ))}
 
-          {/* Old Lovable URLs. The .htaccess issues a real 301 for these on a
+          {/* Interim Hostinger-build slugs. The .htaccess issues a real 301 on a
               direct hit; this handles in-app navigation to the same paths. */}
           {Object.entries(legacyRedirects).map(([from, to]) => (
             <Route key={from} path={from} element={<Navigate to={to} replace />} />

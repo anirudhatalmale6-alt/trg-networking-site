@@ -21,10 +21,11 @@ const ROUTES = [
   '/',
   '/services', '/industries', '/why-trg', '/about', '/contact',
   '/resources', '/resources/case-studies', '/resources/guides',
-  '/managed-it', '/help-desk', '/cybersecurity', '/microsoft-cloud',
-  '/azure', '/ai-services', '/cmmc', '/business-continuity',
-  '/industries/construction', '/industries/manufacturing',
-  '/industries/government-contractors', '/industries/professional-services',
+  '/managed-it-services', '/help-desk-it-support', '/cybersecurity',
+  '/microsoft-365-cloud', '/azure', '/secure-ai-adoption', '/cmmc-readiness',
+  '/backup-business-continuity',
+  '/construction', '/manufacturing', '/government-contractors',
+  '/professional-services',
   '/privacy', '/terms', '/accessibility',
 ]
 
