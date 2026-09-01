@@ -43,10 +43,14 @@ export default function Footer() {
       <div className="shell">
         <div className="grid gap-10 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1.3fr]">
           <div>
+            {/* A white knock-out of the real wordmark.
+                The image the Hostinger build used here, logo-footer.webp, was
+                not a logo at all — it was a watermarked stock photo, so the
+                footer showed a photo of strangers where the logo belongs. */}
             <img
-              src="/img/logo-footer.webp"
+              src="/img/logo-white.webp"
               alt="TRG Networking"
-              width="600" height="264"
+              width="507" height="174"
               className="mb-5 h-11 w-auto"
             />
             <p className="max-w-xs text-[14px] leading-relaxed text-white/65">

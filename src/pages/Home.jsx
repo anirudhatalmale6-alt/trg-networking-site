@@ -283,7 +283,7 @@ export default function Home() {
                 </li>
               ))}
             </ul>
-            <Link to="/help-desk" className="btn-primary mt-8">
+            <Link to="/help-desk-it-support" className="btn-primary mt-8">
               Meet your responsive IT team <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
@@ -342,7 +342,7 @@ export default function Home() {
             <div className="mt-7">
               <Pills items={aiTags} />
             </div>
-            <Link to="/ai-services" className="btn-primary mt-8">
+            <Link to="/secure-ai-adoption" className="btn-primary mt-8">
               Explore secure AI services <ArrowRight size={16} aria-hidden="true" />
             </Link>
           </div>
