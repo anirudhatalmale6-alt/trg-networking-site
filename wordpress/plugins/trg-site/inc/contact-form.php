@@ -335,8 +335,7 @@ function trg_handle_contact() {
 		),
 	), true );
 
-	$to      = trg_site_company( 'email' );
-	$to      = is_email( $to ) ? $to : get_option( 'admin_email' );
+	$to      = trg_enquiry_recipient();
 	$subject = sprintf(
 		/* translators: 1: service area, 2: sender name. */
 		__( 'Website enquiry: %1$s — %2$s', 'trg-site' ),
