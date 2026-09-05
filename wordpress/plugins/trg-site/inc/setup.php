@@ -242,7 +242,8 @@ function trg_home_content() {
 			. 'button2_text="Explore our services ↓" button2_link="#services" button2_style="text" '
 			. 'image="hero-team" image_alt="A business team collaborating with an IT consultant" '
 			. 'caption_eyebrow="The TRG difference" caption="Technology that feels more human." '
-			. 'cards="Responsive support|Real people. Clear ownership.;Security first|Protection built in." '
+			. 'cards="Responsive support|Real people. Clear ownership.;24×7 Monitoring|Always-on protection.;'
+			. 'CMMC Ready|DoD contractor experts.;Security first|Protection built in." cards_accent="4" '
 			. 'strip="Managed IT|Cybersecurity|Microsoft 365|Azure Cloud|CMMC|Secure AI"]',
 
 		'[trg_cards bg="canvas" columns="4" eyebrow="Technology should move your business forward" title="Less disruption. More confidence." body="TRG makes technology easier to manage, easier to understand and better aligned with the way your organization actually works."]' . "\n"
