@@ -46,10 +46,25 @@ export default {
       keyframes: {
         marquee: { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
         fadeUp:  { '0%': { opacity: 0, transform: 'translateY(16px)' }, '100%': { opacity: 1, transform: 'none' } },
+        // The two cards floating over the hero image. glideDown brings them in
+        // from above on load; drift keeps them moving gently afterwards.
+        //
+        // driftAlt is the same path half a cycle out of phase, so the two cards
+        // never move in lockstep. Deliberately mirrored keyframes rather than a
+        // negative animation-delay on `drift`: a negative delay makes the second
+        // animation live from frame one, and because it is declared after
+        // glideDown it would win the transform and swallow the entrance.
+        glideDown: { '0%': { opacity: 0, transform: 'translateY(-30px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
+        drift:     { '0%,100%': { transform: 'translateY(-10px)' }, '50%': { transform: 'translateY(10px)' } },
+        driftAlt:  { '0%,100%': { transform: 'translateY(10px)' }, '50%': { transform: 'translateY(-10px)' } },
       },
       animation: {
         marquee: 'marquee 32s linear infinite',
         fadeUp:  'fadeUp .5s ease-out both',
+        // The drift delay matches the end of the glide, so the card is never
+        // being pulled by both at once.
+        glide:    'glideDown .7s ease-out both, drift 7s ease-in-out .7s infinite',
+        glideAlt: 'glideDown .7s ease-out .15s both, driftAlt 7s ease-in-out .85s infinite',
       },
     },
   },
