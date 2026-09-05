@@ -65,6 +65,38 @@ function trg_image_url( $value ) {
 }
 
 /**
+ * The credit line for an image, or '' when it needs none.
+ *
+ * Read from the attachment's Caption field, so it lives with the picture rather
+ * than with the page. Most photographs need no credit at all; some free-to-use
+ * licences (CC BY and similar) require the photographer to be named wherever the
+ * picture appears. Putting the text in the Caption means that requirement
+ * travels with the file, and vanishes the moment the picture is replaced.
+ *
+ * @param string $value The same image reference passed to trg_image_url().
+ * @return string
+ */
+function trg_image_credit( $value ) {
+	$value = trim( (string) $value );
+	if ( '' === $value || preg_match( '#^https?://#i', $value ) || 0 === strpos( $value, '/' ) ) {
+		return '';
+	}
+
+	$id = 0;
+	if ( ctype_digit( $value ) ) {
+		$id = (int) $value;
+	} elseif ( function_exists( 'trg_picture_override_id' ) ) {
+		$id = trg_picture_override_id( preg_replace( '/\.(webp|jpe?g|png|avif|gif|svg)$/i', '', $value ) );
+	}
+
+	if ( ! $id ) {
+		return '';
+	}
+	$attachment = get_post( $id );
+	return $attachment ? trim( (string) $attachment->post_excerpt ) : '';
+}
+
+/**
  * Resolve a link attribute: a page slug, a full URL, or empty.
  *
  * @param string $value Link reference.
@@ -390,11 +422,15 @@ function trg_sc_hero( $atts ) {
 					<?php echo trg_hero_buttons( $atts ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 				</div>
 				<?php if ( $image ) : ?>
+					<?php $credit = trg_image_credit( $atts['image'] ); ?>
 					<div class="min-w-0">
 						<img src="<?php echo esc_url( $image ); ?>"
 							alt="<?php echo esc_attr( $atts['image_alt'] ); ?>"
 							width="1400" height="800" fetchpriority="high"
 							class="aspect-[16/10] w-full rounded-2xl object-cover shadow-[0_30px_70px_-30px_rgba(1,40,84,0.45)]">
+						<?php if ( $credit ) : ?>
+							<p class="mt-2 text-[12px] leading-snug text-soft"><?php echo esc_html( $credit ); ?></p>
+						<?php endif; ?>
 					</div>
 				<?php endif; ?>
 			</div>
