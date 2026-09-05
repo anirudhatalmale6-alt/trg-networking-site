@@ -55,16 +55,27 @@ export default {
         // animation live from frame one, and because it is declared after
         // glideDown it would win the transform and swallow the entrance.
         glideDown: { '0%': { opacity: 0, transform: 'translateY(-30px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } },
-        drift:     { '0%,100%': { transform: 'translateY(-10px)' }, '50%': { transform: 'translateY(10px)' } },
-        driftAlt:  { '0%,100%': { transform: 'translateY(10px)' }, '50%': { transform: 'translateY(-10px)' } },
+        // 7px, not 10. Only the four hero cards use these, and on a 16/10 image
+        // with the caption band across the bottom there is not enough clear
+        // height for a bigger swing: at 10px the lowest card crossed the caption
+        // once per cycle. Raising the amplitude means re-measuring the gaps.
+        drift:     { '0%,100%': { transform: 'translateY(-7px)' }, '50%': { transform: 'translateY(7px)' } },
+        driftAlt:  { '0%,100%': { transform: 'translateY(7px)' }, '50%': { transform: 'translateY(-7px)' } },
       },
       animation: {
         marquee: 'marquee 32s linear infinite',
         fadeUp:  'fadeUp .5s ease-out both',
         // The drift delay matches the end of the glide, so the card is never
         // being pulled by both at once.
-        glide:    'glideDown .7s ease-out both, drift 7s ease-in-out .7s infinite',
-        glideAlt: 'glideDown .7s ease-out .15s both, driftAlt 7s ease-in-out .85s infinite',
+        //
+        // Four variants for the four hero cards: two directions x two cycle
+        // lengths. With only two variants the four cards fall into two pairs
+        // moving in lockstep, which reads as one block hinging rather than four
+        // things floating. 7s against 9s never comes back into phase.
+        glide:        'glideDown .7s ease-out both,       drift    7s ease-in-out .7s  infinite',
+        glideAlt:     'glideDown .7s ease-out .15s both,  driftAlt 7s ease-in-out .85s infinite',
+        glideSlow:    'glideDown .7s ease-out .3s both,   drift    9s ease-in-out 1s   infinite',
+        glideSlowAlt: 'glideDown .7s ease-out .45s both,  driftAlt 9s ease-in-out 1.15s infinite',
       },
     },
   },
