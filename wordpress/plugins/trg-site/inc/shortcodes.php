@@ -271,10 +271,18 @@ function trg_sc_home_hero( $atts ) {
 					 * edge of the screen and pushed the page sideways. Anything
 					 * beyond the first two cards stays in the stack at all widths
 					 * rather than being dropped silently.
+					 *
+					 * The glide is on the `lg:` variant for the same reason the
+					 * float is: below that the cards are ordinary items in a
+					 * stack, and drifting them up and down would push them into
+					 * their neighbours. `glideAlt` runs the drift half a cycle
+					 * behind `glide` so the two cards are never level with each
+					 * other. Both are switched off automatically by the
+					 * prefers-reduced-motion block in the stylesheet.
 					 */
 					$float_class = array(
-						0 => 'lg:absolute lg:left-[-2.5rem] lg:top-16 lg:z-10 lg:w-64',
-						1 => 'lg:absolute lg:bottom-24 lg:right-[-2.5rem] lg:z-10 lg:w-64',
+						0 => 'lg:absolute lg:left-[-2.5rem] lg:top-16 lg:z-10 lg:w-64 lg:animate-glide',
+						1 => 'lg:absolute lg:bottom-24 lg:right-[-2.5rem] lg:z-10 lg:w-64 lg:animate-glideAlt',
 					);
 					?>
 					<ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:mt-0 lg:block">
