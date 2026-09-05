@@ -170,6 +170,7 @@ function trg_sc_home_hero( $atts ) {
 		'caption_eyebrow' => '',
 		'caption'        => '',
 		'cards'          => '',
+		'cards_accent'   => '',
 		'strip'          => '',
 	), $atts, 'trg_home_hero' );
 
@@ -260,42 +261,60 @@ function trg_sc_home_hero( $atts ) {
 				<?php if ( $cards ) : ?>
 					<?php
 					/*
-					 * Two positions, and only two: card 1 floats over the top-left
-					 * of the image, card 2 over the bottom-right, which is the
-					 * arrangement test2 uses.
+					 * Four positions, matching the mockup the client sent: two down
+					 * the left of the image, two down the right, the fourth one
+					 * filled in brand blue rather than white.
+					 *
+					 * The vertical placement dodges the caption. The image carries
+					 * a dark gradient and the "Technology that feels more human."
+					 * line across its bottom two fifths, so the two lower cards
+					 * have to clear it. That is why card 3 is pinned at 46% rather
+					 * than being spaced evenly against card 1.
+					 *
+					 * The clearance is measured against the BOTTOM of each card's
+					 * drift, not against where it sits at rest. Four rem higher up
+					 * and six points further into the image, the two lower cards
+					 * cleared the caption in a still screenshot and then crossed
+					 * it by 3px once per cycle. Sample the gap over a full cycle
+					 * before moving either of them.
 					 *
 					 * The floating is switched on at `lg:` ONLY. Below that the
 					 * cards fall back to a normal stack underneath the image.
 					 * The Lovable build positioned these against the viewport at
 					 * every width, so on a phone the right-hand card hung off the
 					 * edge of the screen and pushed the page sideways. Anything
-					 * beyond the first two cards stays in the stack at all widths
+					 * beyond the first four cards stays in the stack at all widths
 					 * rather than being dropped silently.
 					 *
 					 * The glide is on the `lg:` variant for the same reason the
 					 * float is: below that the cards are ordinary items in a
 					 * stack, and drifting them up and down would push them into
-					 * their neighbours. `glideAlt` runs the drift half a cycle
-					 * behind `glide` so the two cards are never level with each
-					 * other. Both are switched off automatically by the
-					 * prefers-reduced-motion block in the stylesheet.
+					 * their neighbours. The four are given two different drift
+					 * directions AND two different cycle lengths (7s and 9s), so
+					 * they drift out of step with each other instead of rising and
+					 * falling as one block. All four are switched off automatically
+					 * by the prefers-reduced-motion block in the stylesheet.
 					 */
 					$float_class = array(
-						0 => 'lg:absolute lg:left-[-2.5rem] lg:top-16 lg:z-10 lg:w-64 lg:animate-glide',
-						1 => 'lg:absolute lg:bottom-24 lg:right-[-2.5rem] lg:z-10 lg:w-64 lg:animate-glideAlt',
+						0 => 'lg:absolute lg:left-[-2.5rem] lg:top-6 lg:z-10 lg:w-64 lg:animate-glide',
+						1 => 'lg:absolute lg:right-[-2rem] lg:top-16 lg:z-10 lg:w-56 lg:animate-glideSlowAlt',
+						2 => 'lg:absolute lg:left-[-2.5rem] lg:top-[42%] lg:z-10 lg:w-56 lg:animate-glideAlt',
+						3 => 'lg:absolute lg:right-[-2rem] lg:top-[48%] lg:z-10 lg:w-56 lg:animate-glideSlow',
 					);
+
+					// 1-based in the shortcode because it is written by hand in the
+					// page content; "the 4th card" is what a person counts.
+					$accent = (int) $atts['cards_accent'] - 1;
 					?>
 					<ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:mt-0 lg:block">
 						<?php foreach ( $cards as $i => $card ) : ?>
-							<?php $parts = array_pad( trg_split_list( $card, '|' ), 2, '' ); ?>
-							<li class="flex items-start gap-3 rounded-xl border border-line bg-white p-3.5 shadow-sm <?php echo esc_attr( $float_class[ $i ] ?? 'lg:mt-3' ); ?>">
-								<span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-brand-50 text-brand-600" aria-hidden="true">
-									<?php echo trg_site_icon( 'check', 15 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-								</span>
-								<span class="min-w-0">
-									<span class="block font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-brand-600"><?php echo esc_html( $parts[0] ); ?></span>
-									<span class="block text-[14px] font-semibold text-ink"><?php echo esc_html( $parts[1] ); ?></span>
-								</span>
+							<?php
+							$parts    = array_pad( trg_split_list( $card, '|' ), 2, '' );
+							$is_accent = ( $i === $accent );
+							?>
+							<li class="rounded-2xl px-4 py-3 shadow-lg <?php echo $is_accent ? 'bg-brand-600' : 'border border-line bg-white'; ?> <?php echo esc_attr( $float_class[ $i ] ?? 'lg:mt-3' ); ?>">
+								<span class="block font-heading text-[14px] font-bold leading-snug <?php echo $is_accent ? 'text-white' : 'text-ink'; ?>"><?php echo esc_html( $parts[0] ); ?></span>
+								<span class="block text-[13px] leading-snug <?php echo $is_accent ? 'text-brand-100' : 'text-muted'; ?>"><?php echo esc_html( $parts[1] ); ?></span>
 							</li>
 						<?php endforeach; ?>
 					</ul>
