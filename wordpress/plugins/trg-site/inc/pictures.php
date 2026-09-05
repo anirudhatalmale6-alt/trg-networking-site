@@ -31,7 +31,7 @@ const TRG_PICTURES_OPTION = 'trg_pictures';
  * @return array<int,array<string,string>>
  */
 function trg_picture_slots() {
-	return array(
+	$slots = array(
 		array(
 			'key'   => 'logo-trg',
 			'label' => __( 'Logo — main', 'trg-site' ),
@@ -58,11 +58,46 @@ function trg_picture_slots() {
 		),
 		array(
 			'key'   => 'about-team',
-			'label' => __( 'About page — team photo', 'trg-site' ),
+			'label' => __( 'About page — history photo', 'trg-site' ),
 			'where' => __( 'Beside "Maryland roots. Nationwide support."', 'trg-site' ),
 			'size'  => __( 'Landscape, around 1200 × 900.', 'trg-site' ),
 		),
 	);
+
+	/*
+	 * One slot per page, named after the page, so a photo can be handed over as
+	 * "replace 09" rather than "the one on the cybersecurity page". Built from
+	 * the same page list the site is built from, so a page added later gets its
+	 * slot automatically and this list can never drift out of step with the site.
+	 *
+	 * A slot with nothing in it is not a hole: that page's hero simply renders
+	 * full width, which is the layout the reference build uses.
+	 */
+	$pages = array(
+		'services'   => __( 'Services (the hub page)', 'trg-site' ),
+		'industries' => __( 'Industries (the hub page)', 'trg-site' ),
+		'why-trg'    => __( 'Why TRG', 'trg-site' ),
+		'about'      => __( 'About', 'trg-site' ),
+		'resources'  => __( 'Resources', 'trg-site' ),
+		'contact'    => __( 'Contact', 'trg-site' ),
+	);
+	if ( function_exists( 'trg_detail_page_data' ) ) {
+		foreach ( trg_detail_page_data() as $slug => $page ) {
+			$pages[ $slug ] = $page['title'];
+		}
+	}
+
+	foreach ( $pages as $slug => $label ) {
+		$slots[] = array(
+			'key'   => 'pg-' . $slug,
+			/* translators: %s: page name. */
+			'label' => sprintf( __( '%s — page photo', 'trg-site' ), $label ),
+			'where' => __( 'Beside the heading at the top of the page.', 'trg-site' ),
+			'size'  => __( 'Landscape, around 1400 × 800. Leave empty and the heading runs full width instead.', 'trg-site' ),
+		);
+	}
+
+	return $slots;
 }
 
 /**
@@ -179,13 +214,23 @@ function trg_pictures_page() {
 				<?php
 				$number   = sprintf( '%02d', $i + 1 );
 				$override = trg_picture_override_url( $slot['key'] );
-				$current  = $override ? $override : get_template_directory_uri() . '/assets/img/' . $slot['key'] . '.webp';
+				// Not every slot ships with a picture. Printing a URL for a file
+				// that is not there would render a broken-image icon and read as
+				// a fault; an empty slot is a normal, valid state.
+				$shipped  = get_template_directory() . '/assets/img/' . $slot['key'] . '.webp';
+				$current  = $override ? $override : ( file_exists( $shipped ) ? get_template_directory_uri() . '/assets/img/' . $slot['key'] . '.webp' : '' );
 				?>
 				<tr>
 					<td><strong style="font-size:15px"><?php echo esc_html( $number ); ?></strong></td>
 					<td>
-						<img src="<?php echo esc_url( $current ); ?>" alt=""
-							style="max-width:11em;height:auto;background:#f0f0f1;padding:4px;border:1px solid #dcdcde">
+						<?php if ( $current ) : ?>
+							<img src="<?php echo esc_url( $current ); ?>" alt=""
+								style="max-width:11em;height:auto;background:#f0f0f1;padding:4px;border:1px solid #dcdcde">
+						<?php else : ?>
+							<p style="margin:0;padding:1.6em .6em;text-align:center;color:#646970;background:#f0f0f1;border:1px dashed #c3c4c7">
+								<?php esc_html_e( 'No picture yet', 'trg-site' ); ?>
+							</p>
+						<?php endif; ?>
 						<?php if ( $override ) : ?>
 							<p style="margin:.4em 0 0;color:#2271b1"><?php esc_html_e( 'Your picture', 'trg-site' ); ?></p>
 						<?php endif; ?>

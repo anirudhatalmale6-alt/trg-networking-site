@@ -37,7 +37,7 @@ function trg_page_definitions() {
 		'title'   => 'Services',
 		'excerpt' => 'Managed IT, help desk support, cybersecurity, Microsoft solutions, Azure, secure AI adoption, CMMC readiness, business continuity, network infrastructure and strategic IT leadership.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="What we do" title="Comprehensive Technology Solutions" lede="From everyday IT support to cybersecurity, Microsoft cloud, AI and compliance, TRG brings every layer of your technology together — helping your organization operate securely, efficiently and with confidence."]',
+			'[trg_hero eyebrow="What we do" title="Comprehensive Technology Solutions" lede="From everyday IT support to cybersecurity, Microsoft cloud, AI and compliance, TRG brings every layer of your technology together — helping your organization operate securely, efficiently and with confidence." image="pg-services" image_alt="A TRG team presenting a technology plan on screen"]',
 			'[trg_services bg="white" title="" id=""]',
 			'[trg_perspective title="One partner is easier than five vendors." body="When support, security, Microsoft and planning sit with the same team, problems stop falling between the gaps — and nobody has to referee."]',
 			'[trg_cta_band]',
@@ -49,7 +49,7 @@ function trg_page_definitions() {
 		'title'   => 'Industries',
 		'excerpt' => 'IT and cybersecurity for construction, manufacturing, government contractors, professional services, healthcare and nonprofits.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="Industries we serve" title="Deep Industry Expertise" lede="We understand that technology requirements differ by industry. TRG combines technical expertise with an understanding of the security, compliance, operational and business challenges facing the organizations we serve."]',
+			'[trg_hero eyebrow="Industries we serve" title="Deep Industry Expertise" lede="We understand that technology requirements differ by industry. TRG combines technical expertise with an understanding of the security, compliance, operational and business challenges facing the organizations we serve." image="pg-industries" image_alt="A monitoring team watching systems across multiple screens"]',
 			'[trg_industries bg="white" title=""]',
 			'[trg_split_points id="healthcare" bg="canvas" eyebrow="HIPAA compliance, EHR support and clinical IT" title="Healthcare" body="Protect patient information and keep clinical systems dependable for the people who rely on them. TRG supports practices with security, access control, backup and responsive help for staff who cannot afford to wait." points="HIPAA-aware security controls|EHR and clinical application support|Secure remote and multi-site access|Backup and recovery for patient data"]',
 			'[trg_split_points id="nonprofits" bg="white" eyebrow="Affordable, mission-aligned technology" title="Nonprofits" body="Affordable, mission-aligned technology that stretches limited budgets without cutting corners on security. TRG helps nonprofits get more from donated and discounted Microsoft licensing while keeping donor and constituent data protected." points="Nonprofit Microsoft licensing guidance|Donor and constituent data protection|Predictable, budget-aware planning|Support for volunteers and hybrid staff"]',
@@ -63,7 +63,7 @@ function trg_page_definitions() {
 		'seo_title' => 'Why TRG Networking | Trusted IT Partner Since 1992',
 		'excerpt' => 'Since 1992, TRG has built long-term relationships through responsiveness, integrity and practical technology guidance.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="Why TRG" title="Experienced enough to guide. Personal enough to care." lede="Since 1992, TRG has built long-term relationships through responsiveness, integrity and practical technology guidance." button_text="Talk With Our Team" button_link="contact" call_button="1"]',
+			'[trg_hero eyebrow="Why TRG" title="Experienced enough to guide. Personal enough to care." lede="Since 1992, TRG has built long-term relationships through responsiveness, integrity and practical technology guidance." image="pg-why-trg" image_alt="The TRG Networking team" button_text="Talk With Our Team" button_link="contact" call_button="1"]',
 			'[trg_cards bg="white" columns="3" title="We keep clients through service—not by keeping them in the dark." body="TRG believes you should understand your technology, know what you are paying for and retain appropriate documentation about your environment. Trust is earned through consistent actions and clear communication."]' . "\n"
 				. '[trg_card num="01" title="Responsive by design"]Multiple team members oversee incoming support so requests receive attention and follow-through.[/trg_card]' . "\n"
 				. '[trg_card num="02" title="Plain-English answers"]We explain technology without making employees or leadership feel talked down to.[/trg_card]' . "\n"
@@ -82,7 +82,7 @@ function trg_page_definitions() {
 		'title'   => 'About',
 		'excerpt' => 'TRG Networking is headquartered in Columbia, Maryland and has supported small and midsize organizations with managed IT, cybersecurity and Microsoft solutions since 1992.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="Trusted technology partner since 1992" title="Technology Expertise. A Genuinely Personal Approach." lede="TRG helps organizations use technology confidently through experienced support, thoughtful security and genuine long-term partnership."]',
+			'[trg_hero eyebrow="Trusted technology partner since 1992" title="Technology Expertise. A Genuinely Personal Approach." lede="TRG helps organizations use technology confidently through experienced support, thoughtful security and genuine long-term partnership." image="pg-about" image_alt="The TRG Networking team"]',
 			'[trg_media_split bg="white" reverse="1" image="about-team" image_alt="The TRG Networking team collaborating with a client" '
 				. 'eyebrow="Our history" title="Maryland roots. Nationwide support." '
 				. 'body="TRG Networking has supported small and midsize organizations since 1992, from its headquarters in Columbia, Maryland. Across three decades the technology has changed completely — from server rooms to cloud, from antivirus to Zero Trust, from spreadsheets to Copilot — and the work has stayed the same: understand the business first, then make the technology serve it. Today that spans managed IT, cybersecurity, Microsoft 365 and Azure, CMMC readiness and secure AI adoption, for clients in Maryland and across the country."]',
@@ -105,10 +105,10 @@ function trg_page_definitions() {
 		'seo_title' => 'Contact TRG Networking | Talk With Our Team',
 		'excerpt' => 'Call 410-363-6980 or email our Columbia, Maryland team to start a straightforward conversation about your IT.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="Talk with our team" title="Start with a straightforward conversation." lede="Tell us what is working, what is frustrating your team and what you want technology to do better." button_text="Talk With Our Team" button_link="#enquiry" call_button="1"]',
+			'[trg_hero eyebrow="Talk with our team" title="Start with a straightforward conversation." lede="Tell us what is working, what is frustrating your team and what you want technology to do better." image="pg-contact" image_alt="The TRG Networking office in Columbia, Maryland" button_text="Talk With Our Team" button_link="#enquiry" call_button="1"]',
 			'[trg_cards bg="white" columns="2" title="No technical preparation required." body="Whether you are replacing an IT provider, strengthening cybersecurity, preparing for CMMC, reviewing Microsoft 365, moving servers to Azure or exploring AI, we will help identify a sensible next step."]' . "\n"
 				. '[trg_card num="01" title="Call"]410-363-6980[/trg_card]' . "\n"
-				. '[trg_card num="02" title="Email"]marketing@trgnetworking.com[/trg_card]' . "\n"
+				. '[trg_card num="02" title="Email"]info@trgnetworking.com[/trg_card]' . "\n"
 				. '[trg_card num="03" title="Visit"]9861 Broken Land Parkway, Columbia, Maryland 21046[/trg_card]' . "\n"
 				. '[trg_card num="04" title="Existing clients"]Please use the Client Support Center for active technical requests.[/trg_card]' . "\n"
 				. '[/trg_cards]',
@@ -127,7 +127,7 @@ function trg_page_definitions() {
 		'title'   => 'Resources',
 		'excerpt' => 'Practical technology guidance for business leaders — checklists and insights on IT support, cybersecurity, Microsoft 365, CMMC and AI.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="Resources" title="Practical technology guidance for business leaders." lede="Clear explanations, useful checklists and timely insights — without unnecessary jargon or fear-based selling."]',
+			'[trg_hero eyebrow="Resources" title="Practical technology guidance for business leaders." lede="Clear explanations, useful checklists and timely insights — without unnecessary jargon or fear-based selling." image="pg-resources" image_alt="A technology operations dashboard wall"]',
 			'[trg_cards bg="white" columns="2" title="Useful content should help someone make a better decision." body="TRG’s resource library prioritizes original guidance built around the questions clients actually ask about IT support, cybersecurity, Microsoft 365, CMMC and AI."]' . "\n"
 				. '[trg_card icon="none" title="IT and Security Health Checklist" badge="Coming soon"]A practical starting point for reviewing support, security, backups and technology planning.[/trg_card]' . "\n"
 				. '[trg_card icon="none" title="CMMC Readiness Checklist" badge="Coming soon"]Questions government contractors should answer before technical remediation begins.[/trg_card]' . "\n"
@@ -173,6 +173,8 @@ function trg_page_definitions() {
 
 	// The twelve service and industry pages, all from one description.
 	foreach ( trg_detail_page_data() as $slug => $page ) {
+		// The renderer needs the slug to name this page's picture slot.
+		$page['slug'] = $slug;
 		$pages[] = array(
 			'slug'      => $slug,
 			'title'     => $page['title'],

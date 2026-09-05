@@ -49,7 +49,19 @@ function trg_image_url( $value ) {
 	if ( ! preg_match( '/\.(webp|jpe?g|png|avif|gif|svg)$/i', $value ) ) {
 		$value .= '.webp';
 	}
-	return get_template_directory_uri() . '/assets/img/' . ltrim( $value, '/' );
+	/*
+	 * Return nothing when the file is not there. A picture slot that has never
+	 * been filled is a normal state — the page simply renders without a photo —
+	 * but building the URL anyway printed an <img> pointing at a file that does
+	 * not exist, which shows as a broken image. The request still came back 200
+	 * (WordPress answers a missing path with its 404 *page*), so only the
+	 * decoded width gives it away.
+	 */
+	$file = ltrim( $value, '/' );
+	if ( ! file_exists( get_template_directory() . '/assets/img/' . $file ) ) {
+		return '';
+	}
+	return get_template_directory_uri() . '/assets/img/' . $file;
 }
 
 /**
@@ -195,8 +207,14 @@ function trg_sc_home_hero( $atts ) {
 					$lines[] = '<span class="text-brand-600">' . esc_html( $atts['accent'] ) . '</span>';
 				}
 				?>
+				<?php
+				// A space BEFORE each <br>. Without it the accessible text of the
+				// heading is "…Technology SupportBuilt Around…" — the line break
+				// is a visual break, not a word break, so a screen reader runs
+				// the two lines together.
+				?>
 				<h1 class="mt-6 text-[36px] leading-[1.06] sm:text-[52px] lg:text-[58px]">
-					<?php echo implode( '<br>', $lines ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above. ?>
+					<?php echo implode( ' <br>', $lines ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above. ?>
 				</h1>
 
 				<?php if ( $atts['lede'] ) : ?>
@@ -309,11 +327,23 @@ function trg_sc_hero( $atts ) {
 		'button2_link' => 'contact',
 		'button2_style' => '',
 		'call_button'  => '',
+		'image'        => '',
+		'image_alt'    => '',
 	), $atts, 'trg_hero' );
 
 	// Falling back to the page title means a hero can never render headless,
 	// which would leave the page with no <h1> at all.
 	$title = $atts['title'] ? $atts['title'] : get_the_title();
+
+	/*
+	 * The page picture is OPTIONAL, and everything about this hero depends on
+	 * whether one is set:
+	 *   set   -> two columns, text left, photo right (the Hostinger build's shape)
+	 *   unset -> a single full-width column, which is test2's shape exactly
+	 * So clearing a picture under Settings → TRG Pictures returns that page to
+	 * the reference layout with no code change and nothing left behind.
+	 */
+	$image = trg_image_url( $atts['image'] );
 
 	ob_start();
 	?>
@@ -321,15 +351,25 @@ function trg_sc_hero( $atts ) {
 	<section class="relative overflow-hidden bg-brand-50">
 		<div class="dotted-field pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
 		<div class="shell relative py-16 sm:py-24">
-			<div class="max-w-4xl">
-				<?php if ( $atts['eyebrow'] ) : ?>
-					<span class="eyebrow"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
+			<div class="<?php echo $image ? 'grid items-center gap-10 lg:grid-cols-2 lg:gap-14' : ''; ?>">
+				<div class="<?php echo $image ? 'min-w-0' : 'max-w-4xl'; ?>">
+					<?php if ( $atts['eyebrow'] ) : ?>
+						<span class="eyebrow"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
+					<?php endif; ?>
+					<h1 class="mt-5 text-[34px] leading-[1.1] sm:text-[46px] lg:text-[52px]"><?php echo esc_html( $title ); ?></h1>
+					<?php if ( $atts['lede'] ) : ?>
+						<p class="mt-5 max-w-2xl text-[18px] leading-relaxed text-muted"><?php echo esc_html( $atts['lede'] ); ?></p>
+					<?php endif; ?>
+					<?php echo trg_hero_buttons( $atts ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+				</div>
+				<?php if ( $image ) : ?>
+					<div class="min-w-0">
+						<img src="<?php echo esc_url( $image ); ?>"
+							alt="<?php echo esc_attr( $atts['image_alt'] ); ?>"
+							width="1400" height="800" fetchpriority="high"
+							class="aspect-[16/10] w-full rounded-2xl object-cover shadow-[0_30px_70px_-30px_rgba(1,40,84,0.45)]">
+					</div>
 				<?php endif; ?>
-				<h1 class="mt-5 text-[34px] leading-[1.1] sm:text-[46px] lg:text-[52px]"><?php echo esc_html( $title ); ?></h1>
-				<?php if ( $atts['lede'] ) : ?>
-					<p class="mt-5 max-w-2xl text-[18px] leading-relaxed text-muted"><?php echo esc_html( $atts['lede'] ); ?></p>
-				<?php endif; ?>
-				<?php echo trg_hero_buttons( $atts ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 			</div>
 		</div>
 	</section>

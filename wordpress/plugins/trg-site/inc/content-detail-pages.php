@@ -374,11 +374,18 @@ function trg_detail_page_content( $page ) {
 	 * deliberately left registered — they are still used elsewhere, and dropping
 	 * them would break any page the client builds with them later.
 	 */
+	/*
+	 * Every page gets its own picture slot, named after the page, so the client
+	 * can hand over a photo per page. An unset slot simply renders no image and
+	 * the hero falls back to test2's single-column shape.
+	 */
 	$out = sprintf(
-		'[trg_hero eyebrow="%s" title="%s" lede="%s" button_text="Talk With Our Team" button_link="contact" call_button="1"]',
+		'[trg_hero eyebrow="%s" title="%s" lede="%s" image="%s" image_alt="%s" button_text="Talk With Our Team" button_link="contact" call_button="1"]',
 		trg_attr( $page['eyebrow'] ),
 		trg_attr( $page['hero'] ),
-		trg_attr( $page['lede'] )
+		trg_attr( $page['lede'] ),
+		trg_attr( isset( $page['slug'] ) ? 'pg-' . $page['slug'] : '' ),
+		trg_attr( isset( $page['image_alt'] ) ? $page['image_alt'] : $page['title'] )
 	) . "\n\n";
 
 	$out .= sprintf(

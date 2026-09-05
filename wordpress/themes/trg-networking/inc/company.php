@@ -23,10 +23,11 @@ function trg_company_defaults() {
 		'legal_name'      => 'TRG Networking, Inc.',
 		'founded'         => '1992',
 		'phone'           => '410-363-6980',
-		// The address test2 publishes. This is the one PRINTED on the site;
-		// where enquiry notifications are delivered is a separate setting under
+		// The address PRINTED on the site. Changed to info@ at the client's
+		// request — they do not want marketing@ published. Where enquiry
+		// notifications are delivered is a separate setting under
 		// Settings → TRG Email, so the two can differ.
-		'email'           => 'marketing@trgnetworking.com',
+		'email'           => 'info@trgnetworking.com',
 		'marketing_email' => 'marketing@trgnetworking.com',
 		'street'          => '9861 Broken Land Parkway, Suite 100',
 		'city'            => 'Columbia',
