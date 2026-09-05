@@ -196,3 +196,26 @@ function trg_meta_box_save( $post_id ) {
 	}
 }
 add_action( 'save_post', 'trg_meta_box_save' );
+
+/**
+ * Let a page carry its own <title>.
+ *
+ * WordPress builds "Page name – Site name". test2 writes a distinct, keyword-led
+ * title for each page — "Managed IT Services in Maryland | TRG Networking" — so
+ * a page that has one stored wins, and everything else keeps WordPress's.
+ *
+ * @param string $title Assembled document title.
+ * @return string
+ */
+function trg_document_title( $title ) {
+	if ( ! is_singular() ) {
+		return $title;
+	}
+	$post = get_queried_object();
+	if ( ! $post instanceof WP_Post ) {
+		return $title;
+	}
+	$custom = get_post_meta( $post->ID, '_trg_meta_title', true );
+	return $custom ? $custom : $title;
+}
+add_filter( 'pre_get_document_title', 'trg_document_title', 20 );

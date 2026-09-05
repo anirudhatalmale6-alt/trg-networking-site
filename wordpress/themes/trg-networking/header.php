@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
 	<?php esc_html_e( 'Skip to content', 'trg-networking' ); ?>
 </a>
 
-<div class="hidden bg-ink text-white md:block">
+<div class="hidden bg-navy text-white md:block">
 	<div class="shell flex h-9 items-center justify-between text-[12.5px]">
 		<p class="text-white/70"><?php echo esc_html( trg_company( 'tagline' ) ); ?></p>
 		<div class="flex items-center gap-5">
@@ -55,7 +55,7 @@ defined( 'ABSPATH' ) || exit;
 
 		<div class="flex shrink-0 items-center gap-2">
 			<a href="<?php echo esc_url( trg_page_url( 'contact' ) ); ?>" class="btn-primary hidden sm:inline-flex">
-				<?php esc_html_e( 'Talk with our team', 'trg-networking' ); ?>
+				<?php esc_html_e( 'Talk With Our Team', 'trg-networking' ); ?>
 			</a>
 			<button type="button" class="rounded-lg border border-line p-2 text-ink lg:hidden"
 				aria-label="<?php esc_attr_e( 'Open menu', 'trg-networking' ); ?>"
@@ -83,7 +83,7 @@ defined( 'ABSPATH' ) || exit;
 
 			<div class="mt-6 space-y-3 border-t border-line pt-6">
 				<a href="<?php echo esc_url( trg_page_url( 'contact' ) ); ?>" class="btn-primary w-full">
-					<?php esc_html_e( 'Talk with our team', 'trg-networking' ); ?>
+					<?php esc_html_e( 'Talk With Our Team', 'trg-networking' ); ?>
 				</a>
 				<a href="<?php echo esc_url( trg_phone_href() ); ?>" class="btn-outline w-full">
 					<?php trg_icon( 'phone', 15 ); ?> <?php echo esc_html( trg_company( 'phone' ) ); ?>

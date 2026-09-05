@@ -25,8 +25,9 @@ function trg_page_definitions() {
 	$pages = array();
 
 	$pages[] = array(
-		'slug'    => 'home',
-		'title'   => 'Home',
+		'slug'      => 'home',
+		'title'     => 'Home',
+		'seo_title' => 'TRG Networking | Managed IT & Cybersecurity in Maryland',
 		'excerpt' => 'Personalized technology support built around your goals: managed IT, cybersecurity, Microsoft 365 and Azure, CMMC readiness and secure AI adoption from a Maryland-based team serving organizations nationwide since 1992.',
 		'content' => trg_home_content(),
 	);
@@ -57,30 +58,19 @@ function trg_page_definitions() {
 	);
 
 	$pages[] = array(
-		'slug'    => 'why-trg',
-		'title'   => 'Why TRG',
-		'excerpt' => 'Why choose TRG instead of another MSP: 34+ years of experience, enterprise expertise with personal attention, Microsoft capabilities, a security-first approach and CMMC readiness support.',
+		'slug'      => 'why-trg',
+		'title'     => 'Why TRG',
+		'seo_title' => 'Why TRG Networking | Trusted IT Partner Since 1992',
+		'excerpt' => 'Since 1992, TRG has built long-term relationships through responsiveness, integrity and practical technology guidance.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="Why TRG" title="Why choose TRG instead of another MSP?" lede="Because the answer is not a feature list. Since 1992, TRG has combined enterprise-class technology expertise with the responsiveness and personal attention of a dedicated team — and the difference shows up in how we work, not in what we claim."]',
-			'[trg_media_split bg="white" reverse="1" image="hero-team" image_alt="A TRG consultant working through a technology plan with a client team" '
-				. 'eyebrow="The difference" title="We learn how your business works." '
-				. 'body="Most providers learn your network. Fewer learn your business — how the work actually gets done, where the pressure points are, what the year ahead looks like. That understanding is what turns a technology recommendation into a business decision you can act on with confidence." '
-				. 'bullets="34+ years supporting organizations through every major technology shift|A team that answers, explains and follows through|Recommendations weighed on cost, risk, usability and long-term value"]',
-			'[trg_cards bg="canvas" columns="3" eyebrow="What that means in practice" title="The standards behind the work."]' . "\n"
-				. '[trg_card icon="badge-check" title="34+ years of experience"]Supporting organizations since 1992, through every major shift in how businesses use technology.[/trg_card]' . "\n"
-				. '[trg_card icon="users" title="Personal attention"]You deal with people who know your name and your environment, not an anonymous queue.[/trg_card]' . "\n"
-				. '[trg_card icon="server" title="Enterprise expertise"]Deep experience with complex environments and compliance-driven organizations.[/trg_card]' . "\n"
-				. '[trg_card icon="cloud" title="Microsoft capabilities"]Azure, Microsoft 365, Teams, SharePoint, Intune, Defender and Copilot, configured and supported as one environment.[/trg_card]' . "\n"
-				. '[trg_card icon="shield" title="Security-first approach"]Cybersecurity is designed into every solution rather than bolted on as an afterthought.[/trg_card]' . "\n"
-				. '[trg_card icon="badge-check" title="CMMC readiness expertise"]Experience preparing defense contractors for assessment, with the boundaries of that work stated plainly.[/trg_card]' . "\n"
-				. '[trg_card icon="headset" title="Responsive support"]Multiple team members oversee incoming requests so they are seen, assigned and kept moving.[/trg_card]' . "\n"
-				. '[trg_card icon="compass" title="Strategic technology leadership"]vCIO guidance that aligns technology investment with where the business is going.[/trg_card]' . "\n"
-				. '[trg_card icon="sparkles" title="Secure AI adoption"]Helping teams use AI responsibly, with policy and data protection in place first.[/trg_card]' . "\n"
-				. '[/trg_cards]',
-			'[trg_cards bg="white" columns="3" title="We keep clients through service — not by keeping them in the dark." body="TRG believes you should understand your technology, know what you are paying for and retain appropriate documentation about your environment. Trust is earned through consistent action."]' . "\n"
-				. '[trg_card icon="check" title="Plain-English answers"]We explain technology without making employees or leadership feel talked down to.[/trg_card]' . "\n"
-				. '[trg_card icon="check" title="Business-minded guidance"]Recommendations consider cost, risk, usability, operations and long-term value.[/trg_card]' . "\n"
-				. '[trg_card icon="check" title="Proactive care"]Monitoring and maintenance focus on preventing disruption, not simply reacting to it.[/trg_card]' . "\n"
+			'[trg_hero eyebrow="Why TRG" title="Experienced enough to guide. Personal enough to care." lede="Since 1992, TRG has built long-term relationships through responsiveness, integrity and practical technology guidance." button_text="Talk With Our Team" button_link="contact" call_button="1"]',
+			'[trg_cards bg="white" columns="3" title="We keep clients through service—not by keeping them in the dark." body="TRG believes you should understand your technology, know what you are paying for and retain appropriate documentation about your environment. Trust is earned through consistent actions and clear communication."]' . "\n"
+				. '[trg_card num="01" title="Responsive by design"]Multiple team members oversee incoming support so requests receive attention and follow-through.[/trg_card]' . "\n"
+				. '[trg_card num="02" title="Plain-English answers"]We explain technology without making employees or leadership feel talked down to.[/trg_card]' . "\n"
+				. '[trg_card num="03" title="Business-minded guidance"]Recommendations consider cost, risk, usability, operations and long-term value.[/trg_card]' . "\n"
+				. '[trg_card num="04" title="Seasoned professionals"]Experienced technical people work together to solve issues and plan improvements.[/trg_card]' . "\n"
+				. '[trg_card num="05" title="Proactive care"]Monitoring and maintenance focus on preventing disruption, not simply reacting to it.[/trg_card]' . "\n"
+				. '[trg_card num="06" title="Long-term relationships"]We aim to become a trusted extension of the organizations we support.[/trg_card]' . "\n"
 				. '[/trg_cards]',
 			'[trg_perspective title="Every request is seen. Every solution is explained." body="Every recommendation should serve the business. That is the standard behind the way TRG works."]',
 			'[trg_cta_band]',
@@ -110,14 +100,25 @@ function trg_page_definitions() {
 	);
 
 	$pages[] = array(
-		'slug'    => 'contact',
-		'title'   => 'Contact',
-		'excerpt' => 'Talk with TRG Networking about managed IT, cybersecurity, Microsoft 365, CMMC readiness or secure AI adoption.',
+		'slug'      => 'contact',
+		'title'     => 'Contact',
+		'seo_title' => 'Contact TRG Networking | Talk With Our Team',
+		'excerpt' => 'Call 410-363-6980 or email our Columbia, Maryland team to start a straightforward conversation about your IT.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="Talk with our team" title="Let’s Start the Conversation" lede="Tell us what is working, what is frustrating your team and what you want technology to do better. No technical preparation required."]',
-			'[trg_contact_section title="No technical preparation required." body="Whether you want a consultation, an IT assessment, a CMMC readiness assessment, a cybersecurity assessment or a Microsoft and Azure conversation, tell us which in the form and we will take it from there."]',
-			'[trg_process bg="canvas" eyebrow="What happens next" title="Ready to begin?"]' . "\n" . trg_process_steps() . '[/trg_process]',
-			'[trg_perspective title="A conversation costs nothing and usually clarifies a lot." body="Send the form above or call us. We will listen first, then suggest a sensible next step — whether or not that step involves TRG."]',
+			'[trg_hero eyebrow="Talk with our team" title="Start with a straightforward conversation." lede="Tell us what is working, what is frustrating your team and what you want technology to do better." button_text="Talk With Our Team" button_link="#enquiry" call_button="1"]',
+			'[trg_cards bg="white" columns="2" title="No technical preparation required." body="Whether you are replacing an IT provider, strengthening cybersecurity, preparing for CMMC, reviewing Microsoft 365, moving servers to Azure or exploring AI, we will help identify a sensible next step."]' . "\n"
+				. '[trg_card num="01" title="Call"]410-363-6980[/trg_card]' . "\n"
+				. '[trg_card num="02" title="Email"]marketing@trgnetworking.com[/trg_card]' . "\n"
+				. '[trg_card num="03" title="Visit"]9861 Broken Land Parkway, Columbia, Maryland 21046[/trg_card]' . "\n"
+				. '[trg_card num="04" title="Existing clients"]Please use the Client Support Center for active technical requests.[/trg_card]' . "\n"
+				. '[/trg_cards]',
+			// test2 says here that "a dedicated inquiry form and scheduling
+			// experience will be connected before the new site launches". It is
+			// connected — this is that form. Every submission is stored in
+			// Enquiries before any email is attempted, so a message cannot be
+			// lost to a mail problem.
+			'[trg_contact_section id="enquiry" title="Send us a message." body="Tell us a little about your organization and what you would like to improve. We read every message and reply from a real person."]',
+			'[trg_perspective title="A conversation costs nothing and usually clarifies a lot." body="We will listen first, then suggest a sensible next step — whether or not that step involves TRG."]',
 		) ),
 	);
 
@@ -173,10 +174,11 @@ function trg_page_definitions() {
 	// The twelve service and industry pages, all from one description.
 	foreach ( trg_detail_page_data() as $slug => $page ) {
 		$pages[] = array(
-			'slug'    => $slug,
-			'title'   => $page['title'],
-			'excerpt' => $page['meta'],
-			'content' => trg_detail_page_content( $page ),
+			'slug'      => $slug,
+			'title'     => $page['title'],
+			'excerpt'   => $page['meta'],
+			'seo_title' => isset( $page['seo_title'] ) ? $page['seo_title'] : '',
+			'content'   => trg_detail_page_content( $page ),
 		);
 	}
 
@@ -204,105 +206,90 @@ function trg_page_definitions() {
  * @return string
  */
 function trg_process_steps() {
-	// The four stages of the conversion model named in the change request:
-	// consultation, assessment, discovery, customized solution.
-	return '[trg_step n="1" title="Consultation"]We listen first and learn how your organization works and what it needs.[/trg_step]' . "\n"
-		. '[trg_step n="2" title="Assessment"]We review the environment and identify risks, gaps and opportunities worth addressing.[/trg_step]' . "\n"
-		. '[trg_step n="3" title="Discovery"]We go deeper on the areas that matter most, with your team and your operations in mind.[/trg_step]' . "\n"
-		. '[trg_step n="4" title="Customized solution"]You receive clear priorities, costs and a practical path forward built for your business.[/trg_step]' . "\n";
+	// test2's three stages. It dropped the earlier four-stage model, so this
+	// follows it rather than keeping a stage the reference no longer shows.
+	return '[trg_step n="1" title="Talk with our team"]We listen first and learn what your organization needs.[/trg_step]' . "\n"
+		. '[trg_step n="2" title="Review your environment"]We identify risks, gaps and opportunities worth addressing.[/trg_step]' . "\n"
+		. '[trg_step n="3" title="Build a practical plan"]You receive clear priorities and a sensible path forward.[/trg_step]' . "\n";
 }
 
 /**
  * Homepage content.
  *
+ * Band for band, this is test2.trgnetworking.com's homepage: the same sections,
+ * in the same order, carrying the same words.
+ *
+ * Three sections the earlier build had are deliberately gone, because test2
+ * dropped them: the statistics band ("200+ organizations served", "24x7"), the
+ * technology-partner logo band, and the standalone Microsoft and CMMC bands.
+ * Those were the claims flagged as unverified, so following test2 here removes
+ * them rather than leaving them asserted on the client's behalf.
+ *
  * @return string
  */
 function trg_home_content() {
 	return implode( "\n\n", array(
-		// Hero (section 3 of the change request). The headline is the requested
-		// one; "Simpler IT. Stronger security. A team that responds." is
-		// preserved further down the page rather than deleted.
-		'[trg_home_hero eyebrow="Trusted technology partner since 1992" line1="Personalized Technology Support" accent="Built Around Your Goals." '
-			. 'lede="TRG Networking helps organizations modernize, secure and grow through managed IT, Microsoft Azure, Microsoft 365, cybersecurity, CMMC readiness, secure AI solutions and strategic technology guidance. From cloud migration and fully managed Azure environments to advanced security, business continuity and responsive IT support, we deliver technology solutions tailored to your goals, budget and industry requirements." '
-			. 'button_text="Talk with our team" button_link="contact" button2_text="Free IT Assessment" button2_link="/contact/?type=it-assessment" '
-			. 'badges="Microsoft Partner|24x7 Support|CMMC Readiness Experts|Women/Minority Owned" jump_text="Explore our services" jump_link="#services" '
-			. 'image="hero-team" image_alt="A TRG Networking consultant working through a technology plan with a client team" '
-			. 'caption_eyebrow="The TRG difference" caption="Enterprise expertise. Personal attention." '
-			. 'cards="Responsive support|Real people. Clear ownership.;24x7 monitoring|Always-on protection.;CMMC ready|DoD contractor experts.;Security first|Protection built in." '
-			. 'strip="Managed IT|Cybersecurity|Microsoft 365|Azure|CMMC|Secure AI"]',
+		'[trg_home_hero eyebrow="Trusted technology partner since 1992" line1="Personalized Technology Support" accent="Built Around Your Goals" '
+			. 'lede="TRG helps organizations modernize, secure, and grow with managed IT services, Microsoft Azure cloud hosting, Microsoft 365, cybersecurity, CMMC readiness, secure AI solutions, and strategic technology guidance. From fully managed Azure environments and cloud migrations to advanced security, business continuity, and responsive support, we deliver technology solutions built around your goals, budget, and industry requirements." '
+			. 'button_text="Talk With Our Team" button_link="contact" '
+			. 'button2_text="Explore our services ↓" button2_link="#services" button2_style="text" '
+			. 'image="hero-team" image_alt="A business team collaborating with an IT consultant" '
+			. 'caption_eyebrow="The TRG difference" caption="Technology that feels more human." '
+			. 'cards="Responsive support|Real people. Clear ownership.;Security first|Protection built in." '
+			. 'strip="Managed IT|Cybersecurity|Microsoft 365|Azure Cloud|CMMC|Secure AI"]',
 
-		// Credibility band (section 4). The 99.9% uptime claim is deliberately
-		// not here: the change request rules it out unless it can be documented.
-		'[trg_stats items="34+|Years of experience;200+|Organizations served;7|Technology solution areas;24x7|Monitoring and support"]',
-
-		// Section 6 asks that this band not be finalised until the current
-		// vendor relationships are confirmed. It is headed "technologies we
-		// work with", which is a statement of fact, rather than "partners and
-		// alliances", which claims a relationship on each company's behalf.
-		'[trg_partners title="Technologies we work with every day" items="Microsoft, Cisco, Dell, Fortinet, Sophos, Datto, Synnex, ConnectWise"]',
-
-		'[trg_cards bg="canvas" columns="4" eyebrow="Technology should move your business forward" title="Simpler IT. Stronger security. A team that responds." body="Less disruption. More confidence. TRG makes technology easier to manage, easier to understand and better aligned with the way your organization actually works."]' . "\n"
-			. '[trg_card icon="activity" title="Fewer interruptions"]Proactive monitoring and maintenance help address small issues before they become costly problems.[/trg_card]' . "\n"
-			. '[trg_card icon="shield" title="Stronger protection"]Security that covers people, devices, cloud systems, data and the everyday decisions that connect them.[/trg_card]' . "\n"
-			. '[trg_card icon="users" title="Responsive attention"]Multiple team members oversee incoming support so requests are seen, assigned and kept moving.[/trg_card]' . "\n"
-			. '[trg_card icon="compass" title="Clearer planning"]Plain-English recommendations, predictable costs and a practical roadmap for what comes next.[/trg_card]' . "\n"
+		'[trg_cards bg="canvas" columns="4" eyebrow="Technology should move your business forward" title="Less disruption. More confidence." body="TRG makes technology easier to manage, easier to understand and better aligned with the way your organization actually works."]' . "\n"
+			. '[trg_card num="01" title="Fewer interruptions"]Proactive monitoring and maintenance help address small issues before they become costly problems.[/trg_card]' . "\n"
+			. '[trg_card num="02" title="Stronger protection"]Security that covers people, devices, cloud systems, data and the everyday decisions that connect them.[/trg_card]' . "\n"
+			. '[trg_card num="03" title="Responsive attention"]Multiple team members oversee incoming support so requests are seen, assigned and kept moving.[/trg_card]' . "\n"
+			. '[trg_card num="04" title="Clearer planning"]Plain-English recommendations, predictable costs and a practical roadmap for what comes next.[/trg_card]' . "\n"
 			. '[/trg_cards]',
 
-		// Comprehensive Technology Solutions (section 7). limit="9" shows the
-		// nine solution areas that section lists; Help Desk & IT Support is the
-		// tenth card and has the band immediately below to itself.
-		'[trg_services id="services" bg="white" pill="1" limit="9" eyebrow="What we do" title="Comprehensive Technology Solutions" body="From everyday IT support to cybersecurity, Microsoft cloud, AI and compliance, TRG brings every layer of your technology together — helping your organization operate securely, efficiently and with confidence."]',
+		// limit="7" because test2's grid stops at CMMC Readiness. Help Desk &
+		// IT Support is the eighth card and has its own band further down.
+		'[trg_services id="services" bg="white" limit="7" eyebrow="Complete technology care" title="Every layer of your technology. Covered." body="From daily support to long-term strategy, TRG connects the pieces so your technology works as one secure, reliable system."]',
 
-		// Why TRG (section 8).
-		'[trg_media_split bg="canvas" reverse="1" image="about-team" image_alt="The TRG Networking team" '
-			. 'eyebrow="Why TRG Networking" title="The Enterprise Technology Partner Built for Growth" '
-			. 'body="Enterprise technology expertise. A genuinely personal approach. We combine enterprise-class technology expertise with the responsiveness and personal attention of a dedicated team. We learn how your organization works, understand your goals, and build technology strategies designed around your business — not the other way around." '
-			. 'bullets="Enterprise experience|Strategic IT leadership|Microsoft expertise|Security-first design|CMMC readiness and compliance|AI-ready organizations" '
-			. 'button_text="Why businesses choose TRG" button_link="why-trg" '
-			. 'note_title="Since 1992" note_body="Thirty-four years of adapting to change alongside our clients." note_icon="badge-check"]',
+		'[trg_ai_panel bg="navy" eyebrow="Azure cloud hosting" title="Stop replacing servers. Start running in Azure." '
+			. 'body="TRG hosts your servers and network in Microsoft Azure—eliminating the capital expense of hardware refresh cycles and the security vulnerabilities that aging, unsupported equipment creates. Your environment runs on always-current, Microsoft-managed infrastructure, designed, migrated and managed by TRG." '
+			. 'pills="Azure migration, No hardware refreshes, Always-current security, Scalable on demand" '
+			. 'button_text="Explore Azure Cloud Hosting" button_link="azure-cloud-hosting" '
+			. 'panel_label="Why move to Azure with TRG" '
+			. 'steps="Retire aging hardware|Replace failing servers with Azure instead of buying new ones.;'
+			. 'Close vulnerability gaps|Run on continuously patched Microsoft infrastructure.;'
+			. 'Pay for what you use|Scale resources up or down without overprovisioning.;'
+			. 'One managed environment|TRG supports Azure alongside your other technology."]',
 
 		'[trg_media_split bg="white" image="lov-support" image_alt="A TRG IT specialist working alongside a client team member" '
 			. 'eyebrow="Responsive by design" title="Multiple eyes on every request. One team accountable." '
 			. 'body="Your support request should never feel lost in a queue. Multiple people across TRG oversee incoming requests, help ensure the right person is assigned and keep work moving toward resolution." '
-			. 'bullets="Human attention — not an anonymous call center|Clear ownership and follow-through|Plain-English communication throughout" '
-			. 'button_text="Meet your responsive IT team" button_link="help-desk-it-support" '
+			. 'bullets="Human attention—not an anonymous call center|Clear ownership and follow-through|Plain-English communication throughout" '
+			. 'button_text="Meet Your Responsive IT Team" button_link="help-desk-it-support" '
 			. 'note_title="Shared oversight" note_body="Multiple team members help keep requests moving." note_icon="users"]',
 
-		// Industries (section 9).
-		'[trg_industries bg="canvas" pill="1" eyebrow="Industries we serve" title="Deep Industry Expertise" body="We understand that technology requirements differ by industry. TRG combines technical expertise with an understanding of the security, compliance, operational and business challenges facing the organizations we serve."]',
+		'[trg_industries bg="canvas" eyebrow="Experience that fits your world" title="We learn how your business works." body="Technology decisions are better when they reflect your operations, risks, customers and compliance responsibilities."]',
 
-		// Microsoft (section 10).
-		'[trg_media_split bg="white" reverse="1" image="lov-support" image_alt="A business team working in Microsoft Teams and SharePoint" '
-			. 'eyebrow="Microsoft solutions" title="Unlock the Full Power of Microsoft" '
-			. 'body="TRG helps organizations design, migrate, secure, manage and optimize Microsoft environments — from Azure infrastructure and Microsoft 365 to modern security, collaboration, automation and Copilot." '
-			. 'pills="Azure, Microsoft 365, Teams, SharePoint, Intune, Defender, Copilot" '
-			. 'button_text="Explore Microsoft Solutions" button_link="microsoft-365-cloud"]',
+		// test2 renders this band dark, exactly like the Azure one above it.
+		'[trg_ai_panel bg="navy" eyebrow="Secure AI adoption" title="Use AI with a plan. Not a free-for-all." '
+			. 'body="TRG helps your organization adopt AI responsibly—protecting company information while giving employees practical ways to work faster and make better decisions." '
+			. 'pills="AI readiness, Usage policies, Microsoft Copilot, Employee training" '
+			. 'button_text="Explore secure AI services" button_link="secure-ai-adoption" '
+			. 'panel_label="TRG / AI enablement" '
+			. 'steps="Protect the data|Security and access first;'
+			. 'Set clear policies|Responsible use guidance;'
+			. 'Find practical wins|Workflows worth improving;'
+			. 'Train the team|Confidence without the hype"]',
 
-		// Artificial intelligence (section 11).
-		'[trg_ai_panel bg="canvas" eyebrow="Artificial intelligence" title="AI That Drives Business Performance" accent="Use AI with a plan — not a free-for-all." '
-			. 'body="From Microsoft Copilot and intelligent workflow automation to analytics and AI governance, TRG helps organizations adopt AI securely, responsibly and with measurable business objectives." '
-			. 'pills="Microsoft Copilot, Power BI, Power Automate, Workflow automation, AI readiness, AI governance" '
-			. 'button_text="Explore AI Solutions" button_link="secure-ai-adoption" '
-			. 'steps="Protect the data|Security and access first;Set clear policies|Responsible use guidance;Find practical wins|Workflows worth improving;Train the team|Confidence without the hype"]',
-
-		// CMMC (section 12). "Prepare for" throughout, never "certify".
-		'[trg_media_split bg="white" image="cmmc" image_alt="A government contracting team reviewing CMMC requirements" '
-			. 'eyebrow="CMMC readiness" title="Helping Government Contractors Prepare for CMMC" '
-			. 'body="TRG helps defense contractors prepare for CMMC requirements through readiness assessments, gap analysis, documentation, remediation planning, security improvements and ongoing compliance support." '
-			. 'pills="CMMC readiness assessment, Gap analysis, Policy and SSP development, POA&M development, Remediation support, C3PAO coordination, Continuous compliance" '
-			. 'button_text="Schedule a CMMC Readiness Assessment" button_link="/contact/?type=cmmc"]',
-
-		'[trg_testimonials bg="canvas" pill="1" eyebrow="Trusted relationships" title="Technology Expertise. A Genuinely Personal Approach." '
+		// attribution="0": test2 prints both quotes unattributed. The names are
+		// still in Testimonials, ready to switch on once each client agrees.
+		'[trg_testimonials bg="canvas" attribution="0" eyebrow="Trusted relationships" title="Technology expertise. A genuinely personal approach." '
 			. 'body="Since 1992, organizations have trusted TRG to care for critical systems, support their people and explain complex decisions without the jargon." '
 			. 'cta_text="Why businesses choose TRG" cta_link="why-trg"]',
 
-		'[trg_process bg="white" columns="4" eyebrow="A simple place to begin" title="Start with a conversation." body="No technical preparation required. Tell us what is working, what is frustrating your team and what you want technology to do better."]' . "\n" . trg_process_steps() . '[/trg_process]',
+		'[trg_process bg="white" columns="3" eyebrow="A simple place to begin" title="Start with a conversation." body="No technical preparation required. Tell us what is working, what is frustrating your team and what you want technology to do better."]' . "\n" . trg_process_steps() . '[/trg_process]',
 
-		// Final call to action (section 14).
-		'[trg_cta_band eyebrow="Let’s talk" title="Ready to Transform Your Technology?" '
-			. 'body="Partner with TRG Networking to build a secure, scalable and intelligent technology foundation for your organization." '
-			. 'button_text="Schedule Consultation" button_link="contact" '
-			. 'button2_text="Free IT Assessment" button2_link="/contact/?type=it-assessment"]',
+		'[trg_cta_band eyebrow="Let’s talk" title="Ready for technology that feels easier?" '
+			. 'body="Start with a practical conversation about your organization, your concerns and where you want to go next." '
+			. 'button_text="Talk With Our Team" button_link="contact"]',
 	) );
 }
 
@@ -409,6 +396,9 @@ function trg_run_setup( $refresh = false ) {
 						'post_excerpt' => isset( $page['excerpt'] ) ? $page['excerpt'] : '',
 						'post_content' => $page['content'],
 					) );
+					if ( ! empty( $page['seo_title'] ) ) {
+						update_post_meta( $existing->ID, '_trg_meta_title', $page['seo_title'] );
+					}
 					/* translators: %s: page title. */
 					$log[] = sprintf( __( 'Replaced the text of the “%s” page with the shipped version.', 'trg-site' ), $page['title'] );
 					continue;
@@ -436,8 +426,34 @@ function trg_run_setup( $refresh = false ) {
 			}
 
 			$ids[ $page['slug'] ] = $id;
+			if ( ! empty( $page['seo_title'] ) ) {
+				update_post_meta( $id, '_trg_meta_title', $page['seo_title'] );
+			}
 			/* translators: %s: page title. */
 			$log[] = sprintf( __( 'Created the “%s” page.', 'trg-site' ), $page['title'] );
+		}
+	}
+
+	/* ------------------------------------- pages this revision replaced */
+
+	/*
+	 * Pages from the earlier revision that test2 does not have. They are moved
+	 * to draft, not deleted, so the client can restore any of them from
+	 * Pages → Drafts with one click.
+	 *
+	 * Retiring them is what makes the redirects in redirects.php work at all: a
+	 * redirect only runs on a request WordPress could not otherwise answer, so
+	 * while /azure/ still resolves to a published page it will keep serving that
+	 * page and the rule pointing at /azure-cloud-hosting/ would never fire.
+	 */
+	if ( $refresh ) {
+		foreach ( array( 'azure', 'network-infrastructure', 'strategic-it-vcio' ) as $slug ) {
+			$old = get_page_by_path( $slug );
+			if ( $old && 'draft' !== $old->post_status ) {
+				wp_update_post( array( 'ID' => $old->ID, 'post_status' => 'draft' ) );
+				/* translators: %s: page slug. */
+				$log[] = sprintf( __( 'Moved /%s/ to draft and redirected it to the page that replaced it.', 'trg-site' ), $slug );
+			}
 		}
 	}
 
@@ -476,11 +492,11 @@ function trg_run_setup( $refresh = false ) {
 
 	/* ------------------------------------------------------------- cards */
 
-	$log = array_merge( $log, trg_seed_cards( $ids ) );
+	$log = array_merge( $log, trg_seed_cards( $ids, $refresh ) );
 
 	/* ------------------------------------------------------------- menus */
 
-	$log = array_merge( $log, trg_build_menus( $ids ) );
+	$log = array_merge( $log, trg_build_menus( $ids, $refresh ) );
 
 	update_option( 'trg_setup_done', gmdate( 'c' ) );
 
@@ -493,28 +509,67 @@ function trg_run_setup( $refresh = false ) {
  * @param array<string,int> $ids Page IDs by slug.
  * @return array<int,string>
  */
-function trg_seed_cards( $ids ) {
+function trg_seed_cards( $ids, $refresh = false ) {
 	$log = array();
 
-	// The order the nine solution areas are listed in section 7 of the change
-	// request. Help Desk & IT Support is tenth: the homepage grid asks for the
-	// first nine, and the Services page shows all ten.
-	$service_order  = array( 'managed-it-services', 'cybersecurity', 'microsoft-365-cloud', 'secure-ai-adoption', 'cmmc-readiness', 'backup-business-continuity', 'strategic-it-vcio', 'network-infrastructure', 'azure', 'help-desk-it-support' );
-	// Section 9's order. Healthcare (2) and Nonprofits (6) are seeded below —
-	// they are sections on the Industries page rather than pages of their own —
-	// so the numbers here leave gaps for them.
-	$industry_order = array( 'government-contractors' => 1, 'manufacturing' => 3, 'construction' => 4, 'professional-services' => 5 );
+	// test2's order, in both the dropdown and the homepage grid. The homepage
+	// grid stops at CMMC Readiness; Help Desk & IT Support is eighth and has a
+	// band of its own further down the page.
+	$service_order  = array( 'managed-it-services', 'cybersecurity', 'microsoft-365-cloud', 'azure-cloud-hosting', 'secure-ai-adoption', 'backup-business-continuity', 'cmmc-readiness', 'help-desk-it-support' );
+	$industry_order = array( 'construction' => 1, 'manufacturing' => 2, 'government-contractors' => 3, 'professional-services' => 4 );
 	$data           = trg_detail_page_data();
 
-	$make = static function ( $post_type, $title, $body, $meta, $order ) use ( &$log ) {
-		$found = get_posts( array(
-			'post_type'      => $post_type,
-			'post_status'    => 'any',
-			'title'          => $title,
-			'numberposts'    => 1,
-			'fields'         => 'ids',
-		) );
+	$make = static function ( $post_type, $title, $body, $meta, $order ) use ( &$log, $refresh ) {
+		/*
+		 * Find an existing card by the page it points at, not by its title.
+		 *
+		 * Titles change between revisions — "Backup & Business Continuity"
+		 * became "Business Continuity", "Construction & Contractors" became
+		 * "Construction" — and a title match then finds nothing, so a refresh
+		 * adds a second card instead of updating the first and the grid shows
+		 * the same service twice. The page ID is the thing that actually stays
+		 * the same, so match on that and fall back to the title only for cards
+		 * with no page behind them.
+		 */
+		$found = array();
+		if ( ! empty( $meta['_trg_link'] ) ) {
+			$found = get_posts( array(
+				'post_type'   => $post_type,
+				'post_status' => 'any',
+				'numberposts' => 1,
+				'fields'      => 'ids',
+				'meta_key'    => '_trg_link',
+				'meta_value'  => (string) $meta['_trg_link'],
+			) );
+		}
+		if ( ! $found ) {
+			$found = get_posts( array(
+				'post_type'      => $post_type,
+				'post_status'    => 'any',
+				'title'          => $title,
+				'numberposts'    => 1,
+				'fields'         => 'ids',
+			) );
+		}
 		if ( $found ) {
+			// A normal run leaves an existing card exactly as the client left
+			// it. A refresh run is a deliberate second click that says "give me
+			// the version shipped in this release", so it updates in place.
+			if ( ! $refresh ) {
+				return;
+			}
+			wp_update_post( array(
+				'ID'           => $found[0],
+				'post_title'   => $title,
+				'post_content' => $body,
+				'post_status'  => 'publish',
+				'menu_order'   => $order,
+			) );
+			foreach ( $meta as $key => $value ) {
+				update_post_meta( $found[0], $key, $value );
+			}
+			/* translators: %s: card title. */
+			$log[] = sprintf( __( 'Updated the “%s” card.', 'trg-site' ), $title );
 			return;
 		}
 		$id = wp_insert_post( array(
@@ -566,11 +621,33 @@ function trg_seed_cards( $ids ) {
 		);
 	}
 
-	// Healthcare and nonprofits are sections on the Industries page rather than
-	// pages of their own — there is no copy for a full page and inventing it
-	// would be worse than linking to the section that actually exists.
-	$make( 'trg_industry', 'Healthcare', 'Protect patient information and keep clinical systems dependable for the people who rely on them.', array( '_trg_tags' => 'HIPAA compliance, EHR, clinical IT', '_trg_link' => isset( $ids['industries'] ) ? (string) $ids['industries'] : '' ), 2 );
-	$make( 'trg_industry', 'Nonprofits', 'Affordable, mission-aligned technology that stretches limited budgets without cutting corners on security.', array( '_trg_tags' => 'Affordable mission-aligned IT', '_trg_link' => isset( $ids['industries'] ) ? (string) $ids['industries'] : '' ), 6 );
+	/*
+	 * Cards from the previous revision that test2 does not have. On a refresh
+	 * they are moved to draft, never deleted: draft is reversible from the
+	 * admin screen with one click, and the client may want some of them back.
+	 */
+	if ( $refresh ) {
+		$retired = array(
+			'trg_service'  => array( 'Network Infrastructure', 'Strategic IT / vCIO', 'Azure Cloud', 'Microsoft Solutions' ),
+			'trg_industry' => array( 'Healthcare', 'Nonprofits' ),
+		);
+		foreach ( $retired as $type => $titles ) {
+			foreach ( $titles as $title ) {
+				$found = get_posts( array(
+					'post_type'   => $type,
+					'post_status' => 'publish',
+					'title'       => $title,
+					'numberposts' => 1,
+					'fields'      => 'ids',
+				) );
+				if ( $found ) {
+					wp_update_post( array( 'ID' => $found[0], 'post_status' => 'draft' ) );
+					/* translators: %s: card title. */
+					$log[] = sprintf( __( 'Moved the “%s” card to draft — it is not on test2. Nothing was deleted.', 'trg-site' ), $title );
+				}
+			}
+		}
+	}
 
 	$make( 'trg_testimonial', 'Nick Pirovolidis', 'TRG gives that personal touch, good communication and a skilled staff that fully understands our needs.', array( '_trg_org' => 'BSC America' ), 1 );
 	$make( 'trg_testimonial', 'Todd Hirsch', 'TRG personnel provide prompt and thorough support as well as cost-effective management of our IT needs.', array( '_trg_org' => 'Belt Built Contracting, LLC' ), 2 );
@@ -584,16 +661,13 @@ function trg_seed_cards( $ids ) {
  * @param array<string,int> $ids Page IDs by slug.
  * @return array<int,string>
  */
-function trg_build_menus( $ids ) {
+function trg_build_menus( $ids, $refresh = false ) {
 	$log       = array();
 	$locations = get_nav_menu_locations();
 
-	$services   = array( 'managed-it-services', 'help-desk-it-support', 'cybersecurity', 'microsoft-365-cloud', 'azure', 'secure-ai-adoption', 'cmmc-readiness', 'backup-business-continuity', 'network-infrastructure', 'strategic-it-vcio' );
-	// Section 9's order. Healthcare and Nonprofits are sections on the
-	// Industries page rather than pages of their own, so they appear here as
-	// "#fragment" entries and are added as links, in the right place, rather
-	// than tacked on to the end of the list.
-	$industries = array( 'government-contractors', '#healthcare', 'manufacturing', 'construction', 'professional-services', '#nonprofits' );
+	// test2's dropdown order, exactly.
+	$services   = array( 'managed-it-services', 'cybersecurity', 'microsoft-365-cloud', 'azure-cloud-hosting', 'secure-ai-adoption', 'backup-business-continuity', 'cmmc-readiness', 'help-desk-it-support' );
+	$industries = array( 'construction', 'manufacturing', 'government-contractors', 'professional-services' );
 
 	$page_item = static function ( $menu_id, $slug, $parent = 0, $order = 0, $label = '' ) use ( $ids ) {
 		if ( ! isset( $ids[ $slug ] ) ) {
@@ -644,9 +718,25 @@ function trg_build_menus( $ids ) {
 		return is_wp_error( $id ) ? null : wp_get_nav_menu_object( $id );
 	};
 
+	/*
+	 * A refresh empties a menu so it can be rebuilt from the list above. Without
+	 * this the menus are write-once: the first run creates them, and every later
+	 * run sees items already present and leaves the old pages in the dropdown
+	 * for ever. That is how a rebuild ships new pages but keeps stale navigation.
+	 */
+	$reset_menu = static function ( $menu ) use ( $refresh ) {
+		if ( ! $refresh || ! $menu ) {
+			return;
+		}
+		foreach ( (array) wp_get_nav_menu_items( $menu->term_id ) as $item ) {
+			wp_delete_post( $item->ID, true );
+		}
+	};
+
 	/* ------------------------------------------------------------ header */
 
 	$primary = $ensure_menu( 'Main menu' );
+	$reset_menu( $primary );
 	if ( $primary && ! wp_get_nav_menu_items( $primary->term_id ) ) {
 		$pos = 0;
 
@@ -671,15 +761,18 @@ function trg_build_menus( $ids ) {
 	/* ------------------------------------------------------------ footer */
 
 	$footer_services = $ensure_menu( 'Footer — Services' );
+	$reset_menu( $footer_services );
 	if ( $footer_services && ! wp_get_nav_menu_items( $footer_services->term_id ) ) {
 		$pos = 0;
-		foreach ( $services as $slug ) {
+		// test2's footer lists seven services and leaves Help Desk out.
+		foreach ( array_slice( $services, 0, 7 ) as $slug ) {
 			$page_item( $footer_services->term_id, $slug, 0, ++$pos );
 		}
 		$locations['footer_services'] = $footer_services->term_id;
 	}
 
 	$footer_industries = $ensure_menu( 'Footer — Industries' );
+	$reset_menu( $footer_industries );
 	if ( $footer_industries && ! wp_get_nav_menu_items( $footer_industries->term_id ) ) {
 		$pos = 0;
 		foreach ( $industries as $entry ) {

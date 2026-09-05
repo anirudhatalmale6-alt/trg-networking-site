@@ -11,8 +11,10 @@
   body {
     @apply bg-white font-sans text-body antialiased;
   }
-  h1 { @apply font-display font-extrabold tracking-[-0.02em] text-ink; }
-  h2, h3, h4 { @apply font-heading font-extrabold tracking-[-0.01em] text-ink; }
+  /* One family, one tracking, across every heading level — test2 sets
+     h1..h4 to Outfit 800 at -0.03em and that tighter, uniform setting is a
+     large part of why its headings read the way they do. */
+  h1, h2, h3, h4 { @apply font-display font-extrabold tracking-[-0.03em] text-ink; }
 
   /* Every interactive element keeps a visible focus ring. The site ships an
      accessibility page, so it has to actually honour it. */
@@ -30,11 +32,24 @@
 
   .eyebrow {
     @apply inline-flex items-center gap-2 font-heading text-[11px] font-bold
-           uppercase tracking-[0.14em] text-brand-600;
+           uppercase tracking-[0.18em] text-brand-600;
   }
   .eyebrow-pill {
     @apply inline-flex items-center rounded-full border border-brand-200 bg-brand-50
-           px-3.5 py-1.5 font-heading text-[11px] font-bold uppercase tracking-[0.14em] text-brand-600;
+           px-3.5 py-1.5 font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-brand-600;
+  }
+  /* The short rule that sits to the left of a section eyebrow on test2. */
+  .eyebrow-rule { @apply inline-block h-0.5 w-8 shrink-0 bg-brand-600; }
+
+  /*
+   * The dot grid behind the hero and the closing band. Drawn in CSS rather
+   * than shipped as an image so it stays crisp at any zoom and costs no
+   * request. 18% brand over the tint is the reference's own weight — at full
+   * strength it reads as a texture rather than a hint.
+   */
+  .dotted-field {
+    background-image: radial-gradient(rgba(14, 92, 175, 0.18) 1px, transparent 1px);
+    background-size: 22px 22px;
   }
 
   /*
@@ -46,14 +61,17 @@
    * when the alternative is breaking the layout.
    */
   .btn {
-    @apply inline-flex max-w-full items-center justify-center gap-2 rounded-lg
-           px-[26px] py-[11px] text-center font-heading text-sm font-semibold
+    @apply inline-flex max-w-full items-center justify-center gap-2 rounded-full
+           px-7 py-3.5 text-center font-heading text-sm font-bold
            transition-all duration-200;
   }
-  .btn-primary { @apply btn bg-brand-600 text-white shadow-sm hover:bg-brand-700 hover:shadow-md; }
+  .btn-primary { @apply btn bg-brand-600 text-white shadow-sm hover:bg-navy hover:shadow-md; }
   .btn-outline { @apply btn border border-brand-200 bg-white text-brand-600 hover:border-brand-600 hover:bg-brand-50; }
   .btn-ghost-l { @apply btn border border-white/30 bg-white/10 text-white hover:bg-white/20; }
   .btn-white   { @apply btn bg-white text-brand-600 shadow-sm hover:bg-brand-50; }
+  /* test2's secondary call to action is a bare text link, not a bordered button. */
+  .btn-text    { @apply inline-flex max-w-full items-center justify-center gap-2 text-center
+                        font-heading text-sm font-bold text-ink transition-colors hover:text-brand-600; }
 
   .card {
     @apply rounded-xl border border-line bg-white p-6 transition-all duration-200;

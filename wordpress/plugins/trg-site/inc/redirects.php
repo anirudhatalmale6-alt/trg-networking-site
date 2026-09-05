@@ -31,6 +31,13 @@ defined( 'ABSPATH' ) || exit;
 function trg_redirect_map() {
 	return apply_filters( 'trg_redirect_map', array(
 
+		// Slugs from this project's own earlier revision. test2 renamed the
+		// Azure page and dropped two others, so anything already linking to the
+		// old addresses lands on the page that replaced them rather than a 404.
+		'azure'                             => 'azure-cloud-hosting',
+		'network-infrastructure'            => 'managed-it-services',
+		'strategic-it-vcio'                 => 'why-trg',
+
 		// Interim slugs from the Hostinger staging build.
 		'managed-it'                        => 'managed-it-services',
 		'help-desk'                         => 'help-desk-it-support',

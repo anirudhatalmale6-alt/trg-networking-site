@@ -104,9 +104,12 @@ function trg_sc_contact_section( $atts ) {
 	$atts = shortcode_atts( array(
 		'title' => '',
 		'body'  => '',
+		// So the hero's "Talk With Our Team" button can jump straight to the
+		// form rather than reloading the page it is already on.
+		'id'    => '',
 	), $atts, 'trg_contact_section' );
 
-	return '<section class="section bg-white"><div class="shell grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14">'
+	return '<section ' . ( $atts['id'] ? 'id="' . esc_attr( $atts['id'] ) . '"' : '' ) . ' class="section bg-white"><div class="shell grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14">'
 		. do_shortcode( sprintf( '[trg_contact_details title="%s" body="%s"]', esc_attr( $atts['title'] ), esc_attr( $atts['body'] ) ) )
 		. '<div>' . do_shortcode( '[trg_contact_form]' ) . '</div>'
 		. '</div></section>';

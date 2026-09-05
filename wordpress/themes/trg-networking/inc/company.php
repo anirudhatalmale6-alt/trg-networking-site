@@ -23,7 +23,10 @@ function trg_company_defaults() {
 		'legal_name'      => 'TRG Networking, Inc.',
 		'founded'         => '1992',
 		'phone'           => '410-363-6980',
-		'email'           => 'info@trgnetworking.com',
+		// The address test2 publishes. This is the one PRINTED on the site;
+		// where enquiry notifications are delivered is a separate setting under
+		// Settings → TRG Email, so the two can differ.
+		'email'           => 'marketing@trgnetworking.com',
 		'marketing_email' => 'marketing@trgnetworking.com',
 		'street'          => '9861 Broken Land Parkway, Suite 100',
 		'city'            => 'Columbia',
@@ -31,7 +34,7 @@ function trg_company_defaults() {
 		'state_short'     => 'MD',
 		'zip'             => '21046',
 		'tagline'         => 'Maryland-based • Supporting businesses nationwide',
-		'blurb'           => 'Enterprise technology expertise delivered with personal attention. Supporting organizations since 1992.',
+		'blurb'           => 'Making technology simpler, safer and more responsive for businesses since 1992.',
 		'linkedin'        => 'https://www.linkedin.com/company/trg-networking-inc',
 		'facebook'        => 'https://www.facebook.com/TRGNetworkinginc/',
 		'twitter'         => 'https://twitter.com/trg_networking',

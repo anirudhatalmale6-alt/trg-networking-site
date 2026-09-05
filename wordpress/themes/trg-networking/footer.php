@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 </main>
 
-<footer class="bg-ink pb-8 pt-16 text-white">
+<footer class="bg-navy pb-8 pt-16 text-white">
 	<div class="shell">
 		<div class="grid gap-10 lg:grid-cols-[1.6fr_1fr_1fr_1fr_1.3fr]">
 			<div>
@@ -63,9 +63,17 @@ defined( 'ABSPATH' ) || exit;
 						</a>
 					</li>
 					<li>
-						<a href="mailto:<?php echo esc_attr( trg_company( 'email' ) ); ?>" class="flex items-start gap-2.5 break-all hover:text-white">
+						<?php
+						/*
+						 * break-words, not break-all: break-all splits the address
+						 * mid-word ("marketing@trgnetworking.c / om"), which is how
+						 * the longer marketing@ address rendered in the footer.
+						 * min-w-0 lets the flex child shrink so it wraps at all.
+						 */
+						?>
+						<a href="mailto:<?php echo esc_attr( trg_company( 'email' ) ); ?>" class="flex items-start gap-2.5 hover:text-white">
 							<?php trg_icon( 'mail', 15, 'mt-0.5 shrink-0 text-brand-400' ); ?>
-							<?php echo esc_html( trg_company( 'email' ) ); ?>
+							<span class="min-w-0 break-words"><?php echo esc_html( trg_company( 'email' ) ); ?></span>
 						</a>
 					</li>
 					<li class="flex items-start gap-2.5">

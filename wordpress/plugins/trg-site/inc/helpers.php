@@ -121,7 +121,10 @@ function trg_section_head( $args ) {
 		'eyebrow'       => '',
 		'title'         => '',
 		'body'          => '',
-		'align'         => 'center',
+		// test2 left-aligns every section header on the site; there is no
+		// text-center anywhere in its markup. align="center" is still honoured
+		// so the closing call-to-action band can centre itself.
+		'align'         => 'left',
 		'pill'          => false,
 		'light'         => false,
 		'heading_level' => 'h2',
@@ -130,17 +133,16 @@ function trg_section_head( $args ) {
 	$centred = 'center' === $args['align'];
 	$level   = in_array( $args['heading_level'], array( 'h1', 'h2', 'h3' ), true ) ? $args['heading_level'] : 'h2';
 
-	$out = '<div class="' . ( $centred ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl' ) . '">';
+	$out = '<div class="' . ( $centred ? 'mx-auto max-w-2xl text-center' : 'max-w-3xl' ) . '">';
 
 	if ( $args['eyebrow'] ) {
 		if ( $args['pill'] ) {
 			$out .= '<span class="eyebrow-pill">' . esc_html( $args['eyebrow'] ) . '</span>';
 		} else {
-			$tint = $args['light'] ? 'text-brand-200' : '';
-			$rule = $args['light'] ? 'bg-brand-200' : 'bg-brand-600';
-			$out .= '<span class="eyebrow ' . esc_attr( $tint ) . '">'
-				. '<span class="h-px w-7 ' . esc_attr( $rule ) . '" aria-hidden="true"></span>'
-				. esc_html( $args['eyebrow'] ) . '</span>';
+			// Plain text, no leading rule: on test2 only the page hero carries
+			// the short dash, every section eyebrow below it is bare.
+			$tint = $args['light'] ? 'text-white/70' : '';
+			$out .= '<span class="eyebrow ' . esc_attr( $tint ) . '">' . esc_html( $args['eyebrow'] ) . '</span>';
 		}
 	}
 
@@ -174,8 +176,21 @@ function trg_icon_tile( $icon, $tone = 'brand' ) {
 	);
 	$class = isset( $tones[ $tone ] ) ? $tones[ $tone ] : $tones['brand'];
 
+	/*
+	 * A value that is not one of the shipped icon names is drawn as a short
+	 * text token instead — "IT", "365", "C3" — which is what test2 puts in this
+	 * tile. Falling through to the icon renderer would print an empty box, so
+	 * the check is on what actually came back, not on a list of allowed names:
+	 * a card the client edits later can say anything.
+	 */
+	$svg = trg_site_icon( $icon, 20 );
+	if ( '' === trim( (string) $svg ) ) {
+		return '<div class="grid h-12 w-12 place-items-center rounded-xl ' . esc_attr( $class ) . ' font-display text-[13px] font-extrabold" aria-hidden="true">'
+			. esc_html( $icon ) . '</div>';
+	}
+
 	return '<div class="flex h-12 w-12 items-center justify-center rounded-xl ' . esc_attr( $class ) . '" aria-hidden="true">'
-		. trg_site_icon( $icon, 20 ) . '</div>';
+		. $svg . '</div>';
 }
 
 /**

@@ -51,13 +51,14 @@ function trg_setup() {
 
 	// Colour palette so the client picks brand colours rather than typing hex.
 	add_theme_support( 'editor-color-palette', array(
-		array( 'name' => __( 'Brand blue', 'trg-networking' ), 'slug' => 'brand', 'color' => '#2563EB' ),
-		array( 'name' => __( 'Brand dark', 'trg-networking' ), 'slug' => 'brand-dark', 'color' => '#1D4ED8' ),
-		array( 'name' => __( 'Brand tint', 'trg-networking' ), 'slug' => 'brand-tint', 'color' => '#EFF6FF' ),
-		array( 'name' => __( 'Ink', 'trg-networking' ), 'slug' => 'ink', 'color' => '#0F172A' ),
-		array( 'name' => __( 'Body text', 'trg-networking' ), 'slug' => 'body', 'color' => '#1E293B' ),
-		array( 'name' => __( 'Muted text', 'trg-networking' ), 'slug' => 'muted', 'color' => '#475569' ),
-		array( 'name' => __( 'Canvas', 'trg-networking' ), 'slug' => 'canvas', 'color' => '#F8FAFC' ),
+		array( 'name' => __( 'Brand blue', 'trg-networking' ), 'slug' => 'brand', 'color' => '#0E5CAF' ),
+		array( 'name' => __( 'Brand dark', 'trg-networking' ), 'slug' => 'brand-dark', 'color' => '#004991' ),
+		array( 'name' => __( 'Brand navy', 'trg-networking' ), 'slug' => 'navy', 'color' => '#012854' ),
+		array( 'name' => __( 'Brand tint', 'trg-networking' ), 'slug' => 'brand-tint', 'color' => '#ECF4FF' ),
+		array( 'name' => __( 'Ink', 'trg-networking' ), 'slug' => 'ink', 'color' => '#0E1721' ),
+		array( 'name' => __( 'Body text', 'trg-networking' ), 'slug' => 'body', 'color' => '#212A34' ),
+		array( 'name' => __( 'Muted text', 'trg-networking' ), 'slug' => 'muted', 'color' => '#606A74' ),
+		array( 'name' => __( 'Canvas', 'trg-networking' ), 'slug' => 'canvas', 'color' => '#F1F4F8' ),
 		array( 'name' => __( 'White', 'trg-networking' ), 'slug' => 'white', 'color' => '#FFFFFF' ),
 	) );
 	add_theme_support( 'disable-custom-colors' );
@@ -84,7 +85,7 @@ function trg_assets() {
 
 	wp_enqueue_style(
 		'trg-fonts',
-		'https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Outfit:wght@400..900&family=Plus+Jakarta+Sans:wght@400..800&display=swap',
+		'https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap',
 		array(),
 		null
 	);
@@ -125,6 +126,19 @@ add_filter( 'wp_resource_hints', 'trg_resource_hints', 10, 2 );
  * @return string
  */
 function trg_asset( $path ) {
+	/*
+	 * An image replaced under Settings → TRG Pictures wins over the file that
+	 * ships with the theme. Done here rather than at each call site so the
+	 * header and footer logos are covered without either template knowing the
+	 * override exists — and so a theme update cannot quietly restore the
+	 * shipped logo over the client's own.
+	 */
+	if ( function_exists( 'trg_picture_override_url' ) && preg_match( '#^assets/img/([^/.]+)\.#', ltrim( $path, '/' ), $m ) ) {
+		$override = trg_picture_override_url( $m[1] );
+		if ( $override ) {
+			return $override;
+		}
+	}
 	return get_template_directory_uri() . '/' . ltrim( $path, '/' );
 }
 

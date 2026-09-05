@@ -37,6 +37,15 @@ function trg_image_url( $value ) {
 	if ( preg_match( '#^https?://#i', $value ) || 0 === strpos( $value, '/' ) ) {
 		return $value;
 	}
+	// A picture replaced under Settings → TRG Pictures wins over the file that
+	// ships with the theme, so every place that references "hero-team" picks up
+	// the client's own photograph without any of them being edited.
+	if ( function_exists( 'trg_picture_override_url' ) ) {
+		$override = trg_picture_override_url( preg_replace( '/\.(webp|jpe?g|png|avif|gif|svg)$/i', '', $value ) );
+		if ( $override ) {
+			return $override;
+		}
+	}
 	if ( ! preg_match( '/\.(webp|jpe?g|png|avif|gif|svg)$/i', $value ) ) {
 		$value .= '.webp';
 	}
@@ -93,25 +102,30 @@ function trg_hero_buttons( $atts ) {
 	}
 
 	if ( $atts['button2_text'] ) {
+		// button2_style="text" renders the secondary action as a bare link
+		// rather than an outlined button, which is what test2 does beside the
+		// hero's primary call to action.
 		$out .= sprintf(
-			'<a href="%s" class="btn-outline">%s</a>',
+			'<a href="%s" class="%s">%s</a>',
 			esc_url( trg_link_url( $atts['button2_link'] ) ),
+			'text' === ( $atts['button2_style'] ?? '' ) ? 'btn-text' : 'btn-outline',
 			esc_html( $atts['button2_text'] )
 		);
 	}
 
-	// call_button="1" renders "Call 410-363-6980" using the number from the
-	// Customizer, so the button can never disagree with the header and footer.
+	// call_button="1" renders the number from the Customizer, so the button can
+	// never disagree with the header and footer. test2 shows the bare number as
+	// a text link beside the primary action rather than an outlined "Call ..."
+	// button, and this is the pattern on every one of its inner pages.
 	if ( ! empty( $atts['call_button'] ) ) {
 		$out .= sprintf(
-			'<a href="%s" class="btn-outline">%s</a>',
+			'<a href="%s" class="btn-text">%s</a>',
 			esc_url( trg_site_phone_href() ),
-			/* translators: %s: phone number. */
-			esc_html( sprintf( __( 'Call %s', 'trg-site' ), trg_site_company( 'phone' ) ) )
+			esc_html( trg_site_company( 'phone' ) )
 		);
 	}
 
-	return $out ? '<div class="mt-8 flex flex-col gap-3 sm:flex-row">' . $out . '</div>' : '';
+	return $out ? '<div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">' . $out . '</div>' : '';
 }
 
 /* -------------------------------------------------------------------------
@@ -131,10 +145,11 @@ function trg_sc_home_hero( $atts ) {
 		'line2'          => '',
 		'accent'         => '',
 		'lede'           => '',
-		'button_text'    => __( 'Talk with our team', 'trg-site' ),
+		'button_text'    => __( 'Talk With Our Team', 'trg-site' ),
 		'button_link'    => 'contact',
 		'button2_text'   => __( 'Free IT assessment', 'trg-site' ),
 		'button2_link'   => 'contact',
+		'button2_style'  => '',
 		'badges'         => '',
 		'jump_text'      => '',
 		'jump_link'      => '#services',
@@ -153,14 +168,16 @@ function trg_sc_home_hero( $atts ) {
 
 	ob_start();
 	?>
-	<section class="relative overflow-hidden">
-		<div class="pointer-events-none absolute inset-0" style="background:linear-gradient(160deg,#FFFFFF 0%,#F5F9FF 40%,#EFF6FF 100%)" aria-hidden="true"></div>
-		<div class="pointer-events-none absolute inset-0" style="background:radial-gradient(ellipse 70% 55% at 72% 40%,rgba(37,99,235,0.10) 0%,transparent 65%)" aria-hidden="true"></div>
+	<section class="relative overflow-hidden bg-brand-50">
+		<div class="dotted-field pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
 
 		<div class="shell relative grid items-center gap-12 py-14 sm:py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
 			<div class="animate-fadeUp">
 				<?php if ( $atts['eyebrow'] ) : ?>
-					<span class="eyebrow-pill"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
+					<span class="flex items-center gap-3">
+						<span class="eyebrow-rule" aria-hidden="true"></span>
+						<span class="eyebrow"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
+					</span>
 				<?php endif; ?>
 
 				<?php
@@ -224,19 +241,33 @@ function trg_sc_home_hero( $atts ) {
 
 				<?php if ( $cards ) : ?>
 					<?php
-					// The floating cards sit INSIDE the image column at every width.
-					// On the Lovable build they were positioned against the viewport
-					// and hung off the right edge of a phone screen.
+					/*
+					 * Two positions, and only two: card 1 floats over the top-left
+					 * of the image, card 2 over the bottom-right, which is the
+					 * arrangement test2 uses.
+					 *
+					 * The floating is switched on at `lg:` ONLY. Below that the
+					 * cards fall back to a normal stack underneath the image.
+					 * The Lovable build positioned these against the viewport at
+					 * every width, so on a phone the right-hand card hung off the
+					 * edge of the screen and pushed the page sideways. Anything
+					 * beyond the first two cards stays in the stack at all widths
+					 * rather than being dropped silently.
+					 */
+					$float_class = array(
+						0 => 'lg:absolute lg:left-[-2.5rem] lg:top-16 lg:z-10 lg:w-64',
+						1 => 'lg:absolute lg:bottom-24 lg:right-[-2.5rem] lg:z-10 lg:w-64',
+					);
 					?>
-					<ul class="mt-4 grid gap-3 sm:grid-cols-2">
-						<?php foreach ( $cards as $card ) : ?>
+					<ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:mt-0 lg:block">
+						<?php foreach ( $cards as $i => $card ) : ?>
 							<?php $parts = array_pad( trg_split_list( $card, '|' ), 2, '' ); ?>
-							<li class="flex items-start gap-3 rounded-xl border border-line bg-white p-3.5 shadow-sm">
+							<li class="flex items-start gap-3 rounded-xl border border-line bg-white p-3.5 shadow-sm <?php echo esc_attr( $float_class[ $i ] ?? 'lg:mt-3' ); ?>">
 								<span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-brand-50 text-brand-600" aria-hidden="true">
 									<?php echo trg_site_icon( 'check', 15 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 								</span>
 								<span class="min-w-0">
-									<span class="block font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-soft"><?php echo esc_html( $parts[0] ); ?></span>
+									<span class="block font-heading text-[10.5px] font-bold uppercase tracking-[0.14em] text-brand-600"><?php echo esc_html( $parts[0] ); ?></span>
 									<span class="block text-[14px] font-semibold text-ink"><?php echo esc_html( $parts[1] ); ?></span>
 								</span>
 							</li>
@@ -247,10 +278,10 @@ function trg_sc_home_hero( $atts ) {
 		</div>
 
 		<?php if ( $strip ) : ?>
-			<div class="relative border-y border-line bg-white/70">
-				<div class="shell flex flex-wrap items-center justify-center gap-x-8 gap-y-2.5 py-4">
+			<div class="relative border-t border-brand-100 bg-white/60">
+				<div class="shell flex flex-wrap items-center justify-center gap-x-10 gap-y-2.5 py-5">
 					<?php foreach ( $strip as $item ) : ?>
-						<span class="font-heading text-[11px] font-bold uppercase tracking-[0.16em] text-soft"><?php echo esc_html( $item ); ?></span>
+						<span class="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-brand-600"><?php echo esc_html( $item ); ?></span>
 					<?php endforeach; ?>
 				</div>
 			</div>
@@ -276,6 +307,7 @@ function trg_sc_hero( $atts ) {
 		'button_link'  => 'contact',
 		'button2_text' => '',
 		'button2_link' => 'contact',
+		'button2_style' => '',
 		'call_button'  => '',
 	), $atts, 'trg_hero' );
 
@@ -285,12 +317,13 @@ function trg_sc_hero( $atts ) {
 
 	ob_start();
 	?>
-	<section class="relative overflow-hidden border-b border-line">
-		<div class="pointer-events-none absolute inset-0" style="background:linear-gradient(160deg,#FFFFFF 0%,#F5F9FF 45%,#EFF6FF 100%)" aria-hidden="true"></div>
-		<div class="shell relative py-14 sm:py-20">
-			<div class="max-w-3xl">
+	<?php // Same tinted dot field as the homepage hero, which is what test2 uses on every inner page. ?>
+	<section class="relative overflow-hidden bg-brand-50">
+		<div class="dotted-field pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
+		<div class="shell relative py-16 sm:py-24">
+			<div class="max-w-4xl">
 				<?php if ( $atts['eyebrow'] ) : ?>
-					<span class="eyebrow-pill"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
+					<span class="eyebrow"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
 				<?php endif; ?>
 				<h1 class="mt-5 text-[34px] leading-[1.1] sm:text-[46px] lg:text-[52px]"><?php echo esc_html( $title ); ?></h1>
 				<?php if ( $atts['lede'] ) : ?>
@@ -441,14 +474,23 @@ function trg_sc_card( $atts, $content = '' ) {
 		'link'  => '',
 		'cta'   => '',
 		'badge' => '',
+		'num'   => '',
 	), $atts, 'trg_card' );
 
 	$body = wp_kses_post( trim( wp_strip_all_tags( $content ) ) );
 	$url  = trg_link_url( $atts['link'] );
 	$tag  = $url ? 'a' : 'div';
 
-	$inner  = 'none' === $atts['icon'] ? '' : trg_icon_tile( $atts['icon'] );
-	$inner .= '<h3 class="' . ( 'none' === $atts['icon'] ? '' : 'mt-4 ' ) . 'text-[17px]' . ( $url ? ' group-hover:text-brand-600' : '' ) . '">' . esc_html( $atts['title'] ) . '</h3>';
+	// num="01" replaces the icon tile with a numeral, which is how test2 marks
+	// the capability grids. A number and an icon would compete, so num wins.
+	if ( '' !== $atts['num'] ) {
+		$inner = '<span class="font-heading text-[13px] font-bold tracking-wider text-brand-600">' . esc_html( $atts['num'] ) . '</span>';
+		$lead  = 'mt-3 ';
+	} else {
+		$inner = 'none' === $atts['icon'] ? '' : trg_icon_tile( $atts['icon'] );
+		$lead  = 'none' === $atts['icon'] ? '' : 'mt-4 ';
+	}
+	$inner .= '<h3 class="' . $lead . 'text-[17px]' . ( $url ? ' group-hover:text-brand-600' : '' ) . '">' . esc_html( $atts['title'] ) . '</h3>';
 	$inner .= '<p class="mt-2 flex-1 text-[15px] leading-relaxed text-muted">' . $body . '</p>';
 
 	if ( $url && $atts['cta'] ) {
@@ -487,7 +529,7 @@ function trg_sc_services( $atts ) {
 		'eyebrow' => '',
 		'title'   => '',
 		'body'    => '',
-		'pill'    => '1',
+		'pill'    => '',
 		'bg'      => 'white',
 		'id'      => 'services',
 		'limit'   => '-1',
@@ -549,7 +591,7 @@ function trg_sc_industries( $atts ) {
 		'eyebrow' => '',
 		'title'   => '',
 		'body'    => '',
-		'pill'    => '1',
+		'pill'    => '',
 		'bg'      => 'white',
 		'limit'   => '-1',
 	), $atts, 'trg_industries' );
@@ -571,31 +613,28 @@ function trg_sc_industries( $atts ) {
 	<section class="section <?php echo 'canvas' === $atts['bg'] ? 'bg-canvas' : 'bg-white'; ?>">
 		<div class="shell">
 			<?php echo $head; // phpcs:ignore WordPress.Security.EscapeOutput ?>
-			<ul class="<?php echo $head ? 'mt-12' : ''; ?> divide-y divide-line border-y border-line">
+			<?php // test2 lays the industries out as four cards, not as rows. ?>
+			<div class="<?php echo $head ? 'mt-12' : ''; ?> grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
 				<?php foreach ( $cards as $i => $card ) : ?>
 					<?php
 					$url  = trg_card_link( $card );
 					$tags = get_post_meta( $card->ID, '_trg_tags', true );
 					$tag  = $url ? 'a' : 'div';
 					?>
-					<li>
-						<<?php echo esc_html( $tag ); ?> <?php echo $url ? 'href="' . esc_url( $url ) . '"' : ''; ?>
-							class="group flex flex-col gap-3 py-6 transition-colors hover:bg-canvas sm:flex-row sm:items-center sm:gap-8 sm:px-4">
-							<span class="font-display text-[15px] font-extrabold text-brand-600 sm:w-10"><?php echo esc_html( sprintf( '%02d', $i + 1 ) ); ?></span>
-							<span class="min-w-0 sm:w-[290px] sm:shrink-0">
-								<span class="block font-heading text-[18px] font-extrabold text-ink group-hover:text-brand-600"><?php echo esc_html( get_the_title( $card ) ); ?></span>
-								<?php if ( $tags ) : ?>
-									<span class="mt-0.5 block text-[13px] text-soft"><?php echo esc_html( $tags ); ?></span>
-								<?php endif; ?>
-							</span>
-							<span class="min-w-0 flex-1 text-[15px] leading-relaxed text-muted"><?php echo esc_html( trg_card_body( $card ) ); ?></span>
-							<?php if ( $url ) : ?>
-								<?php echo trg_site_icon( 'arrow-up-right', 19, 'shrink-0 text-soft transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand-600' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-							<?php endif; ?>
-						</<?php echo esc_html( $tag ); ?>>
-					</li>
+					<<?php echo esc_html( $tag ); ?> <?php echo $url ? 'href="' . esc_url( $url ) . '"' : ''; ?>
+						class="card-hover <?php echo $url ? 'group ' : ''; ?>flex flex-col">
+						<span class="font-display text-[13px] font-bold tracking-wider text-brand-400"><?php echo esc_html( sprintf( '%02d', $i + 1 ) ); ?></span>
+						<h3 class="mt-3 text-[17px]<?php echo $url ? ' group-hover:text-brand-600' : ''; ?>"><?php echo esc_html( get_the_title( $card ) ); ?></h3>
+						<p class="mt-2 flex-1 text-[15px] leading-relaxed text-muted"><?php echo esc_html( trg_card_body( $card ) ); ?></p>
+						<?php if ( $tags ) : ?>
+							<p class="mt-3 text-[13px] text-soft"><?php echo esc_html( $tags ); ?></p>
+						<?php endif; ?>
+						<?php if ( $url ) : ?>
+							<?php echo trg_site_icon( 'arrow-up-right', 19, 'mt-5 text-soft transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-brand-600' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+						<?php endif; ?>
+					</<?php echo esc_html( $tag ); ?>>
 				<?php endforeach; ?>
-			</ul>
+			</div>
 		</div>
 	</section>
 	<?php
@@ -614,10 +653,16 @@ function trg_sc_testimonials( $atts ) {
 		'eyebrow'   => '',
 		'title'     => '',
 		'body'      => '',
-		'pill'      => '1',
+		'pill'      => '',
 		'bg'        => 'white',
 		'cta_text'  => '',
 		'cta_link'  => 'why-trg',
+		// attribution="0" prints the quote on its own. test2 shows both
+		// testimonials unattributed, and until each client has agreed in
+		// writing to be named on the new site that is the correct default for
+		// the homepage. The names stay in the Testimonials admin screen, so
+		// turning attribution back on is a one-word edit, not a re-entry job.
+		'attribution' => '1',
 	), $atts, 'trg_testimonials' );
 
 	$cards = trg_get_cards( 'trg_testimonial' );
@@ -642,13 +687,15 @@ function trg_sc_testimonials( $atts ) {
 					<figure class="card flex flex-col bg-canvas">
 						<?php echo trg_site_icon( 'quote', 26, 'text-brand-200' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 						<blockquote class="mt-4 flex-1 text-[17px] leading-relaxed text-body">&ldquo;<?php echo esc_html( trg_card_body( $card ) ); ?>&rdquo;</blockquote>
-						<figcaption class="mt-6 border-t border-line pt-4">
-							<span class="block font-heading text-[15px] font-bold text-ink"><?php echo esc_html( get_the_title( $card ) ); ?></span>
-							<?php $org = get_post_meta( $card->ID, '_trg_org', true ); ?>
-							<?php if ( $org ) : ?>
-								<span class="block text-[13.5px] text-soft"><?php echo esc_html( $org ); ?></span>
-							<?php endif; ?>
-						</figcaption>
+						<?php if ( '0' !== (string) $atts['attribution'] ) : ?>
+							<figcaption class="mt-6 border-t border-line pt-4">
+								<span class="block font-heading text-[15px] font-bold text-ink"><?php echo esc_html( get_the_title( $card ) ); ?></span>
+								<?php $org = get_post_meta( $card->ID, '_trg_org', true ); ?>
+								<?php if ( $org ) : ?>
+									<span class="block text-[13.5px] text-soft"><?php echo esc_html( $org ); ?></span>
+								<?php endif; ?>
+							</figcaption>
+						<?php endif; ?>
 					</figure>
 				<?php endforeach; ?>
 			</div>
@@ -789,7 +836,11 @@ function trg_sc_pills( $atts ) {
 add_shortcode( 'trg_pills', 'trg_sc_pills' );
 
 /**
- * Dark quote band.
+ * The "TRG perspective" band.
+ *
+ * A light, centred panel with a text link out to the contact page — test2's
+ * shape. It used to be a dark rounded card; the dark treatment now belongs to
+ * the Azure and Secure AI panels and to the closing call to action.
  *
  * @param array  $atts    Attributes.
  * @param string $content Body text.
@@ -797,28 +848,29 @@ add_shortcode( 'trg_pills', 'trg_sc_pills' );
  */
 function trg_sc_perspective( $atts, $content = '' ) {
 	$atts = shortcode_atts( array(
-		'eyebrow' => __( 'TRG perspective', 'trg-site' ),
-		'title'   => '',
-		'body'    => '',
+		'eyebrow'   => __( 'TRG perspective', 'trg-site' ),
+		'title'     => '',
+		'body'      => '',
+		'link_text' => __( 'Start a conversation', 'trg-site' ),
+		'link'      => 'contact',
 	), $atts, 'trg_perspective' );
 
 	$body = $atts['body'] ? $atts['body'] : trim( wp_strip_all_tags( $content ) );
 
 	ob_start();
 	?>
-	<section class="section">
-		<div class="shell">
-			<div class="relative overflow-hidden rounded-2xl bg-ink px-6 py-12 sm:px-12 sm:py-14">
-				<div class="pointer-events-none absolute inset-0" style="background:radial-gradient(ellipse 60% 80% at 85% 20%,rgba(37,99,235,0.30) 0%,transparent 70%)" aria-hidden="true"></div>
-				<div class="relative max-w-3xl">
-					<span class="eyebrow text-brand-200">
-						<span class="h-px w-7 bg-brand-200" aria-hidden="true"></span>
-						<?php echo esc_html( $atts['eyebrow'] ); ?>
-					</span>
-					<h2 class="mt-4 text-[26px] leading-[1.2] !text-white sm:text-[32px]"><?php echo esc_html( $atts['title'] ); ?></h2>
-					<p class="mt-4 max-w-2xl text-[17px] leading-relaxed text-white/70"><?php echo esc_html( $body ); ?></p>
-				</div>
-			</div>
+	<section class="section bg-canvas">
+		<div class="shell mx-auto max-w-3xl text-center">
+			<span class="eyebrow"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
+			<h2 class="mt-4 text-[26px] leading-[1.2] sm:text-[32px]"><?php echo esc_html( $atts['title'] ); ?></h2>
+			<p class="mt-5 text-[17px] leading-relaxed text-muted"><?php echo esc_html( $body ); ?></p>
+			<?php if ( $atts['link_text'] ) : ?>
+				<a href="<?php echo esc_url( trg_link_url( $atts['link'] ) ); ?>"
+					class="mt-8 inline-flex items-center gap-1.5 font-heading text-sm font-bold text-brand-600 hover:underline">
+					<?php echo esc_html( $atts['link_text'] ); ?>
+					<?php echo trg_site_icon( 'arrow-right', 15 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
+				</a>
+			<?php endif; ?>
 		</div>
 	</section>
 	<?php
@@ -838,10 +890,11 @@ function trg_sc_cta_band( $atts, $content = '' ) {
 		'eyebrow'      => __( 'Let’s talk', 'trg-site' ),
 		'title'        => __( 'Ready for technology that feels easier?', 'trg-site' ),
 		'body'         => __( 'Start with a straightforward conversation about your business, your concerns and what better IT support could look like.', 'trg-site' ),
-		'button_text'  => __( 'Talk with our team', 'trg-site' ),
+		'button_text'  => __( 'Talk With Our Team', 'trg-site' ),
 		'button_link'  => 'contact',
 		'button2_text' => '',
 		'button2_link' => 'contact',
+		'button2_style' => '',
 	), $atts, 'trg_cta_band' );
 
 	$body = trim( wp_strip_all_tags( $content ) );
@@ -851,28 +904,30 @@ function trg_sc_cta_band( $atts, $content = '' ) {
 
 	ob_start();
 	?>
-	<section class="section relative overflow-hidden" style="background:linear-gradient(135deg,#0F172A 0%,#0D2247 55%,#1D4ED8 100%)">
-		<div class="shell relative grid items-center gap-10 lg:grid-cols-[1.4fr_1fr]">
+	<?php // Solid navy and centred, which is how test2 closes every page. ?>
+	<section class="section relative overflow-hidden bg-navy text-white">
+		<div class="dotted-field pointer-events-none absolute inset-0 opacity-[0.12]" aria-hidden="true"></div>
+		<div class="shell relative mx-auto max-w-3xl text-center">
 			<?php
 			echo trg_section_head( array( // phpcs:ignore WordPress.Security.EscapeOutput
 				'eyebrow' => $atts['eyebrow'],
 				'title'   => $atts['title'],
 				'body'    => $atts['body'],
-				'align'   => 'left',
+				'align'   => 'center',
 				'light'   => true,
 			) );
 			?>
-			<div class="flex flex-col items-start gap-3 lg:items-end">
-				<a href="<?php echo esc_url( trg_link_url( $atts['button_link'] ) ); ?>" class="btn-white w-full sm:w-auto">
+			<div class="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+				<a href="<?php echo esc_url( trg_link_url( $atts['button_link'] ) ); ?>" class="btn-white">
 					<?php echo esc_html( $atts['button_text'] ); ?>
 					<?php echo trg_site_icon( 'arrow-right', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 				</a>
 				<?php if ( $atts['button2_text'] ) : ?>
-					<a href="<?php echo esc_url( trg_link_url( $atts['button2_link'] ) ); ?>" class="btn-ghost-l w-full sm:w-auto">
+					<a href="<?php echo esc_url( trg_link_url( $atts['button2_link'] ) ); ?>" class="btn-ghost-l">
 						<?php echo esc_html( $atts['button2_text'] ); ?>
 					</a>
 				<?php endif; ?>
-				<a href="<?php echo esc_url( trg_site_phone_href() ); ?>" class="btn-ghost-l w-full sm:w-auto">
+				<a href="<?php echo esc_url( trg_site_phone_href() ); ?>" class="btn-ghost-l">
 					<?php
 					/* translators: %s: phone number. */
 					printf( esc_html__( 'Or call %s', 'trg-site' ), esc_html( trg_site_company( 'phone' ) ) );
@@ -1029,21 +1084,29 @@ function trg_sc_ai_panel( $atts ) {
 
 	ob_start();
 	?>
-	<section class="section <?php echo 'white' === $atts['bg'] ? 'bg-white' : 'bg-canvas'; ?>">
-		<div class="shell grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
+	<?php
+	// bg="navy" turns the whole band dark, which is how test2 renders its Azure
+	// section. Same component, because the two bands are the same shape.
+	$dark = 'navy' === $atts['bg'];
+	?>
+	<section class="section <?php echo $dark ? 'relative overflow-hidden bg-navy text-white' : ( 'white' === $atts['bg'] ? 'bg-white' : 'bg-canvas' ); ?>">
+		<?php if ( $dark ) : ?>
+			<div class="dotted-field pointer-events-none absolute inset-0 opacity-[0.12]" aria-hidden="true"></div>
+		<?php endif; ?>
+		<div class="shell relative grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
 			<div>
 				<div class="max-w-2xl">
 					<?php if ( $atts['eyebrow'] ) : ?>
-						<span class="eyebrow"><span class="h-px w-7 bg-brand-600" aria-hidden="true"></span><?php echo esc_html( $atts['eyebrow'] ); ?></span>
+						<span class="eyebrow <?php echo $dark ? 'text-white/70' : ''; ?>"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
 					<?php endif; ?>
-					<h2 class="mt-4 text-[30px] leading-[1.15] sm:text-[38px]">
+					<h2 class="mt-4 text-[30px] leading-[1.15] sm:text-[38px] <?php echo $dark ? 'text-white' : ''; ?>">
 						<?php echo esc_html( $atts['title'] ); ?>
 						<?php if ( $atts['accent'] ) : ?>
-							<br><span class="text-brand-600"><?php echo esc_html( $atts['accent'] ); ?></span>
+							<br><span class="<?php echo $dark ? 'text-brand-300' : 'text-brand-600'; ?>"><?php echo esc_html( $atts['accent'] ); ?></span>
 						<?php endif; ?>
 					</h2>
 					<?php if ( $atts['body'] ) : ?>
-						<p class="mt-4 text-[17px] leading-relaxed text-muted"><?php echo esc_html( $atts['body'] ); ?></p>
+						<p class="mt-4 text-[17px] leading-relaxed <?php echo $dark ? 'text-white/75' : 'text-muted'; ?>"><?php echo esc_html( $atts['body'] ); ?></p>
 					<?php endif; ?>
 				</div>
 
@@ -1058,15 +1121,17 @@ function trg_sc_ai_panel( $atts ) {
 				<?php endif; ?>
 
 				<?php if ( $atts['button_text'] ) : ?>
-					<a href="<?php echo esc_url( trg_link_url( $atts['button_link'] ) ); ?>" class="btn-primary mt-8">
+					<a href="<?php echo esc_url( trg_link_url( $atts['button_link'] ) ); ?>" class="<?php echo $dark ? 'btn-white' : 'btn-primary'; ?> mt-8">
 						<?php echo esc_html( $atts['button_text'] ); ?>
 						<?php echo trg_site_icon( 'arrow-right', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
 					</a>
 				<?php endif; ?>
 			</div>
 
-			<div class="relative overflow-hidden rounded-2xl bg-ink p-6 sm:p-7">
-				<div class="pointer-events-none absolute inset-0" style="background:radial-gradient(ellipse 70% 60% at 80% 10%,rgba(37,99,235,0.35) 0%,transparent 70%)" aria-hidden="true"></div>
+			<div class="relative overflow-hidden rounded-2xl <?php echo $dark ? 'border border-white/15 bg-white/[0.06]' : 'bg-ink'; ?> p-6 sm:p-7">
+				<?php if ( ! $dark ) : ?>
+					<div class="pointer-events-none absolute inset-0" style="background:radial-gradient(ellipse 70% 60% at 80% 10%,rgba(14,92,175,0.40) 0%,transparent 70%)" aria-hidden="true"></div>
+				<?php endif; ?>
 				<div class="relative">
 					<div class="flex items-center justify-between border-b border-white/10 pb-4">
 						<span class="font-heading text-[10.5px] font-bold uppercase tracking-[0.16em] text-white/55"><?php echo esc_html( $atts['panel_label'] ); ?></span>
