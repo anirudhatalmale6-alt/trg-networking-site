@@ -128,9 +128,10 @@ function trg_picture_override_url( $key ) {
  * Admin menu entry.
  */
 function trg_pictures_menu() {
-	add_options_page(
+	add_submenu_page(
+		TRG_HUB_SLUG,
 		__( 'TRG Pictures', 'trg-site' ),
-		__( 'TRG Pictures', 'trg-site' ),
+		__( 'Pictures', 'trg-site' ),
 		'manage_options',
 		'trg-pictures',
 		'trg_pictures_page'

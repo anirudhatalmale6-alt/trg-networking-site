@@ -34,7 +34,7 @@ function trg_register_enquiry_type() {
 		),
 		'public'          => false,
 		'show_ui'         => true,
-		'show_in_menu'    => true,
+		'show_in_menu'    => TRG_HUB_SLUG,
 		'menu_icon'       => 'dashicons-email-alt',
 		'menu_position'   => 24,
 		'supports'        => array( 'title' ),

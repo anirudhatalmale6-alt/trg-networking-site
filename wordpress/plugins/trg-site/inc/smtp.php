@@ -121,9 +121,10 @@ add_action( 'phpmailer_init', 'trg_smtp_configure' );
  * Settings page.
  */
 function trg_smtp_menu() {
-	add_options_page(
+	add_submenu_page(
+		TRG_HUB_SLUG,
 		__( 'TRG Email', 'trg-site' ),
-		__( 'TRG Email', 'trg-site' ),
+		__( 'Email settings', 'trg-site' ),
 		'manage_options',
 		'trg-email',
 		'trg_smtp_page'
@@ -298,14 +299,18 @@ function trg_smtp_notice() {
 	if ( trg_smtp_configured() || ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
-	$screen = get_current_screen();
-	if ( $screen && 'settings_page_trg-email' === $screen->id ) {
+	// Matched on the page query var rather than the screen id: the screen id
+	// carries the parent menu's slug in it, so it changes whenever the page is
+	// moved and the notice would silently start showing on its own settings
+	// screen again.
+	$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	if ( 'trg-email' === $page ) {
 		return;
 	}
 	printf(
 		'<div class="notice notice-warning"><p>%s <a href="%s">%s</a></p></div>',
 		esc_html__( 'The website cannot send email yet, so nobody is notified when the contact form is used. Enquiries are still being saved.', 'trg-site' ),
-		esc_url( admin_url( 'options-general.php?page=trg-email' ) ),
+		esc_url( admin_url( 'admin.php?page=trg-email' ) ),
 		esc_html__( 'Set up email', 'trg-site' )
 	);
 }
