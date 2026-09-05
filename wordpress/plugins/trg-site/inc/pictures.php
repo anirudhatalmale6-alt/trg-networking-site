@@ -130,6 +130,22 @@ function trg_picture_overrides() {
 }
 
 /**
+ * The attachment ID sitting in a slot, or 0 when the slot has never been filled.
+ *
+ * Separate from trg_picture_override_url() because a credit line has to be read
+ * off the attachment itself. Tying it to the picture rather than to the page
+ * means that when the client swaps the photograph for one of his own, the credit
+ * for the previous one disappears with it — nobody has to remember to delete it.
+ *
+ * @param string $key Slot key.
+ * @return int
+ */
+function trg_picture_override_id( $key ) {
+	$map = trg_picture_overrides();
+	return empty( $map[ $key ] ) ? 0 : (int) $map[ $key ];
+}
+
+/**
  * The URL to use for a slot, or '' when the theme's own file should be used.
  *
  * @param string $key Slot key.
