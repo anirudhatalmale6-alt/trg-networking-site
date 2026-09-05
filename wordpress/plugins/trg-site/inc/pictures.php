@@ -97,6 +97,26 @@ function trg_picture_slots() {
 		);
 	}
 
+	/*
+	 * One slot per person on the About page. Four of the six currently show
+	 * initials rather than a face, because the pictures on the old site are not
+	 * photographs of those people — see inc/team.php. Uploading a real headshot
+	 * here replaces the initials with no other change needed.
+	 */
+	if ( function_exists( 'trg_team_members' ) ) {
+		foreach ( trg_team_members() as $member ) {
+			$slots[] = array(
+				'key'   => 'team-' . $member['slug'],
+				/* translators: %s: person's name. */
+				'label' => sprintf( __( '%s — photo', 'trg-site' ), $member['name'] ),
+				'where' => __( 'The leadership team on the About page.', 'trg-site' ),
+				'size'  => $member['photo']
+					? __( 'Square, around 640 × 640, head and shoulders.', 'trg-site' )
+					: __( 'Square, around 640 × 640, head and shoulders. Showing initials at the moment — upload a photo and it replaces them.', 'trg-site' ),
+			);
+		}
+	}
+
 	return $slots;
 }
 

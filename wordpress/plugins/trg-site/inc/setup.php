@@ -94,6 +94,11 @@ function trg_page_definitions() {
 				. '[trg_card icon="server" title="Our expertise"]Managed IT, cybersecurity, Microsoft 365 and Azure, CMMC readiness, business continuity, network infrastructure and strategic IT leadership.[/trg_card]' . "\n"
 				. '[trg_card icon="map-pin" title="Our community"]Based at 9861 Broken Land Parkway, Suite 100, Columbia, Maryland 21046 — close enough to be on site, equipped to support clients anywhere.[/trg_card]' . "\n"
 				. '[/trg_cards]',
+			// The biographies are TRG's own words, lifted from their Hostinger
+			// site. Four of the six show initials rather than a face — see
+			// inc/team.php for why, and TRG Pictures for how to fix it.
+			'[trg_team bg="white" eyebrow="Leadership" title="The people behind the work." '
+				. 'body="TRG is led by a team whose experience spans federal audit and risk management, enterprise architecture, cybersecurity education and nearly three decades of continuous service to the same clients."]',
 			'[trg_perspective title="The right technology relationship should reduce stress — not create more of it." body="TRG works to give leadership and employees confidence that their technology has an experienced team behind it."]',
 			'[trg_cta_band]',
 		) ),
