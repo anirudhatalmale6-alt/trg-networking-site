@@ -1,0 +1,160 @@
+TRG NETWORKING - SERVER AND DNS TASKS BEFORE GO-LIVE
+Prepared for TRG's server engineer. Forward this whole file as it is.
+Date: 5 September 2026
+
+
+WHAT THIS IS
+
+The new TRG Networking website is built and finished. It is running now at
+http://test.trgnetworking.com on your Windows/IIS server on Azure
+(20.124.224.234, PHP 8.3, MySQL on localhost).
+
+Four things need doing on the server and in DNS before it can go live on
+trgnetworking.com. None of them are large. They are listed in the order they
+should happen.
+
+I work over FTP only, which gives me files. It does not give me the certificate
+store, the IIS bindings, the PHP configuration or the DNS zone. Those four
+things are why this list exists.
+
+
+--------------------------------------------------------------------------
+TASK 1 - TWO PHP SETTINGS  (5 minutes, do this first, nothing depends on it)
+--------------------------------------------------------------------------
+
+Current values on the server are too low for a normal website.
+
+a) Upload limit is 2 MB. A photograph straight off a phone is usually larger
+   than that, so picture uploads fail with no useful error. In php.ini:
+
+       upload_max_filesize = 32M
+       post_max_size = 32M
+
+b) Two PHP extensions are not enabled: GD and fileinfo. Without GD, WordPress
+   cannot resize an uploaded photo, so a 4 MB image is served at full size to
+   every visitor and pages become very slow. In php.ini, uncomment:
+
+       extension=php_gd2.dll
+       extension=php_fileinfo.dll
+
+Restart the PHP FastCGI application pool afterwards.
+
+To confirm: I can verify both from my side once it is done. Just say when.
+
+
+--------------------------------------------------------------------------
+TASK 2 - BIND THE SSL CERTIFICATE
+--------------------------------------------------------------------------
+
+TRG already owns a certificate. It needs to be a .pfx file (the certificate
+together with its private key) plus the password for that file.
+
+Do not send the .pfx or its password to me or through the Freelancer chat.
+It should not travel. Import it directly on the server.
+
+a) Import the .pfx into the Local Computer certificate store, Personal folder.
+
+b) In IIS Manager, select the site whose path is
+   D:\inetpub\trgnetworking.com, open Bindings, and add:
+
+       Type https, port 443, hostname trgnetworking.com,     this certificate
+       Type https, port 443, hostname www.trgnetworking.com, this certificate
+       Type http,  port 80,  hostname trgnetworking.com
+       Type http,  port 80,  hostname www.trgnetworking.com
+
+   Keep the existing test.trgnetworking.com bindings. Do not remove them.
+
+c) Please check first whether the certificate covers both trgnetworking.com and
+   www.trgnetworking.com. Most do. If it is a wildcard (*.trgnetworking.com) it
+   will also cover test.trgnetworking.com - in that case please add an https
+   binding for test.trgnetworking.com as well.
+
+   That last point is worth the extra minute. It would let me test the entire
+   site over https and prove it works BEFORE any DNS is touched, instead of
+   finding a certificate problem after the domain has already moved.
+
+   Right now https on the test address returns 404, because there is no
+   binding of any kind on port 443.
+
+
+--------------------------------------------------------------------------
+TASK 3 - DNS  (do not do this until tasks 1 and 2 are finished)
+--------------------------------------------------------------------------
+
+Nameservers are ns1/ns2/ns3.trgnetworking.com, so this is controlled in-house.
+
+WHAT CHANGES - exactly two records:
+
+       trgnetworking.com        A       ->  20.124.224.234
+                                            (currently 52.35.104.127)
+
+       www.trgnetworking.com            ->  20.124.224.234
+                                            (currently a CNAME to
+                                             host.axionthemes.com)
+
+WHAT MUST NOT CHANGE - please read this part carefully:
+
+       MX      trgnetworking-com.mail.protection.outlook.com
+       TXT     v=spf1 ip4:50.76.20.81 include:md02.com ... -all
+       TXT     MS=7BBCCAC7DB29955143A359598E7217C857B78883
+       TXT     google-site-verification=XHRYJY1cnNHNSWenR4SQo0XmoyfW6FxqNAbHByWpo-g
+       TXT     _dmarc  v=DMARC1; p=quarantine; adkim=s; aspf=s;
+       plus the two DKIM selector records
+
+Those are Microsoft 365. If the zone is rebuilt from a default template rather
+than edited, company email stops - and it is not obvious for a day or two,
+because outbound mail keeps working while inbound quietly fails.
+
+One piece of good news, since I checked the record rather than assuming: the
+SPF record does NOT contain an "a" mechanism. Some do, and where they do,
+repointing the A record silently authorises the web server to send mail as the
+domain. TRG's SPF lists specific IP addresses and specific services instead, so
+this move cannot cause that problem. Just leave the record alone.
+
+TIMING:
+
+- The day before: lower the TTL on those two records to 300 seconds. This is
+  what makes the switch reversible in five minutes instead of a day.
+- After the switch: leave the old axionthemes site running for a week. It costs
+  nothing and gives us somewhere to fall back to.
+
+
+--------------------------------------------------------------------------
+TASK 4 - MICROSOFT 365 MAILBOX  (independent of everything above)
+--------------------------------------------------------------------------
+
+The website's enquiry form saves every message to the database, but it cannot
+send notification email yet.
+
+The server is on Azure, which blocks outbound port 25 entirely. I measured this
+from the machine itself: ports 25, 587 and 465 to the Microsoft 365 mail host
+are all blocked, while smtp.office365.com on port 587 is open. So authenticated
+submission through Microsoft 365 is the only route available. That is not a
+preference, it is the only thing the network permits.
+
+Needed:
+
+a) Enable SMTP AUTH on the mailbox that will send (it is off by default in
+   Microsoft 365 tenants).
+b) Create an app password for that mailbox.
+c) Give the app password to Dr. Edwards, who will paste it into the website's
+   own Email settings screen.
+
+Do not send the password to me. The website has a settings page for it
+precisely so that nobody has to.
+
+
+--------------------------------------------------------------------------
+WHAT I DO ONCE THE ABOVE IS DONE
+--------------------------------------------------------------------------
+
+1. Switch WordPress from the test address to https://www.trgnetworking.com
+2. Force http to https, and the bare domain to www, in web.config
+3. Re-run the redirect tests on all 34 old URLs against the live domain. They
+   are already tested, but tested against the test host - I want them proven on
+   the real one before anyone relies on them.
+4. Re-check every page, every image, the contact form and the mobile layout on
+   the live domain
+5. Submit the sitemap to Google
+
+Any questions, send them to Dr. Edwards and he will pass them to me.
