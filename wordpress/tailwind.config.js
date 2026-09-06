@@ -74,11 +74,14 @@ export default {
         // Slower than the partner strip. These carry two lines of text each
         // and a visitor has to be able to read one as it passes.
         marqueeRight: 'marqueeRight 30s linear infinite',
-        // The hero capability ticker. Its track is roughly twice as long as
-        // the partner strip's, so the same 32s would read as twice the speed.
-        // Timed to land near 42px a second, which is slow enough to read a
-        // passing item without the page feeling asleep.
-        marqueeSlow: 'marquee 48s linear infinite',
+        // The hero capability ticker. Timed against the MEASURED track, not
+        // guessed: half the track divided by the duration is the speed in
+        // pixels a second, and 42 is slow enough to read a passing item
+        // without the page feeling asleep. Enlarging the type to 16px grew
+        // the track from 4034px to 5024px, which pushed the same 48s up to
+        // 52px/s — so the duration moves with the type. Re-measure if either
+        // the wording or the size changes again.
+        marqueeSlow: 'marquee 60s linear infinite',
         fadeUp:  'fadeUp .5s ease-out both',
         // The drift delay matches the end of the glide, so the card is never
         // being pulled by both at once.

@@ -470,18 +470,18 @@ function trg_sc_home_hero( $atts ) {
 			$n = count( $strip );
 			?>
 			<div class="relative border-t border-brand-100 bg-white/60">
-				<div class="relative overflow-hidden py-5">
+				<div class="relative overflow-hidden py-6">
 					<ul class="trg-ticker flex w-max items-center animate-marqueeSlow hover:[animation-play-state:paused]">
 						<?php foreach ( array_merge( $strip, $strip ) as $i => $item ) : ?>
 							<li class="flex shrink-0 items-center"<?php echo $i >= $n ? ' aria-hidden="true"' : ''; ?>>
 								<?php if ( '' !== $item['url'] ) : ?>
 									<a href="<?php echo esc_url( $item['url'] ); ?>"
-										class="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-brand-600 transition-colors hover:text-brand-800 hover:underline"
+										class="font-heading text-[15px] font-extrabold uppercase tracking-[0.12em] text-brand-700 transition-colors hover:text-brand-900 hover:underline sm:text-[16px]"
 										<?php echo $i >= $n ? 'tabindex="-1"' : ''; ?>><?php echo esc_html( $item['label'] ); ?></a>
 								<?php else : ?>
-									<span class="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-brand-600"><?php echo esc_html( $item['label'] ); ?></span>
+									<span class="font-heading text-[15px] font-extrabold uppercase tracking-[0.12em] text-brand-700 sm:text-[16px]"><?php echo esc_html( $item['label'] ); ?></span>
 								<?php endif; ?>
-								<span class="trg-dot mx-7 h-[3px] w-[3px] shrink-0 rounded-full bg-brand-300" aria-hidden="true"></span>
+								<span class="trg-dot mx-7 h-[5px] w-[5px] shrink-0 rounded-full bg-brand-400" aria-hidden="true"></span>
 							</li>
 						<?php endforeach; ?>
 					</ul>
