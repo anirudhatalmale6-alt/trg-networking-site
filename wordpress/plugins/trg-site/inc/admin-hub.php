@@ -77,6 +77,7 @@ function trg_hub_links() {
 		'edit.php?post_type=trg_service',
 		'edit.php?post_type=trg_industry',
 		'edit.php?post_type=trg_testimonial',
+			'trg-team',
 		'edit.php?post_type=' . TRG_ENQUIRY_POST_TYPE,
 		'customize.php?autofocus[section]=trg_company',
 		'trg-email',
@@ -142,6 +143,16 @@ function trg_hub_page() {
 	$new      = trg_hub_new_enquiries();
 	$services = wp_count_posts( 'trg_service' );
 	$services = isset( $services->publish ) ? (int) $services->publish : 0;
+
+	// Counted the way a visitor counts them: hidden people are still in the
+	// list, because their picture slot numbers depend on it, but they are not
+	// on the page.
+	$team = 0;
+	foreach ( trg_team_members() as $member ) {
+		if ( empty( $member['hidden'] ) ) {
+			++$team;
+		}
+	}
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'TRG Website', 'trg-site' ); ?></h1>
@@ -218,6 +229,18 @@ function trg_hub_page() {
 				__( 'Client quotes. They currently show without names, because the names have not been cleared for publication yet.', 'trg-site' ),
 				admin_url( 'edit.php?post_type=trg_testimonial' ),
 				__( 'Edit testimonials', 'trg-site' )
+			);
+
+			trg_hub_card(
+				__( 'Leadership team', 'trg-site' ),
+				__( 'The people on the About page. Change a job title, correct a name, rewrite a biography, add someone who has joined, or take someone off the site. Their photographs stay under Pictures.', 'trg-site' ),
+				admin_url( 'admin.php?page=trg-team' ),
+				__( 'Edit the team', 'trg-site' ),
+				sprintf(
+					/* translators: %d: number of people shown on the About page. */
+					_n( '%d person on the About page.', '%d people on the About page.', $team, 'trg-site' ),
+					$team
+				)
 			);
 
 			trg_hub_card(

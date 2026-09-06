@@ -109,7 +109,12 @@ function trg_picture_slots() {
 				'key'   => 'team-' . $member['slug'],
 				/* translators: %s: person's name. */
 				'label' => sprintf( __( '%s — photo', 'trg-site' ), $member['name'] ),
-				'where' => __( 'The leadership team on the About page.', 'trg-site' ),
+				// Hidden people keep their slot so the numbers below them do not
+				// move, but say so — otherwise uploading here and seeing nothing
+				// change on the page reads as a broken upload.
+				'where' => empty( $member['hidden'] )
+					? __( 'The leadership team on the About page.', 'trg-site' )
+					: __( 'Not currently shown on the About page — switch them back on under Leadership team.', 'trg-site' ),
 				'size'  => $member['photo']
 					? __( 'Square, around 640 × 640, head and shoulders.', 'trg-site' )
 					: __( 'Square, around 640 × 640, head and shoulders. Showing initials at the moment — upload a photo and it replaces them.', 'trg-site' ),

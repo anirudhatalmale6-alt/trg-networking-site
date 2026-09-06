@@ -1,8 +1,8 @@
 <?php
 /**
- * The leadership team on the About page.
+ * The leadership team on the About page, and the screen for editing it.
  *
- * The biographies here are TRG's own, taken word for word from their Hostinger
+ * The biographies below are TRG's own, taken word for word from their Hostinger
  * site. The photographs are a different matter: of the six that site carries,
  * two are genuine photographs of the person named, two are stock-library
  * pictures of models who are not the employee, and two are screenshots of an
@@ -15,23 +15,31 @@
  * from this site, and worse, because it attaches a stranger to a named
  * individual's professional reputation.
  *
- * Every one of the six has a picture slot in Settings -> TRG Pictures, so a real
+ * Every one of the six has a picture slot in TRG Website -> Pictures, so a real
  * headshot replaces the monogram the moment TRG supplies one. Nothing here has
  * to be edited for that to happen.
+ *
+ * The words, though, are staff data: a promotion, a new hire, someone leaving.
+ * Those change without any developer being involved, so they are editable under
+ * TRG Website -> Leadership team. The array below stays as the shipped default,
+ * which is what "Put the original text back" restores to.
  *
  * @package TRG_Site
  */
 
 defined( 'ABSPATH' ) || exit;
 
+const TRG_TEAM_OPTION = 'trg_team';
+
 /**
- * The team, in the order TRG lists them.
+ * The team as it shipped, in the order TRG lists them.
  *
- * 'photo' is true only where we hold a real photograph of that person.
+ * 'photo' is true only where we hold a real photograph of that person. It is
+ * deliberately not editable: it records what we were given, not a preference.
  *
  * @return array<int,array<string,mixed>>
  */
-function trg_team_members() {
+function trg_team_default_members() {
 	return array(
 		array(
 			'slug'  => 'madhuri-edwards',
@@ -79,6 +87,70 @@ function trg_team_members() {
 }
 
 /**
+ * The team as it stands now: the shipped list with TRG's own edits applied.
+ *
+ * Hidden people are still returned. They are filtered out at the point of
+ * display, not here, because the picture slots in TRG Pictures are numbered by
+ * their position in this list — dropping someone out of it would renumber the
+ * slots below them, and those numbers are how photographs get handed over in
+ * chat. Taking a person off the About page must not silently change what "27"
+ * means.
+ *
+ * @return array<int,array<string,mixed>>
+ */
+function trg_team_members() {
+	$defaults = trg_team_default_members();
+	$shipped  = array();
+	foreach ( $defaults as $member ) {
+		$shipped[ $member['slug'] ] = $member;
+	}
+
+	$saved = get_option( TRG_TEAM_OPTION, null );
+	if ( ! is_array( $saved ) || ! $saved ) {
+		foreach ( $defaults as $i => $member ) {
+			$defaults[ $i ]['hidden'] = false;
+		}
+		return $defaults;
+	}
+
+	$out  = array();
+	$seen = array();
+
+	foreach ( $saved as $row ) {
+		$slug = isset( $row['slug'] ) ? sanitize_key( $row['slug'] ) : '';
+		if ( '' === $slug || isset( $seen[ $slug ] ) ) {
+			continue;
+		}
+		$seen[ $slug ] = true;
+
+		// 'photo' is never read from the saved list. Whether we hold a genuine
+		// photograph of someone is a fact about what TRG sent, and no amount of
+		// editing their job title changes it.
+		$out[] = array(
+			'slug'   => $slug,
+			'name'   => isset( $row['name'] ) ? (string) $row['name'] : '',
+			'title'  => isset( $row['title'] ) ? (string) $row['title'] : '',
+			'bio'    => isset( $row['bio'] ) ? (string) $row['bio'] : '',
+			'photo'  => ! empty( $shipped[ $slug ]['photo'] ),
+			'hidden' => ! empty( $row['hidden'] ),
+		);
+	}
+
+	// Anyone shipped but absent from the saved list is appended rather than
+	// dropped, so a person added to the default list in a later release still
+	// appears on a site that has already been edited. Hiding someone writes a
+	// row with hidden => true, so this cannot resurrect a person taken down.
+	foreach ( $defaults as $member ) {
+		if ( ! isset( $seen[ $member['slug'] ] ) ) {
+			$member['hidden'] = false;
+			$out[]            = $member;
+		}
+	}
+
+	return $out;
+}
+
+/**
  * Initials for the monogram. "Dr." is a title, not a name, so it is skipped —
  * otherwise every doctor on the team would be a "D".
  *
@@ -118,13 +190,20 @@ function trg_sc_team( $atts ) {
 		'body'    => $atts['body'],
 	) ) : '';
 
+	$members = array();
+	foreach ( trg_team_members() as $member ) {
+		if ( empty( $member['hidden'] ) && '' !== trim( $member['name'] ) ) {
+			$members[] = $member;
+		}
+	}
+
 	ob_start();
 	?>
 	<section class="section <?php echo 'canvas' === $atts['bg'] ? 'bg-canvas' : 'bg-white'; ?>">
 		<div class="shell">
 			<?php echo $head; // phpcs:ignore WordPress.Security.EscapeOutput ?>
 			<div class="<?php echo $head ? 'mt-12' : ''; ?> grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-				<?php foreach ( trg_team_members() as $member ) : ?>
+				<?php foreach ( $members as $member ) : ?>
 					<?php
 					// A client-uploaded picture always wins; then the shipped
 					// photograph, if we hold a genuine one; then the monogram.
@@ -149,8 +228,13 @@ function trg_sc_team( $atts ) {
 							</span>
 						<?php endif; ?>
 						<h3 class="mt-5 text-[18px]"><?php echo esc_html( $member['name'] ); ?></h3>
-						<p class="mt-1 font-display text-[14px] font-bold text-brand-600"><?php echo esc_html( $member['title'] ); ?></p>
-						<p class="mt-3 flex-1 text-[15px] leading-relaxed text-muted"><?php echo esc_html( $member['bio'] ); ?></p>
+						<?php if ( '' !== trim( $member['title'] ) ) : ?>
+							<p class="mt-1 font-display text-[14px] font-bold text-brand-600"><?php echo esc_html( $member['title'] ); ?></p>
+						<?php endif; ?>
+						<?php /* nl2br so a blank line typed in the editor becomes a break on the
+						         page. Without it a two-paragraph bio runs together into one
+						         block and reads as a fault in the editing screen. */ ?>
+						<p class="mt-3 flex-1 text-[15px] leading-relaxed text-muted"><?php echo nl2br( esc_html( $member['bio'] ) ); ?></p>
 					</article>
 				<?php endforeach; ?>
 			</div>
@@ -160,3 +244,283 @@ function trg_sc_team( $atts ) {
 	return ob_get_clean();
 }
 add_shortcode( 'trg_team', 'trg_sc_team' );
+
+/**
+ * Admin menu entry.
+ *
+ * edit_pages rather than manage_options: this is page content — names, titles
+ * and biographies — so anyone trusted to edit the About page is trusted to edit
+ * the people on it.
+ */
+function trg_team_menu() {
+	add_submenu_page(
+		TRG_HUB_SLUG,
+		__( 'Leadership team', 'trg-site' ),
+		__( 'Leadership team', 'trg-site' ),
+		'edit_pages',
+		'trg-team',
+		'trg_team_page'
+	);
+}
+add_action( 'admin_menu', 'trg_team_menu' );
+
+/**
+ * A slug that will not collide with one already in use.
+ *
+ * A person's slug is set once, when they are added, and never regenerated from
+ * their name afterwards. It is what ties them to their picture slot and to the
+ * headshot already uploaded there, so a correction to a spelling, a married
+ * name or a new doctorate must not quietly orphan their photograph.
+ *
+ * @param string $name  The person's name.
+ * @param array  $taken Slugs already in use.
+ * @return string
+ */
+function trg_team_new_slug( $name, $taken ) {
+	$base = sanitize_title( $name );
+	if ( '' === $base ) {
+		$base = 'team-member';
+	}
+	$slug = $base;
+	$n    = 2;
+	while ( in_array( $slug, $taken, true ) ) {
+		$slug = $base . '-' . $n;
+		++$n;
+	}
+	return $slug;
+}
+
+/**
+ * Save, add, remove, reset — then render the screen.
+ */
+function trg_team_page() {
+	if ( ! current_user_can( 'edit_pages' ) ) {
+		wp_die( esc_html__( 'You do not have permission to edit the leadership team.', 'trg-site' ) );
+	}
+
+	$notices = array();
+	$shipped = wp_list_pluck( trg_team_default_members(), 'slug' );
+
+	if ( isset( $_POST['trg_team_nonce'] ) && wp_verify_nonce( sanitize_key( wp_unslash( $_POST['trg_team_nonce'] ) ), 'trg_team' ) ) {
+
+		if ( isset( $_POST['reset'] ) ) {
+			delete_option( TRG_TEAM_OPTION );
+			$notices[] = array( 'updated', __( 'Put the original text back. Photographs you uploaded are untouched.', 'trg-site' ) );
+		} else {
+			// Start from the list as it stands, so a row the form did not send
+			// (a stale tab, a person added in another window) is not silently
+			// deleted by someone else's save.
+			$current = array();
+			foreach ( trg_team_members() as $member ) {
+				$current[ $member['slug'] ] = $member;
+			}
+
+			$posted = isset( $_POST['member'] ) && is_array( $_POST['member'] ) ? wp_unslash( $_POST['member'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+			$order = array();
+			foreach ( $posted as $slug => $row ) {
+				$slug = sanitize_key( $slug );
+				if ( '' === $slug || ! isset( $current[ $slug ] ) ) {
+					continue;
+				}
+				$current[ $slug ]['name']   = sanitize_text_field( isset( $row['name'] ) ? $row['name'] : '' );
+				$current[ $slug ]['title']  = sanitize_text_field( isset( $row['title'] ) ? $row['title'] : '' );
+				$current[ $slug ]['bio']    = sanitize_textarea_field( isset( $row['bio'] ) ? $row['bio'] : '' );
+				$current[ $slug ]['hidden'] = empty( $row['show'] );
+				$order[ $slug ]             = isset( $row['order'] ) ? (float) $row['order'] : 0;
+			}
+
+			$remove = isset( $_POST['remove'] ) ? sanitize_key( wp_unslash( $_POST['remove'] ) ) : '';
+			if ( $remove && isset( $current[ $remove ] ) && ! in_array( $remove, $shipped, true ) ) {
+				unset( $current[ $remove ], $order[ $remove ] );
+				$notices[] = array( 'updated', __( 'Removed.', 'trg-site' ) );
+			}
+
+			$add_name = isset( $_POST['add_name'] ) ? sanitize_text_field( wp_unslash( $_POST['add_name'] ) ) : '';
+			if ( '' !== $add_name ) {
+				$slug             = trg_team_new_slug( $add_name, array_keys( $current ) );
+				$current[ $slug ] = array(
+					'slug'   => $slug,
+					'name'   => $add_name,
+					'title'  => isset( $_POST['add_title'] ) ? sanitize_text_field( wp_unslash( $_POST['add_title'] ) ) : '',
+					'bio'    => '',
+					'photo'  => false,
+					'hidden' => false,
+				);
+				// Last, until he reorders. max() of an empty list is a warning,
+				// hence the guard.
+				$order[ $slug ] = $order ? max( $order ) + 1 : 1;
+				$notices[]      = array(
+					'updated',
+					sprintf(
+						/* translators: %s: person's name. */
+						__( 'Added %s. They will show initials until you upload a photograph under Pictures.', 'trg-site' ),
+						$add_name
+					),
+				);
+			}
+
+			// Sort by the order boxes, keeping anything the form did not carry an
+			// order for in its existing position rather than jumping it to the top.
+			$i    = 0;
+			$sort = array();
+			foreach ( $current as $slug => $member ) {
+				$sort[] = array(
+					'pos'    => isset( $order[ $slug ] ) ? $order[ $slug ] : $i,
+					'seq'    => $i,
+					'member' => $member,
+				);
+				++$i;
+			}
+			usort(
+				$sort,
+				static function ( $a, $b ) {
+					if ( $a['pos'] === $b['pos'] ) {
+						return $a['seq'] <=> $b['seq'];
+					}
+					return $a['pos'] <=> $b['pos'];
+				}
+			);
+
+			$save = array();
+			foreach ( $sort as $entry ) {
+				$save[] = array(
+					'slug'   => $entry['member']['slug'],
+					'name'   => $entry['member']['name'],
+					'title'  => $entry['member']['title'],
+					'bio'    => $entry['member']['bio'],
+					'hidden' => ! empty( $entry['member']['hidden'] ),
+				);
+			}
+			update_option( TRG_TEAM_OPTION, $save );
+
+			if ( ! $notices ) {
+				$notices[] = array( 'updated', __( 'Saved. Open the About page to see it.', 'trg-site' ) );
+			}
+		}
+	}
+
+	$members  = trg_team_members();
+	$about    = get_page_by_path( 'about' );
+	$about_url = $about ? get_permalink( $about ) : home_url( '/about/' );
+	?>
+	<div class="wrap">
+		<h1><?php esc_html_e( 'Leadership team', 'trg-site' ); ?></h1>
+		<p style="max-width:52em">
+			<?php esc_html_e( 'The people shown on the About page. Change a job title, correct a name, rewrite a biography, add someone who has joined, or take someone off the site — all from here. Nothing on this screen can affect the design or any other page.', 'trg-site' ); ?>
+		</p>
+		<p style="max-width:52em">
+			<?php
+			printf(
+				/* translators: %s: link to the Pictures screen. */
+				esc_html__( 'Photographs are not on this screen. They live under %s, one numbered slot per person, and they stay attached to the person even if you change their name here.', 'trg-site' ),
+				'<a href="' . esc_url( admin_url( 'admin.php?page=trg-pictures' ) ) . '">' . esc_html__( 'Pictures', 'trg-site' ) . '</a>'
+			);
+			?>
+		</p>
+
+		<?php foreach ( $notices as $notice ) : ?>
+			<div class="<?php echo esc_attr( 'error' === $notice[0] ? 'notice notice-error' : 'notice notice-success' ); ?>"><p><?php echo esc_html( $notice[1] ); ?></p></div>
+		<?php endforeach; ?>
+
+		<form method="post">
+			<?php wp_nonce_field( 'trg_team', 'trg_team_nonce' ); ?>
+
+			<table class="widefat striped" style="max-width:74em;margin-top:1em">
+				<thead>
+					<tr>
+						<th style="width:5em"><?php esc_html_e( 'Order', 'trg-site' ); ?></th>
+						<th style="width:22em"><?php esc_html_e( 'Name and job title', 'trg-site' ); ?></th>
+						<th><?php esc_html_e( 'Biography', 'trg-site' ); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ( $members as $i => $member ) : ?>
+					<?php $is_shipped = in_array( $member['slug'], $shipped, true ); ?>
+					<tr>
+						<td>
+							<input type="number" step="1" min="0"
+								name="member[<?php echo esc_attr( $member['slug'] ); ?>][order]"
+								value="<?php echo esc_attr( $i + 1 ); ?>"
+								style="width:4.5em">
+						</td>
+						<td>
+							<p style="margin:0 0 .5em">
+								<input type="text" class="large-text"
+									name="member[<?php echo esc_attr( $member['slug'] ); ?>][name]"
+									value="<?php echo esc_attr( $member['name'] ); ?>"
+									placeholder="<?php esc_attr_e( 'Name', 'trg-site' ); ?>">
+							</p>
+							<p style="margin:0 0 .6em">
+								<input type="text" class="large-text"
+									name="member[<?php echo esc_attr( $member['slug'] ); ?>][title]"
+									value="<?php echo esc_attr( $member['title'] ); ?>"
+									placeholder="<?php esc_attr_e( 'Job title', 'trg-site' ); ?>">
+							</p>
+							<p style="margin:0">
+								<label>
+									<input type="checkbox" value="1"
+										name="member[<?php echo esc_attr( $member['slug'] ); ?>][show]"
+										<?php checked( empty( $member['hidden'] ) ); ?>>
+									<?php esc_html_e( 'Show on the About page', 'trg-site' ); ?>
+								</label>
+							</p>
+							<p style="margin:.5em 0 0;color:#646970;font-size:12px">
+								<?php
+								if ( $member['photo'] || ( function_exists( 'trg_picture_override_url' ) && trg_picture_override_url( 'team-' . $member['slug'] ) ) ) {
+									esc_html_e( 'Has a photograph.', 'trg-site' );
+								} else {
+									esc_html_e( 'Showing initials — no photograph yet.', 'trg-site' );
+								}
+								?>
+							</p>
+							<?php if ( ! $is_shipped ) : ?>
+								<p style="margin:.6em 0 0">
+									<button type="submit" name="remove" value="<?php echo esc_attr( $member['slug'] ); ?>"
+										class="button-link" style="color:#b32d2e"
+										onclick="return confirm('<?php echo esc_js( __( 'Remove this person from the site?', 'trg-site' ) ); ?>')">
+										<?php esc_html_e( 'Remove', 'trg-site' ); ?>
+									</button>
+								</p>
+							<?php endif; ?>
+						</td>
+						<td>
+							<textarea rows="7" class="large-text"
+								name="member[<?php echo esc_attr( $member['slug'] ); ?>][bio]"><?php echo esc_textarea( $member['bio'] ); ?></textarea>
+						</td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+			</table>
+
+			<h2 style="margin-top:2em"><?php esc_html_e( 'Add someone', 'trg-site' ); ?></h2>
+			<p style="max-width:52em">
+				<?php esc_html_e( 'Fill these in and save. The new person appears at the bottom, showing their initials, and a picture slot for them appears under Pictures. You can write their biography and move them up on the next save.', 'trg-site' ); ?>
+			</p>
+			<p>
+				<input type="text" name="add_name" class="regular-text" placeholder="<?php esc_attr_e( 'Name', 'trg-site' ); ?>">
+				<input type="text" name="add_title" class="regular-text" placeholder="<?php esc_attr_e( 'Job title', 'trg-site' ); ?>">
+			</p>
+
+			<p style="margin-top:1.6em">
+				<button type="submit" class="button button-primary button-large"><?php esc_html_e( 'Save', 'trg-site' ); ?></button>
+				<a class="button" href="<?php echo esc_url( $about_url ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'View the About page', 'trg-site' ); ?></a>
+			</p>
+		</form>
+
+		<h2 style="margin-top:2em"><?php esc_html_e( 'Start again', 'trg-site' ); ?></h2>
+		<div style="max-width:52em">
+			<p>
+				<?php esc_html_e( 'This puts every name, job title and biography back to the words the site was built with. It does not touch any photograph you have uploaded, and anyone you added is removed.', 'trg-site' ); ?>
+			</p>
+			<form method="post">
+				<?php wp_nonce_field( 'trg_team', 'trg_team_nonce' ); ?>
+				<button type="submit" name="reset" value="1" class="button"
+					onclick="return confirm('<?php echo esc_js( __( 'Put all the original wording back?', 'trg-site' ) ); ?>')">
+					<?php esc_html_e( 'Put the original text back', 'trg-site' ); ?>
+				</button>
+			</form>
+		</div>
+	</div>
+	<?php
+}
