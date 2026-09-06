@@ -213,8 +213,27 @@ function trg_sc_home_hero( $atts ) {
 	), $atts, 'trg_home_hero' );
 
 	$badges = trg_split_list( $atts['badges'], '|' );
-	$strip  = trg_split_list( $atts['strip'], '|' );
 	$cards  = trg_split_list( $atts['cards'], ';' );
+
+	/*
+	 * Two accepted spellings for `strip`. The original is a plain
+	 * `|`-separated list of labels. The newer one separates items with `;` and
+	 * lets each carry an optional link — `Label|/service-page/` — which is the
+	 * same "items by semicolon, parts by pipe" shape `cards` already uses.
+	 * Chosen by whether a semicolon is present, so a page written the old way
+	 * keeps rendering unchanged.
+	 */
+	$strip = array();
+	$raw   = false !== strpos( $atts['strip'], ';' )
+		? trg_split_list( $atts['strip'], ';' )
+		: trg_split_list( $atts['strip'], '|' );
+	foreach ( $raw as $item ) {
+		$parts = array_pad( trg_split_list( $item, '|' ), 2, '' );
+		if ( '' === $parts[0] ) {
+			continue;
+		}
+		$strip[] = array( 'label' => $parts[0], 'url' => $parts[1] );
+	}
 	$image  = trg_image_url( $atts['image'] );
 
 	ob_start();
@@ -426,11 +445,49 @@ function trg_sc_home_hero( $atts ) {
 		</div>
 
 		<?php if ( $strip ) : ?>
+			<?php
+			/*
+			 * The capability ticker. There is exactly ONE of these on the home
+			 * page and it lives here, at the foot of the hero, running the full
+			 * width of the screen. TRG asked for a scrolling strip under the
+			 * photograph; this band already carried the same six capability
+			 * words standing still, and two versions of one idea a hundred
+			 * pixels apart is what makes a page feel unconsidered. So the boxes
+			 * came out and this one started moving instead.
+			 *
+			 * Full width is not vanity: across 1200px five items are legible at
+			 * once, where the right-hand column would have shown two.
+			 *
+			 * Every item carries its separator dot, including the last. That is
+			 * what makes the loop seamless — the track holds the set twice and
+			 * slides exactly -50%, so each half has to be a whole number of
+			 * identical units. A `gap` on the row instead would leave the halves
+			 * half a gap out and the loop would visibly jump every cycle.
+			 *
+			 * The duplicate half is hidden from screen readers and taken out of
+			 * the tab order, so ten links do not become twenty.
+			 */
+			$n = count( $strip );
+			?>
 			<div class="relative border-t border-brand-100 bg-white/60">
-				<div class="shell flex flex-wrap items-center justify-center gap-x-10 gap-y-2.5 py-5">
-					<?php foreach ( $strip as $item ) : ?>
-						<span class="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-brand-600"><?php echo esc_html( $item ); ?></span>
-					<?php endforeach; ?>
+				<div class="relative overflow-hidden py-5">
+					<ul class="trg-ticker flex w-max items-center animate-marqueeSlow hover:[animation-play-state:paused]">
+						<?php foreach ( array_merge( $strip, $strip ) as $i => $item ) : ?>
+							<li class="flex shrink-0 items-center"<?php echo $i >= $n ? ' aria-hidden="true"' : ''; ?>>
+								<?php if ( '' !== $item['url'] ) : ?>
+									<a href="<?php echo esc_url( $item['url'] ); ?>"
+										class="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-brand-600 transition-colors hover:text-brand-800 hover:underline"
+										<?php echo $i >= $n ? 'tabindex="-1"' : ''; ?>><?php echo esc_html( $item['label'] ); ?></a>
+								<?php else : ?>
+									<span class="font-heading text-[11px] font-bold uppercase tracking-[0.18em] text-brand-600"><?php echo esc_html( $item['label'] ); ?></span>
+								<?php endif; ?>
+								<span class="trg-dot mx-7 h-[3px] w-[3px] shrink-0 rounded-full bg-brand-300" aria-hidden="true"></span>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+					<?php // The fade is the colour this band actually is — white at 60% over brand-50 — not plain white, which would show as a pale seam against it. ?>
+					<div class="trg-ticker-fade pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[#F7FBFF] to-transparent" aria-hidden="true"></div>
+					<div class="trg-ticker-fade pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[#F7FBFF] to-transparent" aria-hidden="true"></div>
 				</div>
 			</div>
 		<?php endif; ?>

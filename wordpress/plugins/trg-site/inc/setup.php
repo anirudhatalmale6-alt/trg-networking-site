@@ -242,9 +242,17 @@ function trg_home_content() {
 			. 'button2_text="Explore our services ↓" button2_link="#services" button2_style="text" '
 			. 'image="hero-team" image_alt="A business team collaborating with an IT consultant" '
 			. 'caption_eyebrow="The TRG difference" caption="Technology that feels more human." '
-			. 'cards="Responsive support|24×7 Monitoring;CMMC Ready|DoD contractor experts.;'
-			. 'Security first|Always-on protection." cards_accent="3" '
-			. 'strip="Managed IT|Cybersecurity|Microsoft 365|Azure Cloud|CMMC|Secure AI"]',
+			// No `cards` any more: TRG asked for the claim boxes to come off the
+			// photograph and the capability ticker below to carry the message
+			// instead. The links are root-relative on purpose — absolute ones
+			// would all need rewriting the day the real domain is pointed here.
+			// "Security First" and "Always-On Protection" are claims rather than
+			// services, so they are the two with nowhere to link to.
+			. 'strip="CMMC Ready|/cmmc-readiness/;DoD Contractor Expertise|/government-contractors/;'
+			. 'Security First;Always-On Protection;Microsoft 365|/microsoft-365-cloud/;'
+			. 'Azure Cloud|/azure-cloud-hosting/;Cybersecurity|/cybersecurity/;'
+			. 'Business Continuity|/backup-business-continuity/;Managed IT Services|/managed-it-services/;'
+			. 'Secure AI Adoption|/secure-ai-adoption/"]',
 
 		'[trg_cards bg="canvas" columns="4" eyebrow="Technology should move your business forward" title="Less disruption. More confidence." body="TRG makes technology easier to manage, easier to understand and better aligned with the way your organization actually works."]' . "\n"
 			. '[trg_card num="01" title="Fewer interruptions"]Proactive monitoring and maintenance help address small issues before they become costly problems.[/trg_card]' . "\n"

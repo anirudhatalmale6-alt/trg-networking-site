@@ -124,4 +124,24 @@
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
   }
+
+  /* Stopping the animation is not enough on its own for the hero capability
+     ticker. Collapsing it to its end state parks the track at -50%, which
+     leaves the first half off-screen and the rest clipped — so somebody who
+     asked for less motion would see five of the ten capabilities and have no
+     way to reach the others. Turn it into an ordinary centred, wrapped list
+     instead and drop the duplicate half, which exists only to make the loop
+     seamless. */
+  .trg-ticker {
+    width: auto !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    transform: none !important;
+  }
+  .trg-ticker > li[aria-hidden="true"] { display: none; }
+  .trg-ticker > li:last-child .trg-dot { display: none; }
+  /* The edge fades exist to hide items sliding in and out. Nothing is
+     sliding here, so all they do is grey out the first and last capability
+     for the one visitor who explicitly asked for a calmer page. */
+  .trg-ticker-fade { display: none; }
 }
