@@ -203,6 +203,12 @@ function trg_sc_home_hero( $atts ) {
 		'caption'        => '',
 		'cards'          => '',
 		'cards_accent'   => '',
+		// "marquee" runs the boxes across the space under the photograph;
+		// "float" is the original, which parks them on top of it. TRG asked for
+		// the marquee because the floating cards sat over people's faces. Left
+		// switchable so that decision can be undone by editing one word in the
+		// page rather than by editing the plugin.
+		'cards_layout'   => 'marquee',
 		'strip'          => '',
 	), $atts, 'trg_home_hero' );
 
@@ -216,8 +222,25 @@ function trg_sc_home_hero( $atts ) {
 	<section class="relative overflow-hidden bg-brand-50">
 		<div class="dotted-field pointer-events-none absolute inset-0 opacity-60" aria-hidden="true"></div>
 
-		<div class="shell relative grid items-center gap-12 py-14 sm:py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
-			<div class="animate-fadeUp">
+		<?php
+		/*
+		 * `grid-cols-1` is not decoration. Without it the mobile grid has no
+		 * template at all, so its single implicit column is sized `auto` and
+		 * takes the widest thing inside it — and the marquee track is
+		 * deliberately wider than the screen. Every column child then stretched
+		 * to 1560px and the headline ran off the side of the phone. Tailwind's
+		 * grid-cols-1 is `minmax(0, 1fr)`, which caps the track at the
+		 * container. `lg:grid-cols-2` was already minmax(0,…), which is why the
+		 * desktop layout never showed it.
+		 *
+		 * The section clips its own overflow, so this does NOT show up as page
+		 * scroll width — `scrollWidth === clientWidth` was true the whole time
+		 * the phone layout was broken. Measure element rectangles against the
+		 * viewport instead.
+		 */
+		?>
+		<div class="shell relative grid grid-cols-1 items-center gap-12 py-14 sm:py-16 lg:grid-cols-2 lg:gap-14 lg:py-20">
+			<div class="animate-fadeUp min-w-0">
 				<?php if ( $atts['eyebrow'] ) : ?>
 					<span class="flex items-center gap-3">
 						<span class="eyebrow-rule" aria-hidden="true"></span>
@@ -275,7 +298,7 @@ function trg_sc_home_hero( $atts ) {
 				<?php endif; ?>
 			</div>
 
-			<div class="relative">
+			<div class="relative min-w-0">
 				<?php if ( $image ) : ?>
 					<div class="relative overflow-hidden rounded-2xl shadow-[0_30px_70px_-30px_rgba(15,23,42,0.45)]">
 						<img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $atts['image_alt'] ); ?>"
@@ -290,9 +313,57 @@ function trg_sc_home_hero( $atts ) {
 					</div>
 				<?php endif; ?>
 
-				<?php if ( $cards ) : ?>
+				<?php if ( $cards && 'float' !== $atts['cards_layout'] ) : ?>
 					<?php
 					/*
+					 * The boxes travel across the empty band under the
+					 * photograph instead of being parked on top of it. TRG's
+					 * reviewer asked for this: the floating cards covered the
+					 * faces of the people in the picture, and a photograph of
+					 * your own staff is worth more than the claims laid over it.
+					 *
+					 * Left to right, as asked. That is `marqueeRight`, a
+					 * mirrored keyframe rather than `animation-direction:
+					 * reverse` — see the note in tailwind.config.js.
+					 *
+					 * The spacing is `mr-3` on every box rather than `gap-3` on
+					 * the row, and that is load-bearing. The track holds the set
+					 * twice and the animation slides it by exactly half its
+					 * width; with `gap` the halves are "3 boxes + 2 gaps", so
+					 * half the track lands a gap-and-a-half out and the loop
+					 * visibly jumps every cycle. With the space carried on the
+					 * boxes themselves each half is exactly three whole units.
+					 *
+					 * Overflow is clipped here, so the row can never make the
+					 * page scroll sideways on a phone. The vertical padding is
+					 * what stops that same clip from slicing the drop shadows.
+					 */
+					$accent = (int) $atts['cards_accent'] - 1;
+					$count  = count( $cards );
+					?>
+					<div class="relative mt-4 overflow-hidden pb-7 pt-3 lg:mt-5">
+						<?php // Duplicated for the loop; the copies are hidden from screen readers so the claims are not announced twice. ?>
+						<ul class="flex w-max animate-marqueeRight hover:[animation-play-state:paused]">
+							<?php foreach ( array_merge( $cards, $cards ) as $i => $card ) : ?>
+								<?php
+								$parts     = array_pad( trg_split_list( $card, '|' ), 2, '' );
+								$is_accent = ( $i % $count ) === $accent;
+								?>
+								<li class="mr-3 w-[15.5rem] shrink-0 rounded-2xl px-4 py-3 shadow-lg <?php echo $is_accent ? 'bg-brand-600' : 'border border-line bg-white'; ?>"
+									<?php echo $i >= $count ? 'aria-hidden="true"' : ''; ?>>
+									<span class="block font-heading text-[14px] font-bold leading-snug <?php echo $is_accent ? 'text-white' : 'text-ink'; ?>"><?php echo esc_html( $parts[0] ); ?></span>
+									<span class="block text-[13px] leading-snug <?php echo $is_accent ? 'text-brand-100' : 'text-muted'; ?>"><?php echo esc_html( $parts[1] ); ?></span>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+						<div class="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-brand-50 to-transparent" aria-hidden="true"></div>
+						<div class="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-brand-50 to-transparent" aria-hidden="true"></div>
+					</div>
+				<?php elseif ( $cards ) : ?>
+					<?php
+					/*
+					 * The original layout, kept behind cards_layout="float".
+					 *
 					 * Four positions, matching the mockup the client sent: two down
 					 * the left of the image, two down the right, the fourth one
 					 * filled in brand blue rather than white.

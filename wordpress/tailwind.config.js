@@ -61,9 +61,19 @@ export default {
         // once per cycle. Raising the amplitude means re-measuring the gaps.
         drift:     { '0%,100%': { transform: 'translateY(-7px)' }, '50%': { transform: 'translateY(7px)' } },
         driftAlt:  { '0%,100%': { transform: 'translateY(7px)' }, '50%': { transform: 'translateY(-7px)' } },
+        // The same trick as `marquee`, run the other way: the track starts
+        // shifted a full copy to the left and slides back to zero, so the
+        // boxes travel left-to-right instead of right-to-left. Written as its
+        // own keyframe rather than `animation-direction: reverse` because the
+        // reduced-motion rule collapses every animation to its END state, and
+        // a reversed animation ends where it started — off-screen.
+        marqueeRight: { '0%': { transform: 'translateX(-50%)' }, '100%': { transform: 'translateX(0)' } },
       },
       animation: {
         marquee: 'marquee 32s linear infinite',
+        // Slower than the partner strip. These carry two lines of text each
+        // and a visitor has to be able to read one as it passes.
+        marqueeRight: 'marqueeRight 30s linear infinite',
         fadeUp:  'fadeUp .5s ease-out both',
         // The drift delay matches the end of the glide, so the card is never
         // being pulled by both at once.
