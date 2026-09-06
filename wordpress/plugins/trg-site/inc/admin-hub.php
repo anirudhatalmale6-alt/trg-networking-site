@@ -77,7 +77,8 @@ function trg_hub_links() {
 		'edit.php?post_type=trg_service',
 		'edit.php?post_type=trg_industry',
 		'edit.php?post_type=trg_testimonial',
-			'trg-team',
+		'trg-team',
+		'trg-alerts',
 		'edit.php?post_type=' . TRG_ENQUIRY_POST_TYPE,
 		'customize.php?autofocus[section]=trg_company',
 		'trg-email',
@@ -153,6 +154,8 @@ function trg_hub_page() {
 			++$team;
 		}
 	}
+
+	$waiting = function_exists( 'trg_alerts_count' ) ? trg_alerts_count( 'pending' ) : 0;
 	?>
 	<div class="wrap">
 		<h1><?php esc_html_e( 'TRG Website', 'trg-site' ); ?></h1>
@@ -241,6 +244,20 @@ function trg_hub_page() {
 					_n( '%d person on the About page.', '%d people on the About page.', $team, 'trg-site' ),
 					$team
 				)
+			);
+
+			trg_hub_card(
+				__( 'Security news & alerts', 'trg-site' ),
+				__( 'The site watches CISA, Microsoft and the vulnerability databases for you and puts what it finds in a waiting list. Nothing reaches the website until you publish it yourself.', 'trg-site' ),
+				admin_url( 'admin.php?page=trg-alerts' ),
+				__( 'Review the alerts', 'trg-site' ),
+				$waiting
+					? sprintf(
+						/* translators: %d: number of items awaiting review. */
+						_n( '%d item waiting for you.', '%d items waiting for you.', $waiting, 'trg-site' ),
+						$waiting
+					)
+					: __( 'Nothing waiting.', 'trg-site' )
 			);
 
 			trg_hub_card(
