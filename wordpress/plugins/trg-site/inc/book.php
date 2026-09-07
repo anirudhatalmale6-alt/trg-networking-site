@@ -33,7 +33,8 @@ function trg_book_settings() {
 	return wp_parse_args( $saved, array(
 		'title'    => 'Cybersecurity Without the Jargon',
 		'subtitle' => 'A plain-English guide for business leaders who have to make security decisions without a security background.',
-		'author'   => 'Dr. Charles K. Edwards',
+		// As it appears on the book's own title page and on the About page.
+		'author'   => 'Dr. Charles Edwards',
 		'blurb'    => 'Most cybersecurity writing is aimed at people who already understand it. This one is not. It explains the decisions a business owner actually faces — what to protect first, what the acronyms mean, what a good provider should be doing for you — in language you can act on.',
 		'points'   => '',
 		'file'     => '',
@@ -81,7 +82,7 @@ function trg_book_file_size() {
 	if ( ! empty( $book['file_id'] ) ) {
 		$path = get_attached_file( (int) $book['file_id'] );
 		if ( $path && file_exists( $path ) ) {
-			return size_format( filesize( $path ) );
+			return size_format( filesize( $path ), 1 );
 		}
 	}
 
@@ -96,7 +97,7 @@ function trg_book_file_size() {
 	if ( 0 === strpos( $url, $uploads['baseurl'] ) ) {
 		$path = $uploads['basedir'] . substr( $url, strlen( $uploads['baseurl'] ) );
 		if ( file_exists( $path ) ) {
-			return size_format( filesize( $path ) );
+			return size_format( filesize( $path ), 1 );
 		}
 	}
 
@@ -132,9 +133,17 @@ function trg_sc_book( $atts ) {
 	?>
 	<section class="section <?php echo 'white' === $atts['bg'] ? 'bg-white' : 'bg-canvas'; ?>">
 		<?php // min-w-0 on both columns — see the note in trg_sc_media_split(). ?>
-		<div class="shell grid items-center gap-10 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-16">
+		<?php
+		/*
+		 * items-start, not items-center. With a full chapter list beside it the
+		 * text column is several times the height of the cover, and centring
+		 * parked the cover in the middle of the row with a screen of dead space
+		 * above it. Top-aligned and sticky, it stays with the reader instead.
+		 */
+		?>
+		<div class="shell grid items-start gap-10 lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-16">
 
-			<div class="min-w-0">
+			<div class="min-w-0 lg:sticky lg:top-28">
 				<?php if ( $cover ) : ?>
 					<?php
 					/*
