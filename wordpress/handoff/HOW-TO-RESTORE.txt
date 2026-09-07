@@ -1,0 +1,219 @@
+TRG NETWORKING WEBSITE - COMPLETE COPY
+Taken from test.trgnetworking.com on 7 September 2026, after the book page
+went in. This replaces the 6 September copy.
+
+
+WHAT THIS IS
+============
+
+Everything the site is made of, in eight files. If the server were wiped
+tomorrow, this folder plus a blank WordPress install is enough to have the
+site back. You do not need me, and you do not need Freelancer, to use it.
+
+Keep a copy somewhere that is not the same server.
+
+
+WHAT CHANGED SINCE THE 6 SEPTEMBER COPY
+=======================================
+
+  -  The book. "Cybersecurity Without the Jargon" is on the site as a free
+     download, with its own page, its own admin screen, the cover artwork
+     and the 276-page PDF. All of it is in this copy.
+
+  -  Two server configuration files are now included - web.config and
+     .user.ini. They were missing from the last copy, and without them a
+     restored site on Windows loses its address rules, its file-upload limit
+     and its security headers. See "The server files" below.
+
+  -  Plugin version 1.11.0 (was 1.10.0).
+
+
+THE FILES
+=========
+
+  trg-networking-theme.zip     The design. Header, footer, navigation, page
+                               layouts, stylesheet, and the photographs that
+                               ship with the site. Version 1.1.0.
+
+  trg-site-plugin.zip          The working parts. The coloured page bands,
+                               the contact form, the service and industry
+                               card lists, the leadership team screen, the
+                               Pictures screen, the enquiry store, the
+                               security news queue, the book page, and the
+                               redirects that catch the old site's addresses.
+                               Version 1.11.0.
+
+  trg-content-export.xml       The words. The standard WordPress export file
+                               - the same thing Tools -> Export produces - so
+                               any WordPress install can read it, now or in
+                               ten years. What is in it:
+
+                                 31 pages        26 published, 4 draft, 1 in
+                                                 the trash
+                                 11 services      8 published, 3 draft
+                                  6 industries    4 published, 2 draft
+                                  2 testimonials
+                                  1 post
+                                 17 alerts        3 published, 14 waiting
+                                                 for someone at TRG to
+                                                 approve or reject them
+                                  6 media entries
+                                  5 menus         41 links between them
+
+                               The drafts are real and deliberate - they are
+                               pages that exist but are not linked yet. They
+                               come back as drafts, not as live pages.
+
+  wp-content-uploads.zip       The seven files uploaded through the dashboard
+                               rather than shipped inside the theme: the four
+                               industry photographs, the book PDF, the book
+                               cover and the book's share card.
+
+  trg-settings.json            The settings that live in neither the files
+                               nor the pages: the picture replacements, the
+                               leadership team edits, the menu positions, the
+                               mail configuration, which security sources are
+                               switched on, and the book page's title,
+                               author, chapter list and download link.
+                               Readable in any text editor.
+
+  web.config                   The server file. See below.
+
+  dot-user.ini                 The server file. See below. It must be renamed
+                               to .user.ini on the server - a leading dot,
+                               and Windows will not let you type that name in
+                               Explorer, which is why it is shipped this way.
+
+  INSTALL-INSTRUCTIONS.txt     The longer note written for whoever installs
+                               it, including the DNS warning about your
+                               Microsoft 365 email.
+
+
+THE SERVER FILES
+================
+
+These two are new to this copy, and they are the pair most likely to be
+forgotten in a rebuild, because nothing on screen tells you they are missing
+until something breaks.
+
+  web.config    Goes in the site's document root, beside wp-config.php. It
+                does four jobs: it makes WordPress's addresses work on IIS
+                (without it every page except the home page returns a 404),
+                it refuses to serve files nobody should be able to download,
+                it sets three security headers, and it stops the server
+                announcing which version of PHP it is running.
+
+  .user.ini     Goes in the same folder. It raises the file upload limit from
+                the 2 MB PHP ships with to 32 MB. Without it, uploading the
+                book through the dashboard fails - and it fails silently: the
+                screen comes back looking normal with nothing saved and no
+                error, because PHP throws away an oversized upload before
+                WordPress ever sees it.
+
+                It is not read instantly. Each of the server's PHP workers
+                keeps its own copy for five minutes, so for a few minutes
+                after a change the old and new values take turns. If you edit
+                it, wait five minutes before deciding it did not work.
+
+
+PUTTING THE SITE BACK, IN ORDER
+===============================
+
+  1.  Install WordPress on the new server. Leave it empty.
+
+  2.  Copy web.config into the site's document root. Copy dot-user.ini into
+      the same folder and rename it to .user.ini - from a command prompt, as
+      Explorer will not accept a name starting with a dot:
+
+          ren dot-user.ini .user.ini
+
+  3.  Appearance -> Themes -> Add New -> Upload Theme.
+      Upload trg-networking-theme.zip and activate it.
+
+  4.  Plugins -> Add New -> Upload Plugin.
+      Upload trg-site-plugin.zip and activate it.
+
+  5.  Tools -> Import -> WordPress. Install the importer if WordPress asks.
+      Upload trg-content-export.xml, assign the content to your own user,
+      and tick "Download and import file attachments".
+
+      This is the step that brings the site back. Do NOT run Tools -> TRG
+      Setup as well - that builds the pages from scratch for a brand new
+      site, and running both would give you two of everything. Setup is the
+      alternative to this file, not a step before it.
+
+  6.  Settings -> Reading. Set "Your homepage displays" to a static page and
+      choose Home.
+
+  7.  Settings -> Permalinks. Choose "Post name" and save. Save it even if
+      it already looks right - that is what writes the rules the redirects
+      depend on.
+
+  8.  Appearance -> Menus -> Manage Locations. Point each of the five menus
+      at its place: Main menu at Primary, and the three footer menus and the
+      legal menu at their matching slots. The menus themselves came across
+      in step 5; only where they appear needs saying again.
+
+  9.  If any file is missing from Media -> Library after the import, unzip
+      wp-content-uploads.zip into wp-content/ on the server so its contents
+      sit under wp-content/uploads/, then add them to the library.
+
+ 10.  TRG Website -> Pictures. Set the replaced photographs on their slots
+      again. The file names match the slot names: pg-construction.jpg
+      belongs to the construction slot, and so on. book-cover.jpg belongs to
+      the "Book - cover" slot at the bottom of the list.
+
+ 11.  TRG Website -> Book. Check the download link points at a file that
+      exists on the new server, and that the cover shows. Open /book/ and
+      press the download button - that is the only check that proves it.
+
+ 12.  Open trg-settings.json in any text editor and copy the mail settings
+      back in under TRG Website -> Email settings, the phone, address and
+      social links under Appearance -> Customize -> TRG company details, and
+      the news sources under TRG Website -> News and alerts.
+
+
+THINGS I WOULD RATHER YOU HEARD FROM ME THAN FOUND OUT
+======================================================
+
+  -  The mailbox password is not in any of these files, on purpose. A
+     password sitting in a zip in a folder anyone can reach is a worse
+     problem than the one the backup solves. It is one field to type again
+     under TRG Website -> Email settings.
+
+  -  trg-settings.json shows the leadership team as empty. That is correct
+     and nothing is missing. The six people are built into the plugin; that
+     setting only fills up once somebody edits them on the Leadership team
+     screen, and so far nobody has.
+
+  -  There are no enquiries in the export because none have been sent
+     through the form yet. Once real ones start arriving they will be in
+     every copy made after that.
+
+  -  The security alerts come across with their statuses intact - published
+     stays published, waiting stays waiting, rejected stays rejected. So a
+     restored site does not re-offer you seventeen items you have already
+     been through.
+
+  -  The picture replacements are recorded as numbers, and WordPress hands
+     out new numbers when files are imported. That is the only thing in the
+     list that cannot carry itself across, which is why step 10 exists.
+
+  -  The book's download link is stored as a plain web address rather than a
+     library reference, on purpose: it means the link keeps working while
+     the file behind it is replaced. It also means that after a restore the
+     address in it still points at the old server until you change it in
+     step 11.
+
+  -  This is a copy of the site as it stands today. It is not a live backup
+     and it does not update itself. When the outstanding work is finished,
+     ask me for a fresh one - it takes me a few minutes.
+
+  -  There is no database dump here and you do not need one. Everything in
+     the database that matters is either in the export file or in the
+     settings file. What is deliberately absent is the user accounts. If you
+     ever rebuild, you make yourself a new administrator with a new
+     password, which is the right way round anyway.
+
+
+- Anirudha

@@ -187,3 +187,112 @@ is on staging or live.  If WordPress showed an error message, the exact text
 of it.
 
 - Anirudha
+
+
+===============================================================================
+ADDENDUM - 6 September 2026.  Plugin version 1.10.0.
+===============================================================================
+
+Written after the note above, and it wins where the two disagree.
+
+WHAT CHANGED SINCE VERSION 1.1 OF THIS NOTE
+-------------------------------------------
+
+  -  There is now a single "TRG Website" menu in the dashboard that gathers
+     everything the owner maintains himself, with a plain-English guide on
+     its front page.  Nothing was taken away; the old locations still work.
+
+  -  TRG Website -> Pictures.  Every photograph on the site, numbered, with
+     the page it appears on named next to it.  Uploading a replacement never
+     overwrites the original, and one button puts the original back.
+
+  -  TRG Website -> Leadership team.  The six people on the About page are no
+     longer fixed in the code.  Names, job titles, biographies, the order
+     they appear in and whether they appear at all are all editable, and
+     someone new can be added.  A person kept in the list but switched off
+     keeps their picture slot number, so the numbers under Pictures never
+     shift underneath you.
+
+  -  TRG Website -> Email settings holds the mailbox the site sends through.
+     Every enquiry is stored in the dashboard whether or not the email goes
+     out, so a mail failure can never lose a customer's message.
+
+IF YOU ARE RESTORING RATHER THAN INSTALLING FRESH
+-------------------------------------------------
+
+Read HOW-TO-RESTORE.txt instead of this file.  The two describe different
+jobs.  This one builds a new site from nothing and invents its page text;
+that one puts an existing site back, with its real wording, from the export
+file supplied alongside it.  Running both would give you two of everything.
+
+  -  1.8.0 moved the four claim boxes off the home page photograph.  They now
+     run left to right across the band underneath it, regrouped into three,
+     so nothing covers the faces of the people in the picture.  The old
+     layout is still there: put cards_layout="float" in the [trg_home_hero]
+     shortcode on the Home page and it goes back to floating over the image.
+
+  -  1.9.0 replaced the hero claim boxes with a single scrolling capability
+     ticker across the foot of the hero, and 1.10.0 added TRG Website ->
+     News and alerts: a scheduled check of CISA, Microsoft, SANS and NVD
+     that files everything into a holding list.  Nothing it collects reaches
+     the site until somebody presses Publish on it.  The published items
+     appear wherever [trg_alerts] is placed; out of the box that is the
+     Resources page.
+
+     Note for whoever maintains this: CISA's RSS feeds are unreachable from
+     a server.  Every cisa.gov/*.xml path returns 403 to a non-browser
+     client.  The KEV catalogue is used instead, as JSON, and it mirrors on
+     raw.githubusercontent.com if the first address ever stops answering.
+
+
+===============================================================================
+ADDENDUM - 7 September 2026.  Plugin version 1.11.0.
+===============================================================================
+
+Written after everything above, and it wins where they disagree.
+
+THE BOOK
+--------
+
+  -  "Cybersecurity Without the Jargon" by Dr. Charles Edwards is published on
+     the site as a free download at /book/, linked from the main menu and the
+     footer.  The page carries the cover, a short excerpt, the fourteen
+     chapter titles and a download button that states the file size.
+
+  -  TRG Website -> Book is where all of it is edited: title, subtitle,
+     author, the blurb, the chapter list, the page count, and the file
+     itself.  Nothing on that page is written into the theme or the plugin,
+     so a new edition is a five-minute job with no developer.
+
+  -  The download link can be either an uploaded file or a pasted web
+     address, and a pasted address wins if both are set.  The live site uses
+     a pasted address pointing at /wp-content/uploads/book/ on purpose: it
+     keeps one permanent link that goes on business cards and in email
+     signatures, while the file behind it can be swapped for a new edition
+     without breaking anything already sent out.
+
+  -  The page also describes the book to search engines as a published work
+     with a named author, using schema.org Book.  That markup is printed only
+     on the page that actually carries the book, not site-wide.
+
+  -  If no file is set, the page shows "Available to download shortly"
+     instead of a button.  A download button that leads nowhere is worse than
+     no button, so there is deliberately no way to produce one.
+
+THE TWO SERVER FILES
+--------------------
+
+  -  web.config and .user.ini are now part of the backup.  They are described
+     in HOW-TO-RESTORE.txt.  The short version: without web.config every page
+     but the home page 404s on IIS, and without .user.ini no file over 2 MB
+     can be uploaded through the dashboard - silently, with no error message.
+
+  -  .user.ini is shipped as dot-user.ini because Windows Explorer will not
+     accept a file name that begins with a dot.  Rename it after copying:
+
+         ren dot-user.ini .user.ini
+
+  -  Both belong in the document root beside wp-config.php, and web.config
+     already refuses to serve either of them over the web.  If you move this
+     site to Linux, web.config does nothing at all and its job is done by
+     .htaccess instead - Settings -> Permalinks -> Save writes that for you.

@@ -7,7 +7,10 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TRG_THEME_VERSION', '1.0.0' );
+/* Keep in step with the Version line in style.css. Only used as a fallback for
+   asset URLs when the built file is missing — filemtime is the real cache key —
+   but a constant that disagrees with the header makes every version report lie. */
+define( 'TRG_THEME_VERSION', '1.1.0' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/nav.php';

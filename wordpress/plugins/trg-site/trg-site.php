@@ -21,7 +21,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TRG_SITE_VERSION', '1.10.0' );
+define( 'TRG_SITE_VERSION', '1.11.0' );
 define( 'TRG_SITE_FILE', __FILE__ );
 define( 'TRG_SITE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TRG_SITE_URL', plugin_dir_url( __FILE__ ) );
