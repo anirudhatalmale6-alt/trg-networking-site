@@ -122,6 +122,19 @@ function trg_picture_slots() {
 		}
 	}
 
+	/*
+	 * Appended last on purpose. The numbers in this list are how pictures get
+	 * talked about in writing — "replace 26" — so a slot inserted in the middle
+	 * silently renames every slot below it and turns an old instruction into the
+	 * wrong picture. New slots go on the end.
+	 */
+	$slots[] = array(
+		'key'   => 'book-cover',
+		'label' => __( 'Book — cover', 'trg-site' ),
+		'where' => __( 'The book page, beside the download button.', 'trg-site' ),
+		'size'  => __( 'Portrait, the shape of a book cover, around 800 × 1200. Shown at its own proportions and never cropped. Leave empty and a plain navy cover is drawn with the title on it.', 'trg-site' ),
+	);
+
 	return $slots;
 }
 

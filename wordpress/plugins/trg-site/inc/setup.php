@@ -176,6 +176,28 @@ function trg_page_definitions() {
 		) ),
 	);
 
+	/*
+	 * The book. Top level rather than under Resources: it is the one thing on
+	 * this site nobody else in the sector has, and burying it two clicks deep
+	 * to satisfy a tidy information architecture would waste it.
+	 *
+	 * The page carries no wording of its own — every word comes from the option
+	 * behind TRG Networking → The book, so the client can revise it without a
+	 * developer, and a second edition is a file upload.
+	 */
+	$pages[] = array(
+		'slug'      => 'book',
+		'title'     => 'The Book',
+		'seo_title' => 'Cybersecurity Without the Jargon | Free Book by Dr. Charles K. Edwards',
+		'excerpt'   => 'A plain-English cybersecurity guide for business leaders, written by TRG Networking’s Dr. Charles K. Edwards. Free to download.',
+		'content'   => implode( "\n\n", array(
+			'[trg_hero eyebrow="From our founder" title="Cybersecurity, explained without the jargon." lede="Written for the people who have to make security decisions without a security background."]',
+			'[trg_book bg="white"]',
+			'[trg_perspective title="Read it, then ask us anything in it." body="The book is not a sales document and there is nothing behind a form. If something in it raises a question about your own organization, call us and we will answer it."]',
+			'[trg_cta_band]',
+		) ),
+	);
+
 	// The twelve service and industry pages, all from one description.
 	foreach ( trg_detail_page_data() as $slug => $page ) {
 		// The renderer needs the slug to name this page's picture slot.
@@ -768,6 +790,7 @@ function trg_build_menus( $ids, $refresh = false ) {
 
 		$page_item( $primary->term_id, 'why-trg', 0, ++$pos );
 		$page_item( $primary->term_id, 'resources', 0, ++$pos );
+		$page_item( $primary->term_id, 'book', 0, ++$pos );
 		$page_item( $primary->term_id, 'about', 0, ++$pos );
 
 		$locations['primary'] = $primary->term_id;
@@ -800,7 +823,7 @@ function trg_build_menus( $ids, $refresh = false ) {
 	$footer_company = $ensure_menu( 'Footer — Company' );
 	if ( $footer_company && ! wp_get_nav_menu_items( $footer_company->term_id ) ) {
 		$pos = 0;
-		foreach ( array( 'about', 'why-trg', 'services', 'industries', 'contact', 'resources', 'case-studies', 'guides' ) as $slug ) {
+		foreach ( array( 'about', 'why-trg', 'services', 'industries', 'contact', 'resources', 'case-studies', 'guides', 'book' ) as $slug ) {
 			$page_item( $footer_company->term_id, $slug, 0, ++$pos );
 		}
 		$locations['footer_company'] = $footer_company->term_id;

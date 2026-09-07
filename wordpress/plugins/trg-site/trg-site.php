@@ -3,7 +3,7 @@
  * Plugin Name:       TRG Site
  * Plugin URI:        https://www.trgnetworking.com/
  * Description:       The section blocks, contact form, editable service/industry/testimonial lists and old-URL redirects for the TRG Networking site. Keep this active — the theme's pages are built from the shortcodes it registers.
- * Version:           1.10.0
+ * Version:           1.11.0
  * Requires at least: 6.2
  * Requires PHP:      7.4
  * Author:            Anirudha Talmale
@@ -37,6 +37,7 @@ require_once TRG_SITE_DIR . 'inc/team.php';
 require_once TRG_SITE_DIR . 'inc/smtp.php';
 require_once TRG_SITE_DIR . 'inc/pictures.php';
 require_once TRG_SITE_DIR . 'inc/alerts.php';
+require_once TRG_SITE_DIR . 'inc/book.php';
 require_once TRG_SITE_DIR . 'inc/contact-form.php';
 require_once TRG_SITE_DIR . 'inc/redirects.php';
 require_once TRG_SITE_DIR . 'inc/setup.php';

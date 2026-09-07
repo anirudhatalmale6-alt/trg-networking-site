@@ -79,6 +79,7 @@ function trg_hub_links() {
 		'edit.php?post_type=trg_testimonial',
 		'trg-team',
 		'trg-alerts',
+		'trg-book',
 		'edit.php?post_type=' . TRG_ENQUIRY_POST_TYPE,
 		'customize.php?autofocus[section]=trg_company',
 		'trg-email',
@@ -258,6 +259,16 @@ function trg_hub_page() {
 						$waiting
 					)
 					: __( 'Nothing waiting.', 'trg-site' )
+			);
+
+			trg_hub_card(
+				__( 'The book', 'trg-site' ),
+				__( 'Everything on the book page — the title, the description, what is inside, and the file people download. Replace the file here when a new edition is ready and the page updates itself.', 'trg-site' ),
+				admin_url( 'admin.php?page=trg-book' ),
+				__( 'Edit the book page', 'trg-site' ),
+				function_exists( 'trg_book_file_url' ) && '' !== trg_book_file_url()
+					? __( 'The download is live.', 'trg-site' )
+					: __( 'No file uploaded yet — the page says “available shortly”.', 'trg-site' )
 			);
 
 			trg_hub_card(
