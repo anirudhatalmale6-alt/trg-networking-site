@@ -142,6 +142,48 @@ function trg_detail_page_data() {
 		'card'       => array( 'AZ', 'Host your servers and network in Microsoft Azure—eliminating the cost of replacing aging hardware and the vulnerabilities it creates.' ),
 	),
 
+	/*
+	 * The ninth service, added 09/09 from Madhuri's storyboard. Every word here
+	 * is hers; the position in this array is what puts it sixth in the footer
+	 * and in the home-page grid, which is where her footer list has it.
+	 */
+	'network-infrastructure' => array(
+		'kind'       => 'service',
+		'title'      => 'Network & Infrastructure',
+		'nav_title'  => 'Network & Infrastructure',
+		'eyebrow'    => 'Network & infrastructure',
+		'hero'       => 'Reliable connections. Secure networks. Built to perform.',
+		'lede'       => 'TRG designs, secures and supports the network foundation that keeps your people, locations, devices, applications and cloud services connected.',
+		'meta'       => 'Network design, business Wi-Fi, firewalls, multi-site connectivity and ISP coordination from TRG Networking—infrastructure built around how your organization actually works.',
+		'seo_title'  => 'Network & Infrastructure Services | TRG Networking',
+		'introTitle' => 'A reliable network is the foundation for everything else.',
+		'introBody'  => 'Cloud applications, cybersecurity, remote work, phones, line-of-business systems and everyday support all depend on a network that is stable, secure and properly designed. TRG helps eliminate weak links and gives your organization a network that can grow with the business.',
+		'features'   => array(
+			array( 'Network design & modernization', 'Assess and improve switches, routing, cabling, wireless coverage and network architecture around current and future business needs.' ),
+			array( 'Business Wi-Fi', 'Design secure, reliable wireless coverage for employees, guests, conference rooms, warehouses and other working areas.' ),
+			array( 'Firewalls & secure access', 'Protect the network perimeter and provide controlled access for remote employees, vendors and approved third parties.' ),
+			array( 'Multi-site connectivity', 'Connect offices, branches, job sites and remote locations so employees can reach the systems and information they need.' ),
+			array( 'Monitoring & performance', 'Watch network health, capacity and connectivity so recurring problems can be identified before they become larger disruptions.' ),
+			array( 'ISP & vendor coordination', 'Work with internet, telecom, cabling and equipment vendors so your team does not have to referee technical issues.' ),
+		),
+		'perspective' => array(
+			'The network should disappear into the background—because it simply works.',
+			'TRG designs reliability and security together rather than treating them as separate projects, so the foundation stays out of your way.',
+		),
+		'faq'        => array(
+			array( 'Do we need to replace our entire network to improve performance?', 'Usually not. TRG starts by understanding what is already in place, where the problems are, and what the business actually needs. We can often improve performance and security in phases—replacing only the equipment or design elements that are limiting reliability, supportability or growth.' ),
+			array( 'Our Wi-Fi is unreliable in parts of the office. Can you fix that without guessing?', 'Yes. Reliable wireless starts with proper design, not simply adding more access points. TRG reviews coverage, interference, building layout, user density and device requirements, then designs Wi-Fi around how people actually use the space.' ),
+			array( 'Can you support a business with more than one location?', 'Yes. TRG can connect multiple offices, branch locations, project sites and remote users using secure network and cloud technologies. The goal is to give employees dependable access while maintaining appropriate security and separation between locations.' ),
+			array( 'How do you protect remote employees connecting back to our systems?', 'We use secure remote-access methods, identity controls, multi-factor authentication, firewalls and appropriate network policies so approved users can work remotely without unnecessarily exposing internal systems.' ),
+			array( 'What happens when our internet provider says the problem is our network—and our network vendor says it is the provider?', 'That is exactly the kind of situation TRG helps resolve. We troubleshoot the full path, gather the technical information needed, and coordinate with the appropriate carrier or vendor so your staff is not stuck between companies pointing at one another.' ),
+			array( 'Can TRG monitor our network proactively?', 'Yes. Network devices and connectivity can be monitored for availability, performance and recurring conditions. Monitoring helps identify developing problems and gives us better information when troubleshooting interruptions.' ),
+			array( 'How does network infrastructure relate to cybersecurity?', 'They are closely connected. Firewalls, segmentation, secure wireless, access controls, supported equipment and proper configuration all affect your security posture. TRG designs network reliability and security together rather than treating them as separate projects.' ),
+			array( 'Can you help us plan for growth or an office move?', 'Yes. TRG can help plan network capacity, internet connectivity, wireless coverage, switching, firewall requirements, cabling coordination and migration timing before employees move into the new environment.' ),
+			array( 'Do you work with our existing internet, phone, cabling or equipment vendors?', 'Yes. TRG regularly coordinates with third-party technology vendors. We can help define requirements, troubleshoot issues and keep responsibility clear while allowing you to retain vendors that are working well for your organization.' ),
+		),
+		'card'       => array( 'NI', 'Switching, business Wi-Fi, firewalls and multi-site connectivity—designed, secured and supported so the network stays out of your way.' ),
+	),
+
 	'secure-ai-adoption' => array(
 		'kind'       => 'service',
 		'title'      => 'Secure AI Adoption',

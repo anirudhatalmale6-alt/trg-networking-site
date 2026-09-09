@@ -82,8 +82,34 @@ function trg_picture_slots() {
 		'contact'    => __( 'Contact', 'trg-site' ),
 	);
 	if ( function_exists( 'trg_detail_page_data' ) ) {
-		foreach ( trg_detail_page_data() as $slug => $page ) {
-			$pages[ $slug ] = $page['title'];
+		$detail = trg_detail_page_data();
+
+		/*
+		 * The order of trg_detail_page_data() is the order pages appear in the
+		 * grids and the footer, so it changes whenever a service is added in
+		 * the middle — Network & Infrastructure went in sixth on 09/09.
+		 *
+		 * The numbers in THIS list are how pictures get talked about in
+		 * writing: "replace 21". Taking the display order would silently
+		 * renumber every slot below the new one and invalidate anything
+		 * already written down. So the original twelve keep their positions and
+		 * anything new is appended, whatever the display order becomes.
+		 */
+		$original = array(
+			'managed-it-services', 'cybersecurity', 'microsoft-365-cloud',
+			'azure-cloud-hosting', 'secure-ai-adoption', 'backup-business-continuity',
+			'cmmc-readiness', 'help-desk-it-support', 'construction', 'manufacturing',
+			'government-contractors', 'professional-services',
+		);
+		foreach ( $original as $slug ) {
+			if ( isset( $detail[ $slug ] ) ) {
+				$pages[ $slug ] = $detail[ $slug ]['title'];
+			}
+		}
+		foreach ( $detail as $slug => $page ) {
+			if ( ! isset( $pages[ $slug ] ) ) {
+				$pages[ $slug ] = $page['title'];
+			}
 		}
 	}
 
