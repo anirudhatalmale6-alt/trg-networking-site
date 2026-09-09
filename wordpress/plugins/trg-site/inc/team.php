@@ -227,7 +227,7 @@ function trg_sc_team( $atts ) {
 								<?php echo esc_html( trg_team_initials( $member['name'] ) ); ?>
 							</span>
 						<?php endif; ?>
-						<h3 class="mt-5 text-[18px]"><?php echo esc_html( $member['name'] ); ?></h3>
+						<h3 class="mt-5 text-[17px]"><?php echo esc_html( $member['name'] ); ?></h3>
 						<?php if ( '' !== trim( $member['title'] ) ) : ?>
 							<p class="mt-1 font-display text-[14px] font-bold text-brand-600"><?php echo esc_html( $member['title'] ); ?></p>
 						<?php endif; ?>

@@ -288,7 +288,7 @@ function trg_sc_home_hero( $atts ) {
 				// is a visual break, not a word break, so a screen reader runs
 				// the two lines together.
 				?>
-				<h1 class="mt-6 text-[36px] leading-[1.06] sm:text-[52px] lg:text-[58px]">
+				<h1 class="mt-6 text-[34px] leading-[1.1] sm:text-[46px] lg:text-[52px]">
 					<?php echo implode( ' <br>', $lines ); // phpcs:ignore WordPress.Security.EscapeOutput -- escaped above. ?>
 				</h1>
 
@@ -793,7 +793,7 @@ function trg_sc_services( $atts ) {
 					?>
 					<<?php echo esc_html( $tag ); ?> <?php echo $url ? 'href="' . esc_url( $url ) . '"' : ''; ?> class="card-hover <?php echo $url ? 'group ' : ''; ?>flex flex-col">
 						<?php echo trg_icon_tile( $icon ? $icon : 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-						<h3 class="mt-4 text-[18px]<?php echo $url ? ' group-hover:text-brand-600' : ''; ?>"><?php echo esc_html( get_the_title( $card ) ); ?></h3>
+						<h3 class="mt-4 text-[17px]<?php echo $url ? ' group-hover:text-brand-600' : ''; ?>"><?php echo esc_html( get_the_title( $card ) ); ?></h3>
 						<p class="mt-2 flex-1 text-[15px] leading-relaxed text-muted"><?php echo esc_html( trg_card_body( $card ) ); ?></p>
 						<?php if ( $url ) : ?>
 							<span class="mt-4 inline-flex items-center gap-1.5 font-heading text-[13.5px] font-bold text-brand-600">
@@ -1285,7 +1285,7 @@ function trg_sc_step( $atts, $content = '' ) {
 	return '<li class="text-center">'
 		. '<span class="mx-auto flex h-11 w-11 items-center justify-center rounded-full border-2 border-brand-200 bg-white font-display text-[16px] font-extrabold text-brand-600">'
 		. esc_html( $atts['n'] ) . '</span>'
-		. '<h3 class="mt-4 text-[18px]">' . esc_html( $atts['title'] ) . '</h3>'
+		. '<h3 class="mt-4 text-[17px]">' . esc_html( $atts['title'] ) . '</h3>'
 		. '<p class="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-muted">' . esc_html( trim( wp_strip_all_tags( $content ) ) ) . '</p>'
 		. '</li>';
 }

@@ -53,7 +53,7 @@ function trg_detail_page_data() {
 			array( 'Do you replace an internal IT person?', 'TRG can serve as a complete outsourced IT team or work alongside internal technology staff, depending on your needs.' ),
 			array( 'Is managed IT billed monthly?', 'Managed services are generally structured around a predictable monthly agreement. The exact scope depends on your users, locations, systems and support requirements.' ),
 		),
-		'card'       => array( 'IT', 'Proactive care, responsive support and a clear technology plan—without the cost of building an internal IT department.' ),
+		'card'       => array( 'IT', 'Proactive care, responsive support, and a clear technology plan built around your organization.' ),
 	),
 
 	'cybersecurity' => array(
@@ -83,7 +83,7 @@ function trg_detail_page_data() {
 			array( 'Can TRG review our current security?', 'Yes. A review can help identify gaps, outdated controls and priorities for improving your overall security posture.' ),
 			array( 'Do you provide employee security training?', 'Security awareness and responsible technology use can be included as part of a broader cybersecurity program.' ),
 		),
-		'card'       => array( 'CY', 'Layered protection for your people, devices, identities and data, backed by practical guidance your team can follow.' ),
+		'card'       => array( 'CY', 'Layered protection for people, devices, identities, email, cloud systems, and critical business data.' ),
 	),
 
 	'microsoft-365-cloud' => array(
@@ -108,7 +108,7 @@ function trg_detail_page_data() {
 			'Better Microsoft decisions start with licensing and security together.',
 			'TRG considers cost, functionality, data access and protection instead of treating licenses as simple line items.',
 		),
-		'card'       => array( '365', 'Licensing, security, migrations and everyday support that help your organization get more from Microsoft 365.' ),
+		'card'       => array( '365', 'Licensing, security, collaboration, migration, and support aligned with the way your organization works.' ),
 	),
 
 	'azure-cloud-hosting' => array(
@@ -139,7 +139,7 @@ function trg_detail_page_data() {
 			array( 'Is Azure more secure than on-premise servers?', 'Microsoft keeps Azure infrastructure continuously updated and patched. Combined with proper configuration, monitoring and access controls managed by TRG, it eliminates the vulnerability gaps that aging, unsupported hardware creates.' ),
 			array( 'Does TRG manage Azure for organizations outside Maryland?', 'Yes. TRG is headquartered in Columbia, Maryland and manages Azure environments for organizations nationwide.' ),
 		),
-		'card'       => array( 'AZ', 'Host your servers and network in Microsoft Azure—eliminating the cost of replacing aging hardware and the vulnerabilities it creates.' ),
+		'card'       => array( 'AZ', 'Secure Azure hosting and migration that reduces dependence on aging on-premise infrastructure.' ),
 	),
 
 	/*
@@ -181,7 +181,7 @@ function trg_detail_page_data() {
 			array( 'Can you help us plan for growth or an office move?', 'Yes. TRG can help plan network capacity, internet connectivity, wireless coverage, switching, firewall requirements, cabling coordination and migration timing before employees move into the new environment.' ),
 			array( 'Do you work with our existing internet, phone, cabling or equipment vendors?', 'Yes. TRG regularly coordinates with third-party technology vendors. We can help define requirements, troubleshoot issues and keep responsibility clear while allowing you to retain vendors that are working well for your organization.' ),
 		),
-		'card'       => array( 'NI', 'Switching, business Wi-Fi, firewalls and multi-site connectivity—designed, secured and supported so the network stays out of your way.' ),
+		'card'       => array( 'NI', 'Secure, reliable networks designed to keep your people, locations, devices, and business systems connected and performing.' ),
 	),
 
 	'secure-ai-adoption' => array(
@@ -211,7 +211,7 @@ function trg_detail_page_data() {
 			array( 'Can you help us prepare for Microsoft Copilot?', 'Yes. Copilot readiness includes licensing, data access, SharePoint permissions, security settings, policy and employee preparation.' ),
 			array( 'Does TRG build custom AI software?', 'TRG focuses on secure adoption, Microsoft Copilot readiness, policy, training and practical business use. Custom development would be evaluated separately based on scope.' ),
 		),
-		'card'       => array( 'AI', 'Policies, training and practical use cases that help your team save time with AI while protecting company information.' ),
+		'card'       => array( 'AI', 'Practical AI guidance, policies, training, and secure adoption that protect company information.' ),
 	),
 
 	'backup-business-continuity' => array(
@@ -234,7 +234,7 @@ function trg_detail_page_data() {
 			'The real question is not whether data was backed up.',
 			'It is whether your business can recover the right systems and data within a timeframe that protects operations and customers.',
 		),
-		'card'       => array( 'BC', 'Verified backups and recovery planning designed to keep a disruption from becoming a business-ending event.' ),
+		'card'       => array( 'BC', 'Backup and recovery planning designed to reduce disruption and help the business recover with confidence.' ),
 	),
 
 	'cmmc-readiness' => array(
@@ -259,7 +259,7 @@ function trg_detail_page_data() {
 			'Readiness without false promises.',
 			'TRG supports the technical foundation for CMMC. We do not describe a business as compliant or guarantee certification before the appropriate assessment is completed.',
 		),
-		'card'       => array( 'C3', 'Technology and security guidance for government contractors working toward a stronger, audit-ready environment.' ),
+		'card'       => array( 'C3', 'Practical technology and security guidance for government contractors preparing for CMMC requirements.' ),
 	),
 
 	'help-desk-it-support' => array(
@@ -282,7 +282,7 @@ function trg_detail_page_data() {
 			'Support is part technical skill and part customer care.',
 			'TRG believes both matter. Your employees deserve capable answers delivered with patience, professionalism and respect.',
 		),
-		'card'       => array( 'HD', 'Friendly, responsive support that treats people with respect and keeps technology issues moving toward resolution.' ),
+		'card'       => array( 'HD', 'Fast, responsive support from real people who keep your employees productive and technology problems from becoming business disruptions.' ),
 	),
 
 	/* ----------------------------------------------------- industries */

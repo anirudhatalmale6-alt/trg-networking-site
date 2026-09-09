@@ -276,54 +276,28 @@ function trg_home_content() {
 			. 'Business Continuity|/backup-business-continuity/;Managed IT Services|/managed-it-services/;'
 			. 'Secure AI Adoption|/secure-ai-adoption/"]',
 
-		'[trg_cards bg="canvas" columns="4" eyebrow="Technology should move your business forward" title="Less disruption. More confidence." body="TRG makes technology easier to manage, easier to understand and better aligned with the way your organization actually works."]' . "\n"
+		'[trg_cards bg="canvas" columns="4" eyebrow="Technology that moves your business forward" title="Less disruption. More confidence." body="TRG makes technology easier to understand, easier to manage, and better aligned with the way your organization works."]' . "\n"
 			. '[trg_card num="01" title="Fewer interruptions"]Proactive monitoring and maintenance help address small issues before they become costly problems.[/trg_card]' . "\n"
 			. '[trg_card num="02" title="Stronger protection"]Security that covers people, devices, cloud systems, data and the everyday decisions that connect them.[/trg_card]' . "\n"
 			. '[trg_card num="03" title="Responsive attention"]Multiple team members oversee incoming support so requests are seen, assigned and kept moving.[/trg_card]' . "\n"
 			. '[trg_card num="04" title="Clearer planning"]Plain-English recommendations, predictable costs and a practical roadmap for what comes next.[/trg_card]' . "\n"
 			. '[/trg_cards]',
 
-		// limit="7" because test2's grid stops at CMMC Readiness. Help Desk &
-		// IT Support is the eighth card and has its own band further down.
-		'[trg_services id="services" bg="white" limit="7" eyebrow="Complete technology care" title="Every layer of your technology. Covered." body="From daily support to long-term strategy, TRG connects the pieces so your technology works as one secure, reliable system."]',
-
-		'[trg_ai_panel bg="navy" eyebrow="Azure cloud hosting" title="Stop replacing servers. Start running in Azure." '
-			. 'body="TRG hosts your servers and network in Microsoft Azure—eliminating the capital expense of hardware refresh cycles and the security vulnerabilities that aging, unsupported equipment creates. Your environment runs on always-current, Microsoft-managed infrastructure, designed, migrated and managed by TRG." '
-			. 'pills="Azure migration, No hardware refreshes, Always-current security, Scalable on demand" '
-			. 'button_text="Explore Azure Cloud Hosting" button_link="azure-cloud-hosting" '
-			. 'panel_label="Why move to Azure with TRG" '
-			. 'steps="Retire aging hardware|Replace failing servers with Azure instead of buying new ones.;'
-			. 'Close vulnerability gaps|Run on continuously patched Microsoft infrastructure.;'
-			. 'Pay for what you use|Scale resources up or down without overprovisioning.;'
-			. 'One managed environment|TRG supports Azure alongside your other technology."]',
-
-		'[trg_media_split bg="white" image="lov-support" image_alt="A TRG IT specialist working alongside a client team member" '
-			. 'eyebrow="Responsive by design" title="Multiple eyes on every request. One team accountable." '
-			. 'body="Your support request should never feel lost in a queue. Multiple people across TRG oversee incoming requests, help ensure the right person is assigned and keep work moving toward resolution." '
-			. 'bullets="Human attention—not an anonymous call center|Clear ownership and follow-through|Plain-English communication throughout" '
-			. 'button_text="Meet Your Responsive IT Team" button_link="help-desk-it-support" '
-			. 'note_title="Shared oversight" note_body="Multiple team members help keep requests moving." note_icon="users"]',
-
-		'[trg_industries bg="canvas" eyebrow="Experience that fits your world" title="We learn how your business works." body="Technology decisions are better when they reflect your operations, risks, customers and compliance responsibilities."]',
-
-		// test2 renders this band dark, exactly like the Azure one above it.
-		'[trg_ai_panel bg="navy" eyebrow="Secure AI adoption" title="Use AI with a plan. Not a free-for-all." '
-			. 'body="TRG helps your organization adopt AI responsibly—protecting company information while giving employees practical ways to work faster and make better decisions." '
-			. 'pills="AI readiness, Usage policies, Microsoft Copilot, Employee training" '
-			. 'button_text="Explore secure AI services" button_link="secure-ai-adoption" '
-			. 'panel_label="TRG / AI enablement" '
-			. 'steps="Protect the data|Security and access first;'
-			. 'Set clear policies|Responsible use guidance;'
-			. 'Find practical wins|Workflows worth improving;'
-			. 'Train the team|Confidence without the hype"]',
-
-		// attribution="0": test2 prints both quotes unattributed. The names are
-		// still in Testimonials, ready to switch on once each client agrees.
-		'[trg_testimonials bg="canvas" attribution="0" eyebrow="Trusted relationships" title="Technology expertise. A genuinely personal approach." '
-			. 'body="Since 1992, organizations have trusted TRG to care for critical systems, support their people and explain complex decisions without the jargon." '
-			. 'cta_text="Why businesses choose TRG" cta_link="why-trg"]',
-
-		'[trg_process bg="white" columns="3" eyebrow="A simple place to begin" title="Start with a conversation." body="No technical preparation required. Tell us what is working, what is frustrating your team and what you want technology to do better."]' . "\n" . trg_process_steps() . '[/trg_process]',
+		/*
+		 * All nine services, in the 3x3 order of Madhuri's final home-page
+		 * correction sheet: Managed IT, Help Desk, Network & Infrastructure /
+		 * Cybersecurity, Microsoft 365, Azure / Secure AI, Business Continuity,
+		 * CMMC. The order itself lives on the trg_service posts' menu_order.
+		 *
+		 * Five bands that used to sit between this grid and the closing call to
+		 * action have been removed on her instruction: the Azure panel, the
+		 * "multiple eyes on every request" split, the industries row, the AI
+		 * panel and the testimonials. Every one of them already has a page of
+		 * its own that says more, and together they were most of the reason the
+		 * home page ran to sixteen screens on a phone. Nothing was deleted from
+		 * the site - only from this page.
+		 */
+		'[trg_services id="services" bg="white" eyebrow="Complete technology care" title="Every layer of your technology. Covered." body="From daily support to long-term strategy, TRG connects the pieces so your technology works as one secure, reliable system."]',
 
 		'[trg_cta_band eyebrow="Let’s talk" title="Ready for technology that feels easier?" '
 			. 'body="Start with a practical conversation about your organization, your concerns and where you want to go next." '
@@ -553,7 +527,16 @@ function trg_seed_cards( $ids, $refresh = false ) {
 	// test2's order, in both the dropdown and the homepage grid. The homepage
 	// grid stops at CMMC Readiness; Help Desk & IT Support is eighth and has a
 	// band of its own further down the page.
-	$service_order  = array( 'managed-it-services', 'cybersecurity', 'microsoft-365-cloud', 'azure-cloud-hosting', 'secure-ai-adoption', 'backup-business-continuity', 'cmmc-readiness', 'help-desk-it-support' );
+	/*
+	 * Reading order of the home page's 3x3 grid, from Madhuri's final
+	 * correction sheet: the three everyday-support services first, then the
+	 * three platform ones, then the three specialist ones.
+	 */
+	$service_order  = array(
+		'managed-it-services', 'help-desk-it-support', 'network-infrastructure',
+		'cybersecurity', 'microsoft-365-cloud', 'azure-cloud-hosting',
+		'secure-ai-adoption', 'backup-business-continuity', 'cmmc-readiness',
+	);
 	$industry_order = array( 'construction' => 1, 'manufacturing' => 2, 'government-contractors' => 3, 'professional-services' => 4 );
 	$data           = trg_detail_page_data();
 
