@@ -63,7 +63,7 @@ function trg_page_definitions() {
 		'seo_title' => 'Why TRG Networking | Trusted IT Partner Since 1992',
 		'excerpt' => 'Since 1992, TRG has built long-term relationships through responsiveness, integrity and practical technology guidance.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="Why TRG" title="Experienced enough to guide. Personal enough to care." lede="Since 1992, TRG has built long-term relationships through responsiveness, integrity and practical technology guidance." image="pg-why-trg" image_alt="The TRG Networking team" button_text="Talk With Our Team" button_link="contact" call_button="1"]',
+			'[trg_hero eyebrow="Why TRG" title="Experienced enough to guide. Personal enough to care." lede="Since 1992, TRG has built long-term relationships through responsiveness, integrity and practical technology guidance." image="pg-why-trg" image_alt="The TRG Networking team" button_text="Connect With Our Team" button_link="contact" call_button="1"]',
 			'[trg_cards bg="white" columns="3" title="We keep clients through service—not by keeping them in the dark." body="TRG believes you should understand your technology, know what you are paying for and retain appropriate documentation about your environment. Trust is earned through consistent actions and clear communication."]' . "\n"
 				. '[trg_card num="01" title="Responsive by design"]Multiple team members oversee incoming support so requests receive attention and follow-through.[/trg_card]' . "\n"
 				. '[trg_card num="02" title="Plain-English answers"]We explain technology without making employees or leadership feel talked down to.[/trg_card]' . "\n"
@@ -107,10 +107,10 @@ function trg_page_definitions() {
 	$pages[] = array(
 		'slug'      => 'contact',
 		'title'     => 'Contact',
-		'seo_title' => 'Contact TRG Networking | Talk With Our Team',
+		'seo_title' => 'Contact TRG Networking | Connect With Our Team',
 		'excerpt' => 'Call 410-363-6980 or email our Columbia, Maryland team to start a straightforward conversation about your IT.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="Contact and connect with our team" title="Let’s power your workflows" lede="Headquartered in Maryland and serving organizations nationwide. Tell us what is working, what is frustrating your team and what you want technology to do better." image="pg-contact" image_alt="The TRG Networking office in Columbia, Maryland" button_text="Talk With Our Team" button_link="#enquiry" call_button="1"]',
+			'[trg_hero eyebrow="Contact and connect with our team" title="Let’s power your workflows" lede="Headquartered in Maryland and serving organizations nationwide. Tell us what is working, what is frustrating your team and what you want technology to do better." image="pg-contact" image_alt="The TRG Networking office in Columbia, Maryland" button_text="Connect With Our Team" button_link="#enquiry" call_button="1"]',
 			'[trg_cards bg="white" columns="2" title="No technical preparation required." body="Whether you are replacing an IT provider, strengthening cybersecurity, preparing for CMMC, reviewing Microsoft 365, moving servers to Azure or exploring AI, we will help identify a sensible next step."]' . "\n"
 				. '[trg_card num="01" title="Call"]410-363-6980[/trg_card]' . "\n"
 				. '[trg_card num="02" title="Email"]info@trgnetworking.com[/trg_card]' . "\n"
@@ -260,7 +260,7 @@ function trg_home_content() {
 	return implode( "\n\n", array(
 		'[trg_home_hero eyebrow="Trusted technology partner since 1992" line1="Personalized Technology Support" accent="Built Around Your Goals" '
 			. 'lede="TRG helps organizations modernize, secure, and grow with managed IT services, Microsoft Azure cloud hosting, Microsoft 365, cybersecurity, CMMC readiness, secure AI solutions, and strategic technology guidance. From fully managed Azure environments and cloud migrations to advanced security, business continuity, and responsive support, we deliver technology solutions built around your goals, budget, and industry requirements." '
-			. 'button_text="Talk With Our Team" button_link="contact" '
+			. 'button_text="Connect With Our Team" button_link="contact" '
 			. 'button2_text="Explore our services↓" button2_link="#services" button2_style="text" '
 			. 'image="hero-team" image_alt="A business team collaborating with an IT consultant" '
 			. 'caption_eyebrow="The TRG difference" caption="Technology that feels more human." '
@@ -301,7 +301,7 @@ function trg_home_content() {
 
 		'[trg_cta_band eyebrow="Let’s talk" title="Ready for technology that feels easier?" '
 			. 'body="Start with a practical conversation about your organization, your concerns and where you want to go next." '
-			. 'button_text="Talk With Our Team" button_link="contact"]',
+			. 'button_text="Connect With Our Team" button_link="contact"]',
 	) );
 }
 

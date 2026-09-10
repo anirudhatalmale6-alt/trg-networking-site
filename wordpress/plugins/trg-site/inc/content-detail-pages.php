@@ -422,7 +422,7 @@ function trg_detail_page_content( $page ) {
 	 * the hero falls back to test2's single-column shape.
 	 */
 	$out = sprintf(
-		'[trg_hero eyebrow="%s" title="%s" lede="%s" image="%s" image_alt="%s" button_text="Talk With Our Team" button_link="contact" call_button="1"]',
+		'[trg_hero eyebrow="%s" title="%s" lede="%s" image="%s" image_alt="%s" button_text="Connect With Our Team" button_link="contact" call_button="1"]',
 		trg_attr( $page['eyebrow'] ),
 		trg_attr( $page['hero'] ),
 		trg_attr( $page['lede'] ),

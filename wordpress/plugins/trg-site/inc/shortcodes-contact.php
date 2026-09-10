@@ -104,7 +104,7 @@ function trg_sc_contact_section( $atts ) {
 	$atts = shortcode_atts( array(
 		'title' => '',
 		'body'  => '',
-		// So the hero's "Talk With Our Team" button can jump straight to the
+		// So the hero's "Connect With Our Team" button can jump straight to the
 		// form rather than reloading the page it is already on.
 		'id'    => '',
 	), $atts, 'trg_contact_section' );

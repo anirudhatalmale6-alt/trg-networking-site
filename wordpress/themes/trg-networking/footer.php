@@ -82,7 +82,7 @@ defined( 'ABSPATH' ) || exit;
 					</li>
 				</ul>
 				<a href="<?php echo esc_url( trg_page_url( 'support-center' ) ); ?>" class="btn-ghost-l mt-5 w-full">
-					<?php esc_html_e( 'Existing client support', 'trg-networking' ); ?>
+					<?php esc_html_e( 'Client Support', 'trg-networking' ); ?>
 				</a>
 			</div>
 		</div>

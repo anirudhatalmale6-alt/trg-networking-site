@@ -189,7 +189,7 @@ function trg_sc_home_hero( $atts ) {
 		'line2'          => '',
 		'accent'         => '',
 		'lede'           => '',
-		'button_text'    => __( 'Talk With Our Team', 'trg-site' ),
+		'button_text'    => __( 'Connect With Our Team', 'trg-site' ),
 		'button_link'    => 'contact',
 		'button2_text'   => __( 'Free IT assessment', 'trg-site' ),
 		'button2_link'   => 'contact',
@@ -1136,7 +1136,7 @@ function trg_sc_cta_band( $atts, $content = '' ) {
 		 * looking band.
 		 */
 		'body'         => __( 'Start with a practical conversation about your organization, your concerns and where you want to go next.', 'trg-site' ),
-		'button_text'  => __( 'Talk With Our Team', 'trg-site' ),
+		'button_text'  => __( 'Connect With Our Team', 'trg-site' ),
 		'button_link'  => 'contact',
 		'button2_text' => '',
 		'button2_link' => 'contact',
