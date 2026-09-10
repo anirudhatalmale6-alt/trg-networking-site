@@ -555,7 +555,16 @@ function trg_sc_hero( $atts ) {
 						<img src="<?php echo esc_url( $image ); ?>"
 							alt="<?php echo esc_attr( $atts['image_alt'] ); ?>"
 							width="1400" height="800" fetchpriority="high"
-							class="aspect-[16/10] w-full rounded-2xl object-cover shadow-[0_30px_70px_-30px_rgba(1,40,84,0.45)]">
+							<?php /*
+								No fixed aspect ratio and no object-cover. The pictures TRG
+								supplies are designed banners with words in them, and they
+								do not all share a shape - 16:9 and 3:2 both arrive. Forcing
+								them into a 16:10 box cropped five per cent off each side,
+								which is what cut "Azure Cloud" down to "zure Cloud". The
+								image now keeps its own proportions, so nothing is ever
+								trimmed whatever shape comes next.
+							*/ ?>
+							class="w-full rounded-2xl shadow-[0_30px_70px_-30px_rgba(1,40,84,0.45)]">
 						<?php if ( $credit ) : ?>
 							<p class="mt-2 text-[12px] leading-snug text-soft"><?php echo esc_html( $credit ); ?></p>
 						<?php endif; ?>
