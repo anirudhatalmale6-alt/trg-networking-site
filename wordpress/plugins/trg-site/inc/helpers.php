@@ -110,6 +110,31 @@ function trg_split_list( $value, $separator = ',' ) {
 }
 
 /**
+ * A heading, without the full stop on the end.
+ *
+ * TRG asked for no periods on headings or subheadings anywhere on the site.
+ * Doing it here rather than editing sixty-two strings means the rule also
+ * covers whatever Madhuri writes next - her storyboards punctuate headings as
+ * sentences - and it leaves the copy in the plugin matching her documents, so
+ * the two can still be compared line for line.
+ *
+ * Only a single trailing period is removed. An ellipsis, a question mark and
+ * an exclamation mark are all left alone, and periods INSIDE a heading stay:
+ * "Less disruption. More confidence" needs the first one to read at all.
+ *
+ * @param string $text Heading text.
+ * @return string
+ */
+function trg_heading( $text ) {
+	$text = trim( (string) $text );
+	if ( '' === $text || '...' === substr( $text, -3 ) || '…' === substr( $text, -3 ) ) {
+		return $text;
+	}
+	return '.' === substr( $text, -1 ) ? rtrim( substr( $text, 0, -1 ) ) : $text;
+}
+
+/**
+/**
  * Render an eyebrow + heading + optional body, the site's standard section
  * opener.
  *
@@ -150,7 +175,7 @@ function trg_section_head( $args ) {
 		'<%1$s class="mt-4 text-[30px] leading-[1.15] sm:text-[38px] %2$s">%3$s</%1$s>',
 		$level,
 		$args['light'] ? '!text-white' : '',
-		wp_kses_post( $args['title'] )
+		wp_kses_post( trg_heading( $args['title'] ) )
 	);
 
 	if ( $args['body'] ) {

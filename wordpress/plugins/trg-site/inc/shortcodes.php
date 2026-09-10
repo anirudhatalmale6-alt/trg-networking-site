@@ -543,7 +543,7 @@ function trg_sc_hero( $atts ) {
 					<?php if ( $atts['eyebrow'] ) : ?>
 						<span class="eyebrow"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
 					<?php endif; ?>
-					<h1 class="mt-5 text-[34px] leading-[1.1] sm:text-[46px] lg:text-[52px]"><?php echo esc_html( $title ); ?></h1>
+					<h1 class="mt-5 text-[34px] leading-[1.1] sm:text-[46px] lg:text-[52px]"><?php echo esc_html( trg_heading( $title ) ); ?></h1>
 					<?php if ( $atts['lede'] ) : ?>
 						<p class="mt-5 max-w-2xl text-[18px] leading-relaxed text-muted"><?php echo esc_html( $atts['lede'] ); ?></p>
 					<?php endif; ?>
@@ -721,7 +721,7 @@ function trg_sc_card( $atts, $content = '' ) {
 		$inner = 'none' === $atts['icon'] ? '' : trg_icon_tile( $atts['icon'] );
 		$lead  = 'none' === $atts['icon'] ? '' : 'mt-4 ';
 	}
-	$inner .= '<h3 class="' . $lead . 'text-[17px]' . ( $url ? ' group-hover:text-brand-600' : '' ) . '">' . esc_html( $atts['title'] ) . '</h3>';
+	$inner .= '<h3 class="' . $lead . 'text-[17px]' . ( $url ? ' group-hover:text-brand-600' : '' ) . '">' . esc_html( trg_heading( $atts['title'] ) ) . '</h3>';
 	$inner .= '<p class="mt-2 flex-1 text-[15px] leading-relaxed text-muted">' . $body . '</p>';
 
 	if ( $url && $atts['cta'] ) {
@@ -793,7 +793,7 @@ function trg_sc_services( $atts ) {
 					?>
 					<<?php echo esc_html( $tag ); ?> <?php echo $url ? 'href="' . esc_url( $url ) . '"' : ''; ?> class="card-hover <?php echo $url ? 'group ' : ''; ?>flex flex-col">
 						<?php echo trg_icon_tile( $icon ? $icon : 'check' ); // phpcs:ignore WordPress.Security.EscapeOutput ?>
-						<h3 class="mt-4 text-[17px]<?php echo $url ? ' group-hover:text-brand-600' : ''; ?>"><?php echo esc_html( get_the_title( $card ) ); ?></h3>
+						<h3 class="mt-4 text-[17px]<?php echo $url ? ' group-hover:text-brand-600' : ''; ?>"><?php echo esc_html( trg_heading( get_the_title( $card ) ) ); ?></h3>
 						<p class="mt-2 flex-1 text-[15px] leading-relaxed text-muted"><?php echo esc_html( trg_card_body( $card ) ); ?></p>
 						<?php if ( $url ) : ?>
 							<span class="mt-4 inline-flex items-center gap-1.5 font-heading text-[13.5px] font-bold text-brand-600">
@@ -855,7 +855,7 @@ function trg_sc_industries( $atts ) {
 					<<?php echo esc_html( $tag ); ?> <?php echo $url ? 'href="' . esc_url( $url ) . '"' : ''; ?>
 						class="card-hover <?php echo $url ? 'group ' : ''; ?>flex flex-col">
 						<span class="font-display text-[13px] font-bold tracking-wider text-brand-400"><?php echo esc_html( sprintf( '%02d', $i + 1 ) ); ?></span>
-						<h3 class="mt-3 text-[17px]<?php echo $url ? ' group-hover:text-brand-600' : ''; ?>"><?php echo esc_html( get_the_title( $card ) ); ?></h3>
+						<h3 class="mt-3 text-[17px]<?php echo $url ? ' group-hover:text-brand-600' : ''; ?>"><?php echo esc_html( trg_heading( get_the_title( $card ) ) ); ?></h3>
 						<p class="mt-2 flex-1 text-[15px] leading-relaxed text-muted"><?php echo esc_html( trg_card_body( $card ) ); ?></p>
 						<?php if ( $tags ) : ?>
 							<p class="mt-3 text-[13px] text-soft"><?php echo esc_html( $tags ); ?></p>
@@ -1093,7 +1093,7 @@ function trg_sc_perspective( $atts, $content = '' ) {
 	<section class="section bg-canvas">
 		<div class="shell mx-auto max-w-3xl text-center">
 			<span class="eyebrow"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
-			<h2 class="mt-4 text-[26px] leading-[1.2] sm:text-[32px]"><?php echo esc_html( $atts['title'] ); ?></h2>
+			<h2 class="mt-4 text-[26px] leading-[1.2] sm:text-[32px]"><?php echo esc_html( trg_heading( $atts['title'] ) ); ?></h2>
 			<p class="mt-5 text-[17px] leading-relaxed text-muted"><?php echo esc_html( $body ); ?></p>
 			<?php if ( $atts['link_text'] ) : ?>
 				<a href="<?php echo esc_url( trg_link_url( $atts['link'] ) ); ?>"
@@ -1291,7 +1291,7 @@ function trg_sc_step( $atts, $content = '' ) {
 	return '<li class="text-center">'
 		. '<span class="mx-auto flex h-11 w-11 items-center justify-center rounded-full border-2 border-brand-200 bg-white font-display text-[16px] font-extrabold text-brand-600">'
 		. esc_html( $atts['n'] ) . '</span>'
-		. '<h3 class="mt-4 text-[17px]">' . esc_html( $atts['title'] ) . '</h3>'
+		. '<h3 class="mt-4 text-[17px]">' . esc_html( trg_heading( $atts['title'] ) ) . '</h3>'
 		. '<p class="mx-auto mt-2 max-w-xs text-[15px] leading-relaxed text-muted">' . esc_html( trim( wp_strip_all_tags( $content ) ) ) . '</p>'
 		. '</li>';
 }
@@ -1337,7 +1337,7 @@ function trg_sc_ai_panel( $atts ) {
 						<span class="eyebrow <?php echo $dark ? 'text-white/70' : ''; ?>"><?php echo esc_html( $atts['eyebrow'] ); ?></span>
 					<?php endif; ?>
 					<h2 class="mt-4 text-[30px] leading-[1.15] sm:text-[38px] <?php echo $dark ? 'text-white' : ''; ?>">
-						<?php echo esc_html( $atts['title'] ); ?>
+						<?php echo esc_html( trg_heading( $atts['title'] ) ); ?>
 						<?php if ( $atts['accent'] ) : ?>
 							<br><span class="<?php echo $dark ? 'text-brand-300' : 'text-brand-600'; ?>"><?php echo esc_html( $atts['accent'] ); ?></span>
 						<?php endif; ?>
@@ -1444,7 +1444,7 @@ function trg_sc_related( $atts ) {
 				<?php foreach ( $filtered as $card ) : ?>
 					<?php $url = trg_card_link( $card ); ?>
 					<<?php echo $url ? 'a href="' . esc_url( $url ) . '"' : 'div'; ?> class="card-hover group">
-						<h3 class="text-[17px] group-hover:text-brand-600"><?php echo esc_html( get_the_title( $card ) ); ?></h3>
+						<h3 class="text-[17px] group-hover:text-brand-600"><?php echo esc_html( trg_heading( get_the_title( $card ) ) ); ?></h3>
 						<p class="mt-2 text-[14.5px] leading-relaxed text-muted"><?php echo esc_html( trg_card_body( $card ) ); ?></p>
 						<?php if ( $url ) : ?>
 							<span class="mt-4 inline-flex items-center gap-1.5 font-heading text-[13px] font-bold text-brand-600">

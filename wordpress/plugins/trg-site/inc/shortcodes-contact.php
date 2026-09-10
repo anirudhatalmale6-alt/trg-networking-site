@@ -157,7 +157,7 @@ function trg_sc_support_cards( $atts ) {
 			</div>
 
 			<div class="mt-8 rounded-xl border border-brand-200 bg-brand-50 p-6">
-				<h2 class="text-[18px]"><?php echo esc_html( $atts['panel_title'] ); ?></h2>
+				<h2 class="text-[18px]"><?php echo esc_html( trg_heading( $atts['panel_title'] ) ); ?></h2>
 				<p class="mt-2 text-[15px] leading-relaxed text-muted"><?php echo esc_html( $atts['panel_body'] ); ?></p>
 				<a href="<?php echo esc_url( trg_site_page_url( 'contact' ) ); ?>" class="btn-primary mt-5">
 					<?php echo esc_html( $atts['panel_button'] ); ?>
@@ -241,7 +241,7 @@ function trg_sc_note( $atts, $content = '' ) {
 	$body = trim( wp_strip_all_tags( $content ) );
 
 	$out  = '<div class="rounded-xl border border-line bg-canvas p-6">';
-	$out .= '<h2 class="text-[17px]">' . esc_html( $atts['title'] ) . '</h2>';
+	$out .= '<h2 class="text-[17px]">' . esc_html( trg_heading( $atts['title'] ) ) . '</h2>';
 	$out .= '<p class="mt-2 max-w-2xl text-[15px] leading-relaxed text-muted">' . esc_html( $body ) . '</p>';
 
 	if ( $atts['button_text'] ) {
