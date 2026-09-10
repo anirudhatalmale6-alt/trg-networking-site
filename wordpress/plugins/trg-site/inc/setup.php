@@ -261,7 +261,7 @@ function trg_home_content() {
 		'[trg_home_hero eyebrow="Trusted technology partner since 1992" line1="Personalized Technology Support" accent="Built Around Your Goals" '
 			. 'lede="TRG helps organizations modernize, secure, and grow with managed IT services, Microsoft Azure cloud hosting, Microsoft 365, cybersecurity, CMMC readiness, secure AI solutions, and strategic technology guidance. From fully managed Azure environments and cloud migrations to advanced security, business continuity, and responsive support, we deliver technology solutions built around your goals, budget, and industry requirements." '
 			. 'button_text="Talk With Our Team" button_link="contact" '
-			. 'button2_text="Explore our services ↓" button2_link="#services" button2_style="text" '
+			. 'button2_text="Explore our services↓" button2_link="#services" button2_style="text" '
 			. 'image="hero-team" image_alt="A business team collaborating with an IT consultant" '
 			. 'caption_eyebrow="The TRG difference" caption="Technology that feels more human." '
 			// No `cards` any more: TRG asked for the claim boxes to come off the

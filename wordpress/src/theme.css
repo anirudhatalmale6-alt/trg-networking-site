@@ -69,9 +69,15 @@
   .btn-outline { @apply btn border border-brand-200 bg-white text-brand-600 hover:border-brand-600 hover:bg-brand-50; }
   .btn-ghost-l { @apply btn border border-white/30 bg-white/10 text-white hover:bg-white/20; }
   .btn-white   { @apply btn bg-white text-brand-600 shadow-sm hover:bg-brand-50; }
-  /* test2's secondary call to action is a bare text link, not a bordered button. */
-  .btn-text    { @apply inline-flex max-w-full items-center justify-center gap-2 text-center
-                        font-heading text-sm font-bold text-ink transition-colors hover:text-brand-600; }
+  /*
+    test2's secondary call to action is a bare text link, not a bordered button.
+    Underlined since 09/09: Madhuri's storyboard draws it underlined, and beside
+    a solid button an un-underlined label does not read as clickable at all.
+  */
+  .btn-text    { @apply inline-flex max-w-full items-center justify-center gap-1 text-center
+                        font-heading text-sm font-bold text-ink underline decoration-brand-300
+                        decoration-2 underline-offset-4 transition-colors
+                        hover:text-brand-600 hover:decoration-brand-600; }
 
   .card {
     @apply rounded-xl border border-line bg-white p-6 transition-all duration-200;

@@ -1120,7 +1120,13 @@ function trg_sc_cta_band( $atts, $content = '' ) {
 	$atts = shortcode_atts( array(
 		'eyebrow'      => __( 'Let’s talk', 'trg-site' ),
 		'title'        => __( 'Ready for technology that feels easier?', 'trg-site' ),
-		'body'         => __( 'Start with a straightforward conversation about your business, your concerns and what better IT support could look like.', 'trg-site' ),
+		/*
+		 * Madhuri's wording, and the same sentence the storyboards close every
+		 * page with. It used to differ from the one passed in explicitly, so
+		 * fourteen pages said one thing and five said another in an identical
+		 * looking band.
+		 */
+		'body'         => __( 'Start with a practical conversation about your organization, your concerns and where you want to go next.', 'trg-site' ),
 		'button_text'  => __( 'Talk With Our Team', 'trg-site' ),
 		'button_link'  => 'contact',
 		'button2_text' => '',
