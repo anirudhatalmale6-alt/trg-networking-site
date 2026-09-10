@@ -992,7 +992,10 @@ function trg_sc_media_split( $atts ) {
 				<?php if ( $image ) : ?>
 					<img src="<?php echo esc_url( $image ); ?>" alt="<?php echo esc_attr( $atts['image_alt'] ); ?>"
 						width="1400" height="1050" loading="lazy"
-						class="aspect-[4/3] w-full rounded-2xl object-cover shadow-[0_24px_60px_-28px_rgba(15,23,42,0.45)]">
+						<?php /* No fixed ratio, for the same reason as the page hero: TRG's
+						   pictures arrive in several shapes and a 4:3 box was
+						   trimming the sides off the About photograph. */ ?>
+						class="w-full rounded-2xl shadow-[0_24px_60px_-28px_rgba(15,23,42,0.45)]">
 				<?php endif; ?>
 
 				<?php if ( $atts['note_title'] ) : ?>
