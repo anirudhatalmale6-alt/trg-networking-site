@@ -114,7 +114,7 @@ function trg_page_definitions() {
 			'[trg_cards bg="white" columns="2" title="No technical preparation required." body="Whether you are replacing an IT provider, strengthening cybersecurity, preparing for CMMC, reviewing Microsoft 365, moving servers to Azure or exploring AI, we will help identify a sensible next step."]' . "\n"
 				. '[trg_card num="01" title="Call"]410-363-6980[/trg_card]' . "\n"
 				. '[trg_card num="02" title="Email"]info@trgnetworking.com[/trg_card]' . "\n"
-				. '[trg_card num="03" title="Visit"]9861 Broken Land Parkway, Columbia, Maryland 21046[/trg_card]' . "\n"
+				. '[trg_card num="03" title="Visit"]9861 Broken Land Parkway, Suite 100, Columbia, Maryland 21046[/trg_card]' . "\n"
 				. '[trg_card num="04" title="Existing clients"]Please use the Client Support Center for active technical requests.[/trg_card]' . "\n"
 				. '[/trg_cards]',
 			// test2 says here that "a dedicated inquiry form and scheduling
