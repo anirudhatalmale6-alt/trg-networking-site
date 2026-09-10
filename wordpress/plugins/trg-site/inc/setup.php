@@ -110,7 +110,7 @@ function trg_page_definitions() {
 		'seo_title' => 'Contact TRG Networking | Talk With Our Team',
 		'excerpt' => 'Call 410-363-6980 or email our Columbia, Maryland team to start a straightforward conversation about your IT.',
 		'content' => implode( "\n\n", array(
-			'[trg_hero eyebrow="Talk with our team" title="Start with a straightforward conversation." lede="Tell us what is working, what is frustrating your team and what you want technology to do better." image="pg-contact" image_alt="The TRG Networking office in Columbia, Maryland" button_text="Talk With Our Team" button_link="#enquiry" call_button="1"]',
+			'[trg_hero eyebrow="Contact and connect with our team" title="Let’s power your workflows" lede="Headquartered in Maryland and serving organizations nationwide. Tell us what is working, what is frustrating your team and what you want technology to do better." image="pg-contact" image_alt="The TRG Networking office in Columbia, Maryland" button_text="Talk With Our Team" button_link="#enquiry" call_button="1"]',
 			'[trg_cards bg="white" columns="2" title="No technical preparation required." body="Whether you are replacing an IT provider, strengthening cybersecurity, preparing for CMMC, reviewing Microsoft 365, moving servers to Azure or exploring AI, we will help identify a sensible next step."]' . "\n"
 				. '[trg_card num="01" title="Call"]410-363-6980[/trg_card]' . "\n"
 				. '[trg_card num="02" title="Email"]info@trgnetworking.com[/trg_card]' . "\n"
@@ -122,8 +122,8 @@ function trg_page_definitions() {
 			// connected — this is that form. Every submission is stored in
 			// Enquiries before any email is attempted, so a message cannot be
 			// lost to a mail problem.
-			'[trg_contact_section id="enquiry" title="Send us a message." body="Tell us a little about your organization and what you would like to improve. We read every message and reply from a real person."]',
-			'[trg_perspective title="A conversation costs nothing and usually clarifies a lot." body="We will listen first, then suggest a sensible next step — whether or not that step involves TRG."]',
+			'[trg_contact_section id="enquiry" title="Contact us" body="Tell us a little about your organization and what you would like to improve. We read every message and reply from a real person."]',
+			'[trg_perspective title="Proudly rooted in Maryland since 1992" body="We combine local accountability and deep regional expertise with a high-capacity infrastructure built to support your distributed, hybrid and remote teams anywhere in the United States."]',
 		) ),
 	);
 
