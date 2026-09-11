@@ -104,6 +104,28 @@ function trg_page_definitions() {
 		) ),
 	);
 
+	/*
+	 * Our Team, added 11/09 from TRG's own mockup. The six biographies already
+	 * existed as a section on the About page and are unchanged - this gives
+	 * them a page of their own, which is what the mockup asks for, and it is
+	 * the same editable list behind both. Nothing was removed from About:
+	 * Madhuri has not reviewed that page yet, so taking the section out would
+	 * be a decision nobody has made.
+	 */
+	$pages[] = array(
+		'slug'      => 'our-team',
+		'title'     => 'Our Team',
+		'seo_title' => 'Our Team | TRG Networking',
+		'excerpt'   => 'The people behind TRG Networking: leadership, engineering, operations and procurement, with experience spanning federal audit and risk management, enterprise architecture and cybersecurity.',
+		'content'   => implode( "\n\n", array(
+			'[trg_hero eyebrow="Experienced professionals. Practical solutions. Stronger together." title="Our Team" lede="At TRG Networking, our strength comes from the experience, commitment and technical expertise of our people. Our team works together to understand our clients’ business and technology needs and to deliver secure, reliable and practical solutions. From strategic planning and cybersecurity to engineering, operations, procurement and project delivery, we bring together the capabilities needed to support our clients throughout the technology lifecycle." image="pg-about" image_alt="The TRG Networking team"]',
+			'[trg_team bg="white" eyebrow="Our team" title="Experienced people. Real results." '
+				. 'body="TRG is led by a team whose experience spans federal audit and risk management, enterprise architecture, cybersecurity education and nearly three decades of continuous service to the same clients."]',
+			'[trg_perspective title="Experience. Collaboration. Commitment." body="TRG Networking brings together experienced professionals who share a commitment to helping our clients build, secure, manage and modernize the technology environments that support their organizations."]',
+			'[trg_cta_band]',
+		) ),
+	);
+
 	$pages[] = array(
 		'slug'      => 'contact',
 		'title'     => 'Contact',
