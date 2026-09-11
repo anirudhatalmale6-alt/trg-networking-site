@@ -178,10 +178,19 @@ function trg_team_initials( $name ) {
  */
 function trg_sc_team( $atts ) {
 	$atts = shortcode_atts( array(
-		'eyebrow' => '',
-		'title'   => '',
-		'body'    => '',
-		'bg'      => 'canvas',
+		'eyebrow'  => '',
+		'title'    => '',
+		'body'     => '',
+		'bg'       => 'canvas',
+		/*
+		 * pictures="0" shows the monogram for everyone, even where a real
+		 * photograph exists. TRG asked for the Our Team page to run without
+		 * pictures; the About page still has them, so this is per-placement
+		 * rather than a setting that would strip them everywhere. The
+		 * photographs stay exactly where they are - switching this back to 1
+		 * brings them straight back.
+		 */
+		'pictures' => '1',
 	), $atts, 'trg_team' );
 
 	$head = $atts['title'] ? trg_section_head( array(
@@ -208,11 +217,13 @@ function trg_sc_team( $atts ) {
 					// A client-uploaded picture always wins; then the shipped
 					// photograph, if we hold a genuine one; then the monogram.
 					$src = '';
-					if ( function_exists( 'trg_picture_override_url' ) ) {
-						$src = trg_picture_override_url( 'team-' . $member['slug'] );
-					}
-					if ( ! $src && $member['photo'] ) {
-						$src = trg_image_url( 'team-' . $member['slug'] . '.webp' );
+					if ( '0' !== (string) $atts['pictures'] ) {
+						if ( function_exists( 'trg_picture_override_url' ) ) {
+							$src = trg_picture_override_url( 'team-' . $member['slug'] );
+						}
+						if ( ! $src && $member['photo'] ) {
+							$src = trg_image_url( 'team-' . $member['slug'] . '.webp' );
+						}
 					}
 					?>
 					<article class="card-hover flex flex-col">
