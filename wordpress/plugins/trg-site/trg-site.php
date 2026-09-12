@@ -27,6 +27,9 @@ define( 'TRG_SITE_DIR', plugin_dir_path( __FILE__ ) );
 define( 'TRG_SITE_URL', plugin_dir_url( __FILE__ ) );
 
 require_once TRG_SITE_DIR . 'inc/helpers.php';
+// Must load before anything reads the site address: it makes the test
+// hostname answer as itself while the stored address is the live domain.
+require_once TRG_SITE_DIR . 'inc/test-host.php';
 // First: it defines TRG_HUB_SLUG, which the post types and the settings screens
 // all register themselves against.
 require_once TRG_SITE_DIR . 'inc/admin-hub.php';
