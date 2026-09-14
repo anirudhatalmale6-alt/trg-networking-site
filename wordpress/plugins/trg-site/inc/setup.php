@@ -210,7 +210,7 @@ function trg_page_definitions() {
 	$pages[] = array(
 		'slug'      => 'book',
 		'title'     => 'The Book',
-		'seo_title' => 'Cybersecurity Without the Jargon | Free Book by Dr. Charles K. Edwards',
+		'seo_title' => 'Free Book: Cybersecurity Without the Jargon | TRG Networking',
 		'excerpt'   => 'A plain-English cybersecurity guide for business leaders, written by TRG Networking’s Dr. Charles K. Edwards. Free to download.',
 		'content'   => implode( "\n\n", array(
 			'[trg_hero eyebrow="From our founder" title="Cybersecurity, explained without the jargon." lede="Written for the people who have to make security decisions without a security background."]',

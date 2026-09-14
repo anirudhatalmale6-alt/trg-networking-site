@@ -118,7 +118,7 @@ function trg_detail_page_data() {
 		'hero'       => 'Host your servers and network in Azure—without replacing hardware.',
 		'lede'       => 'TRG migrates and manages your servers, applications and network infrastructure in Microsoft Azure, eliminating costly hardware refresh cycles and the security gaps that aging on-premise equipment creates.',
 		'meta'       => 'Host your servers and network in Microsoft Azure with TRG—eliminate hardware replacement costs and the vulnerabilities of aging on-premise infrastructure.',
-		'seo_title'  => 'Azure Cloud Hosting | Microsoft Azure Managed Servers | TRG Networking',
+		'seo_title'  => 'Azure Cloud Hosting & Managed Servers | TRG Networking',
 		'introTitle' => 'Stop buying servers. Start gaining flexibility.',
 		'introBody'  => 'On-premise servers age, fail and fall out of support—each replacement brings capital expense, downtime risk and fresh vulnerabilities. Azure cloud hosting lets your environment run on secure, always-current Microsoft infrastructure instead, with TRG designing, migrating and managing every layer.',
 		'features'   => array(
