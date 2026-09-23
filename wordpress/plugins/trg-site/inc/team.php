@@ -154,6 +154,15 @@ function trg_team_members() {
  * Initials for the monogram. "Dr." is a title, not a name, so it is skipped —
  * otherwise every doctor on the team would be a "D".
  *
+ * Two things a plain "first letter of each word" gets wrong on a real name:
+ *
+ *   - "Kandy (Kandra) Clifton" reads its second initial from the bracket and
+ *     renders as "K(". Punctuation is therefore stripped before the letter is
+ *     taken, not after.
+ *   - A bracketed given name is the same person, not a second one, so it must
+ *     not consume the slot the surname needs. Skipping it turns that name into
+ *     "KC" rather than "KK".
+ *
  * @param string $name Full name.
  * @return string
  */
@@ -161,13 +170,23 @@ function trg_team_initials( $name ) {
 	$parts    = preg_split( '/\s+/', trim( $name ) );
 	$initials = '';
 	foreach ( $parts as $part ) {
-		$part = rtrim( $part, '.' );
+		$part = (string) $part;
+
+		// A parenthesised alternative — "(Kandra)", "(Bob)" — is the same
+		// person written twice. The surname deserves the second letter.
+		if ( '' !== $part && '(' === mb_substr( $part, 0, 1 ) ) {
+			continue;
+		}
+
+		// Keep letters only, so brackets, quotes, commas and stray hyphens
+		// cannot become an initial. Unicode-aware: accented names keep theirs.
+		$part = preg_replace( '/[^\p{L}]/u', '', $part );
 		if ( '' === $part || in_array( strtolower( $part ), array( 'dr', 'mr', 'mrs', 'ms' ), true ) ) {
 			continue;
 		}
-		$initials .= strtoupper( substr( $part, 0, 1 ) );
+		$initials .= strtoupper( mb_substr( $part, 0, 1 ) );
 	}
-	return substr( $initials, 0, 2 );
+	return mb_substr( $initials, 0, 2 );
 }
 
 /**
