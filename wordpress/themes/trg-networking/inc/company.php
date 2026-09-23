@@ -23,11 +23,12 @@ function trg_company_defaults() {
 		'legal_name'      => 'TRG Networking, Inc.',
 		'founded'         => '1992',
 		'phone'           => '410-363-6980',
-		// The address PRINTED on the site. Changed to info@ at the client's
-		// request — they do not want marketing@ published. Where enquiry
-		// notifications are delivered is a separate setting under
-		// Settings → TRG Email, so the two can differ.
-		'email'           => 'info@trgnetworking.com',
+		// The address PRINTED on the site. Changed from info@ to
+		// ManagedServices@ on 23 Sep at Charles's request: it is the mailbox he
+		// actually monitors, where info@ was nobody's in particular. Where
+		// enquiry notifications are DELIVERED is a separate setting under
+		// TRG Website → Email settings, so the two can differ.
+		'email'           => 'ManagedServices@trgnetworking.com',
 		'marketing_email' => 'marketing@trgnetworking.com',
 		'street'          => '9861 Broken Land Parkway, Suite 100',
 		'city'            => 'Columbia',

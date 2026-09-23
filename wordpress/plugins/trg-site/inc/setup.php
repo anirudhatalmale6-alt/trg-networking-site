@@ -133,11 +133,15 @@ function trg_page_definitions() {
 		'excerpt' => 'Call 410-363-6980 or email our Columbia, Maryland team to start a straightforward conversation about your IT.',
 		'content' => implode( "\n\n", array(
 			'[trg_hero eyebrow="Contact and connect with our team" title="Let’s power your workflows" lede="Headquartered in Maryland and serving organizations nationwide. Tell us what is working, what is frustrating your team and what you want technology to do better." image="pg-contact" image_alt="The TRG Networking office in Columbia, Maryland" button_text="Connect With Our Team" button_link="#enquiry" call_button="1"]',
-			'[trg_cards bg="white" columns="2" title="No technical preparation required." body="Whether you are replacing an IT provider, strengthening cybersecurity, preparing for CMMC, reviewing Microsoft 365, moving servers to Azure or exploring AI, we will help identify a sensible next step."]' . "\n"
+			// Three cards, not four. The "Visit" card came off on 23 Sep: TRG is
+			// not staffed at the Columbia address, so inviting people to turn up
+			// there was an invitation to a closed door. Phone and email only,
+			// which is what most firms in this position publish. columns="3" so
+			// the three sit on one row rather than leaving a gap.
+			'[trg_cards bg="white" columns="3" title="No technical preparation required." body="Whether you are replacing an IT provider, strengthening cybersecurity, preparing for CMMC, reviewing Microsoft 365, moving servers to Azure or exploring AI, we will help identify a sensible next step."]' . "\n"
 				. '[trg_card num="01" title="Call"]410-363-6980[/trg_card]' . "\n"
-				. '[trg_card num="02" title="Email"]info@trgnetworking.com[/trg_card]' . "\n"
-				. '[trg_card num="03" title="Visit"]9861 Broken Land Parkway, Suite 100, Columbia, Maryland 21046[/trg_card]' . "\n"
-				. '[trg_card num="04" title="Existing clients"]Please use the Client Support Center for active technical requests.[/trg_card]' . "\n"
+				. '[trg_card num="02" title="Email"]ManagedServices@trgnetworking.com[/trg_card]' . "\n"
+				. '[trg_card num="03" title="Existing clients"]Please use the Client Support Center for active technical requests.[/trg_card]' . "\n"
 				. '[/trg_cards]',
 			// test2 says here that "a dedicated inquiry form and scheduling
 			// experience will be connected before the new site launches". It is
