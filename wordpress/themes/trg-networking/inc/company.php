@@ -30,7 +30,7 @@ function trg_company_defaults() {
 		// TRG Website → Email settings, so the two can differ.
 		'email'           => 'ManagedServices@trgnetworking.com',
 		'marketing_email' => 'marketing@trgnetworking.com',
-		'street'          => '9861 Broken Land Parkway, Suite 100',
+		'street'          => '9861 Brokenland Parkway, Suite 100',
 		'city'            => 'Columbia',
 		'state'           => 'Maryland',
 		'state_short'     => 'MD',

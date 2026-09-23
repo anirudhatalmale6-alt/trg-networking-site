@@ -92,7 +92,7 @@ function trg_page_definitions() {
 				. '[trg_card icon="users" title="Our people"]Experienced technical professionals who explain their work, share ownership of every request and stay with clients for years.[/trg_card]' . "\n"
 				. '[trg_card icon="check" title="Our values"]Listen first, communicate clearly, recommend responsibly and follow through on the work.[/trg_card]' . "\n"
 				. '[trg_card icon="server" title="Our expertise"]Managed IT, cybersecurity, Microsoft 365 and Azure, CMMC readiness, business continuity, network infrastructure and strategic IT leadership.[/trg_card]' . "\n"
-				. '[trg_card icon="map-pin" title="Our community"]Based at 9861 Broken Land Parkway, Suite 100, Columbia, Maryland 21046 — close enough to be on site, equipped to support clients anywhere.[/trg_card]' . "\n"
+				. '[trg_card icon="map-pin" title="Our community"]Based at 9861 Brokenland Parkway, Suite 100, Columbia, Maryland 21046 — close enough to be on site, equipped to support clients anywhere.[/trg_card]' . "\n"
 				. '[/trg_cards]',
 			// The biographies are TRG's own words, lifted from their Hostinger
 			// site. Four of the six show initials rather than a face — see
@@ -354,7 +354,7 @@ function trg_legal_pages() {
 		. $block( 'How it is stored', 'Enquiries are emailed to our team and stored in this website’s dashboard, and are retained for as long as needed to serve you and to meet our record-keeping obligations.' )
 		. $block( 'Third parties', 'This site loads web fonts from Google Fonts, which means Google receives the IP address of visitors. We do not run advertising trackers on this site.' )
 		. $block( 'Your choices', 'You can ask us what information we hold about you, ask us to correct it, or ask us to delete it. Contact us using the details in the footer of this page.' )
-		. $block( 'Contact', 'TRG Networking, Inc., 9861 Broken Land Parkway, Suite 100, Columbia, Maryland 21046.' );
+		. $block( 'Contact', 'TRG Networking, Inc., 9861 Brokenland Parkway, Suite 100, Columbia, Maryland 21046.' );
 
 	$terms = $block( 'About this site', 'This website is operated by TRG Networking, Inc. By using it you agree to these terms. If you do not agree, please do not use the site.' )
 		. $block( 'Information provided here', 'Content on this site describes our services in general terms. It is not technical, legal or compliance advice, and it does not create a client relationship. Descriptions of CMMC and other regulatory work describe readiness support — they are not a guarantee of certification or of a compliance outcome.' )
